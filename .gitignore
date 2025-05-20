@@ -1,0 +1,40 @@
+# .NET Core
+bin/
+obj/
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vscode/
+.idea/
+*.vs/
+
+# Environment files
+appsettings.Development.json
+.env
+
+# Build output
+/out/
+/publish/
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.mdf
+*.ldf
+
+# Secrets
+secrets.json
+
+# Miscellaneous
+Thumbs.db
+.DS_Store
