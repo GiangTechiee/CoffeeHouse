@@ -1,40 +1,241 @@
+# ============================================
 # .NET Core
-bin/
-obj/
+# ============================================
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# ============================================
+# Visual Studio / Rider / VS Code
+# ============================================
+.vscode/
+.idea/
+.vs/
+*.vs/
+*.swp
+*.swo
+*~
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
 *.csproj.user
+
+# ============================================
+# User-specific files
+# ============================================
+*.rsuser
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
 
-# Visual Studio
-.vscode/
-.idea/
-*.vs/
-
-# Environment files
+# ============================================
+# Environment & Secrets
+# ============================================
 appsettings.Development.json
+appsettings.Local.json
+*.env
 .env
-
-# Build output
-/out/
-/publish/
-
-# NuGet Packages
-*.nupkg
-packages/
-
-# Logs
-*.log
-logs/
-
-# Database files
-*.mdf
-*.ldf
-
-# Secrets
+.env.local
+.env.development
+.env.production
 secrets.json
 
-# Miscellaneous
+# ============================================
+# Build output
+# ============================================
+/out/
+/publish/
+[Dd]ist/
+[Bb]uild/
+
+# ============================================
+# NuGet Packages
+# ============================================
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ============================================
+# Node.js / npm
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+# Không ignore package-lock.json để đảm bảo consistent dependencies
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+*.log.*
+log-*.txt
+
+# ============================================
+# Database files
+# ============================================
+*.mdf
+*.ldf
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# ============================================
+# Test Results
+# ============================================
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+TestResults/
+coverage/
+*.lcov
+
+# ============================================
+# Cache & Temporary files
+# ============================================
+*.cache
+*.tmp
+*.temp
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp_proj
+*_wpftmp.csproj
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# ============================================
+# OS generated files
+# ============================================
 Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ============================================
+# Docker
+# ============================================
+docker-compose.override.yml
+.dockerignore
+
+# ============================================
+# Backup & Archive files
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# ============================================
+# IDE & Editor specific
+# ============================================
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# Miscellaneous & Generated
+# ============================================
+.agent/
+*.pid
+*.seed
+*.pid.lock
+.sass-cache/
+.npm
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.node_repl_history
+*.tsbuildinfo
+.yarn-integrity
+.parcel-cache
+.next
+.nuxt
+.cache
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# ============================================
+# Project Specific Ignored Items
+# ============================================
+.dotnet/
+TestConnection/
+src/CoffeeHouse.Web/wwwroot/css/tailwind.css
