@@ -1,0 +1,138 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using CoffeeHouse.ViewModels
+@model IPagedList<ProductViewModel>
+@{
+    ViewData["Title"] = "Sản phẩm";
+    ViewData["Products"] = "active";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-controller="products" asp-action="index" class="text-text-muted hover:text-primary transition-all">Sản phẩm</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">@ViewBag.targetName</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Shop Section -->
+<section class="py-24 bg-white relative overflow-hidden">
+    <div class="container-custom relative z-10">
+        <div class="flex flex-col lg:flex-row gap-20">
+            <!-- Sidebar -->
+            <aside class="w-full lg:w-80 shrink-0">
+                <div class="sticky top-32 space-y-12">
+                    <div class="bg-surface-soft p-10 rounded-[48px] border border-border/50 shadow-inner relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-[0.03] text-6xl font-black pointer-events-none select-none italic">
+                            GROUP
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-black text-secondary uppercase tracking-tighter mb-10 pb-6 border-b border-border/50 italic">
+                                Danh mục
+                            </h4>
+                            <div class="space-y-2">
+                                @await Component.InvokeAsync("NhomSpMenu")
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Promo Card (Optional) -->
+                    <div class="bg-secondary p-10 rounded-[48px] text-white relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                        <h5 class="text-2xl font-black italic tracking-tighter mb-4">Space Edition 2024</h5>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-primary mb-8">Exclusive Lineup</p>
+                        <a asp-controller="products" asp-action="index" class="text-[8px] font-black uppercase tracking-[0.2em] flex items-center gap-3 group/btn">
+                            Khám phá ngay
+                            <i class="fas fa-arrow-right group-hover/btn:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1">
+                <div class="mb-16 pb-10 border-b border-border/50 space-y-4">
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Lineup Selection</span>
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div>
+                            <h2 class="text-5xl font-black text-secondary tracking-tighter italic">
+                                @ViewBag.targetName
+                            </h2>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-text-muted mt-4">Hiển thị <span class="text-secondary">@Model.Count</span> sản phẩm trong danh mục</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    @foreach (var (item, index) in Model.Select((v, i) => (v, i)))
+                    {
+                        <div class="group animate-scale-in" style="animation-delay: @(index * 100)ms">
+                            <div class="relative aspect-[4/5] overflow-hidden rounded-[48px] bg-surface-dark shadow-sm hover:shadow-2xl transition-all duration-700">
+                                <img src="@Url.Content("~/img/products/" + item.ImageUrl)" alt="@item.ProductName"
+                                     class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                                
+                                <!-- Premium Actions Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                                
+                                <div class="absolute bottom-8 left-8 right-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                    <div class="flex flex-col gap-3">
+                                        <a asp-controller="cart" asp-action="add" asp-route-id="@item.ProductId" asp-route-quantity="1"
+                                           class="w-full btn-primary py-4 text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20">
+                                            <i class="fas fa-plus mr-2"></i> Thêm nhanh
+                                        </a>
+                                        <div class="flex gap-2">
+                                            <a asp-controller="products" asp-action="details" asp-route-id="@item.ProductId"
+                                               class="flex-1 bg-white/10 backdrop-blur-md border border-white/20 py-3 rounded-2xl text-[10px] font-black text-white uppercase tracking-widest text-center hover:bg-white hover:text-secondary transition-all">
+                                                Chi tiết
+                                            </a>
+                                            <a href="@Url.Content("~/img/products/" + item.ImageUrl)" 
+                                               class="image-popup w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex-center text-white hover:bg-white hover:text-secondary transition-all">
+                                                <i class="fas fa-expand-alt text-xs"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 text-center space-y-2">
+                                <h3 class="text-xl font-black text-secondary tracking-tight italic group-hover:text-primary transition-colors">
+                                    <a asp-controller="products" asp-action="details" asp-route-id="@item.ProductId">@item.ProductName</a>
+                                </h3>
+                                <p class="text-2xl font-black text-primary tracking-tighter italic">@(item.Price?.ToString("n0") ?? "0") <span class="text-xs uppercase ml-1 font-bold">đ</span></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Pagination -->
+                @if (Model.PageCount > 1)
+                {
+                    <div class="mt-24 flex justify-center">
+                        @Html.PagedListPager(Model, page => Url.Action("ProductType", new {
+                            page = page,
+                            target = ViewBag.target,
+                            targetName = ViewBag.targetName
+                        }),
+                        new PagedListRenderOptions()
+                        {
+                            MaximumPageNumbersToDisplay = 5,
+                            PageClasses = new List<String> { "w-14 h-14 flex items-center justify-center rounded-2xl border border-border/50 text-xs font-black transition-all hover:bg-primary hover:text-white hover:border-primary shadow-sm hover:shadow-xl hover:-translate-y-1" },
+                            UlElementClasses = new List<String> { "flex items-center gap-3" },
+                            LiElementClasses = new List<String> { "" },
+                            ActiveLiElementClass = "[&_a]:bg-primary [&_a]:text-white [&_a]:border-primary [&_a]:shadow-primary/20",
+                        })
+                    </div>
+                }
+            </main>
+        </div>
+    </div>
+</section>
+
+

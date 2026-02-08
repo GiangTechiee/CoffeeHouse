@@ -1,0 +1,34 @@
+{
+  "name": "coffeehouse",
+  "version": "1.0.0",
+  "description": "Hệ thống quản lý quán cà phê được phát triển bằng .NET với MVC, cung cấp giải pháp toàn diện cho việc quản lý vận hành quán cà phê.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "globals": "^16.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./src/CoffeeHouse.Web/wwwroot/css/tailwind-input.css -o ./src/CoffeeHouse.Web/wwwroot/css/tailwind.css --watch",
+    "build:css:prod": "tailwindcss -i ./src/CoffeeHouse.Web/wwwroot/css/tailwind-input.css -o ./src/CoffeeHouse.Web/wwwroot/css/tailwind.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiangTechiee/CoffeeHouse.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GiangTechiee/CoffeeHouse/issues"
+  },
+  "homepage": "https://github.com/GiangTechiee/CoffeeHouse#readme"
+}

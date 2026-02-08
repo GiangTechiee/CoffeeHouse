@@ -1,0 +1,324 @@
+/* ============================================
+   Advanced Interactions Styles
+   Phase 5: Infinite Scroll, Search, Image Zoom, Wishlist
+   ============================================ */
+
+/* ===== INFINITE SCROLL ===== */
+.infinite-scroll-loading {
+  text-align: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.infinite-scroll-sentinel {
+  height: 1px;
+  visibility: hidden;
+}
+
+/* ===== SEARCH AUTOCOMPLETE ===== */
+.search-autocomplete-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 0.5rem;
+}
+
+.search-autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: #111111;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.search-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.search-autocomplete-item:hover,
+.search-autocomplete-item.selected {
+  background-color: #f4f4f4;
+}
+
+.search-autocomplete-item.no-results {
+  justify-content: center;
+  color: #666666;
+  cursor: default;
+}
+
+.search-result-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.search-result-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-result-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result-title mark {
+  background-color: #fff5f5;
+  color: #ca1515;
+  padding: 0 0.125rem;
+  border-radius: 0.125rem;
+}
+
+.search-result-category {
+  font-size: 0.75rem;
+  color: #666666;
+}
+
+.search-result-price {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ca1515;
+  margin-top: 0.25rem;
+}
+
+/* ===== IMAGE LIGHTBOX ===== */
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-lightbox.active {
+  opacity: 1;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lightbox-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  cursor: move;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.lightbox-controls {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+}
+
+.lightbox-controls button {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* ===== WISHLIST ===== */
+.wishlist-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  color: #666666;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.wishlist-btn:hover {
+  background: #ca1515;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.wishlist-btn.active {
+  background: #ca1515;
+  color: #fff;
+}
+
+.wishlist-btn.active i {
+  animation: heartBeat 0.5s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(1.1); }
+  75% { transform: scale(1.2); }
+}
+
+/* Wishlist count badge */
+[data-wishlist-count] {
+  display: inline-block;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #ca1515;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .search-autocomplete-results {
+    max-height: 300px;
+  }
+
+  .search-autocomplete-item {
+    padding: 1rem;
+  }
+
+  .search-result-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightbox-content {
+    padding: 1rem;
+  }
+
+  .lightbox-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .lightbox-controls {
+    bottom: 1rem;
+  }
+
+  .lightbox-controls button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ===== DARK MODE ===== */
+html.dark .search-autocomplete-results {
+  background: var(--dark-bg-tertiary);
+  border-color: var(--dark-border);
+}
+
+html.dark .search-autocomplete-item {
+  color: var(--dark-text);
+  border-bottom-color: var(--dark-border);
+}
+
+html.dark .search-autocomplete-item:hover,
+html.dark .search-autocomplete-item.selected {
+  background-color: var(--dark-bg-secondary);
+}
+
+html.dark .search-result-title {
+  color: var(--dark-text);
+}
+
+html.dark .search-result-title mark {
+  background-color: rgba(202, 21, 21, 0.2);
+  color: #e63946;
+}
+
+html.dark .wishlist-btn {
+  background: var(--dark-bg-tertiary);
+  color: var(--dark-text-muted);
+}
+
+html.dark .wishlist-btn:hover {
+  background: #ca1515;
+  color: #fff;
+}

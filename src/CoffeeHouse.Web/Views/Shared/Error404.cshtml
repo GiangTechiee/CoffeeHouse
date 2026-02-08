@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "404 - Mất kết nối tín hiệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="min-h-screen flex items-center justify-center bg-secondary relative overflow-hidden py-32">
+    <!-- Immersive Space Background -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[150px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-32 opacity-[0.03] text-[30vw] font-black pointer-events-none select-none italic leading-none text-white whitespace-nowrap">
+            LOST SPACE
+        </div>
+    </div>
+
+    <div class="container-custom relative z-10 text-center space-y-12">
+        <!-- Floating Visual -->
+        <div class="relative inline-block hover-float">
+            <div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="relative w-64 h-64 bg-white/5 backdrop-blur-3xl rounded-[64px] border border-white/10 flex-center shadow-2xl transition-transform duration-1000 group-hover:rotate-12">
+                <div class="text-center">
+                    <span class="block text-8xl font-black text-primary tracking-tighter italic leading-none mb-2">404</span>
+                    <p class="text-[10px] font-black uppercase tracking-[0.4em] text-white/50 italic">Signal Lost</p>
+                </div>
+                <!-- Mini Satellite Icon -->
+                <i class="fas fa-satellite text-primary absolute -top-4 -right-4 text-4xl animate-bounce-slow"></i>
+            </div>
+        </div>
+
+        <!-- Error Content -->
+        <div class="max-w-xl mx-auto space-y-6">
+            <h1 class="text-4xl font-black text-white tracking-tighter italic">Tín hiệu đã bị ngắt quãng</h1>
+            <p class="text-white/60 text-lg font-medium leading-relaxed">
+                Xin lỗi, tọa độ bạn đang tìm kiếm không tồn tại trong bản đồ thiên hà của chúng tôi. Có vẻ như bạn đã đi lạc quá xa vào vùng không gian đen.
+            </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a asp-controller="Home" asp-action="Index" class="btn-primary px-12 py-5 shadow-2xl shadow-primary/20 flex items-center gap-4 group">
+                <i class="fas fa-rocket transition-transform group-hover:translate-x-2 group-hover:-translate-y-2"></i>
+                Về trạm điều hành (Trang chủ)
+            </a>
+            <button onclick="history.back()" class="px-10 py-5 bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-secondary transition-all flex items-center gap-4">
+                <i class="fas fa-arrow-left"></i>
+                Quay lại quỹ đạo
+            </button>
+        </div>
+
+        <!-- Search Integration -->
+        <div class="max-w-md mx-auto pt-16 border-t border-white/5">
+            <p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-8 italic">Hoặc quét lại tần số tìm kiếm</p>
+            <form asp-controller="Search" asp-action="Index" method="get" class="relative group/search">
+                <input type="text" name="search" placeholder="Nhập từ khóa tìm kiếm..." 
+                       class="w-full h-20 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] px-10 text-white placeholder-white/20 font-bold focus:outline-none focus:border-primary/50 transition-all group-focus-within/search:bg-white/10 shadow-inner" />
+                <button type="submit" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-primary text-white rounded-2xl flex-center hover:scale-110 active:scale-95 transition-all shadow-lg shadow-primary/20">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,31 @@
+﻿<div class="search-model fixed inset-0 z-[2000] bg-[#F7F2E8]/98 backdrop-blur-xl opacity-0 invisible transition-all duration-500 flex-center overflow-hidden">
+    <!-- Paper Texture -->
+    <div class="absolute inset-0 opacity-[0.05] pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/linen.png');"></div>
+
+    <div class="absolute top-12 right-12 z-10">
+        <button class="search-close-switch w-12 h-12 border border-[#E3D7C7] rounded-full flex-center text-[#2B1E16] hover:bg-[#A3483C] hover:text-white transition-all duration-300">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="w-full max-w-4xl px-10 relative z-10 text-center">
+        <div class="mb-10">
+            <span class="label-small">TÌM KIẾM</span>
+            <div class="ornament">❦</div>
+        </div>
+
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "search-model-form" }))
+        {
+            <div class="relative">
+                <input type="text" id="search-input" name="search" 
+                       placeholder="Nhập từ khóa tìm kiếm..." 
+                       autocomplete="off"
+                       class="w-full bg-transparent border-b border-[#E3D7C7] py-8 text-4xl lg:text-6xl text-center font-serif text-[#2B1E16] italic placeholder:opacity-20 focus:outline-none focus:border-[#C8A96A] transition-all">
+            </div>
+            
+            <div class="mt-12">
+                <p class="label-small" style="font-size: 10px; opacity: 0.5;">Nhấn <span style="color: var(--faded-red);">Enter</span> để khám phá</p>
+            </div>
+        }
+    </div>
+</div>

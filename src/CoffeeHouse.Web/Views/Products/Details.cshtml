@@ -1,0 +1,184 @@
+﻿@using CoffeeHouse.ViewModels
+@model ProductViewModel
+@{
+    ViewData["Title"] = Model.ProductName;
+    ViewData["Products"] = "active";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fas fa-home"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-controller="Products" asp-action="Index" class="text-text-muted hover:text-primary transition-colors">Sản phẩm</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary">@Model.ProductName</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Product Details Section -->
+<section class="py-20 bg-white">
+    <div class="container-custom">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+            <!-- Product Image -->
+            <div class="group">
+                <div class="relative aspect-square overflow-hidden rounded-[48px] shadow-2xl border border-border/50 bg-surface-dark">
+                    <img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+                         src="@Url.Content("~/img/products/" + Model.ImageUrl)" alt="@Model.ProductName">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="flex flex-col justify-center space-y-10">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Sản phẩm mới</span>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-text-light ml-2 font-medium">(4.8/5)</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-5xl font-black text-secondary tracking-tighter leading-tight italic">@Model.ProductName</h1>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-black text-primary">@(Model.Price?.ToString("n0") ?? "0")</span>
+                        <span class="text-xl font-bold text-primary/70 uppercase">vnđ</span>
+                    </div>
+                    
+                    <p class="text-text-muted leading-relaxed text-lg max-w-lg">
+                        Sản phẩm chất lượng cao được tuyển chọn từ những vùng nguyên liệu tốt nhất, mang lại hương vị chuẩn gu truyền thống.
+                    </p>
+                </div>
+
+                <div class="h-px bg-gradient-to-r from-border/50 via-border to-transparent"></div>
+
+                <form id="addToCartForm" class="space-y-8" asp-controller="cart" asp-action="add" method="get">
+                    <input type="hidden" name="id" value="@Model.ProductId" />
+                    <div class="flex flex-wrap items-center gap-6">
+                        <div class="space-y-3">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-text-light ml-4">Số lượng bản</span>
+                            <div class="flex items-center bg-surface-soft rounded-full p-1.5 border border-border transition-all focus-within:ring-2 focus-within:ring-primary/20">
+                                <button type="button" class="w-12 h-12 flex-center rounded-full text-secondary hover:bg-white hover:text-primary hover:shadow-sm transition-all" onclick="const input = this.parentNode.querySelector('input'); if(input.value > 1) input.value--">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <input type="number" name="quantity" value="1" min="1" 
+                                       class="w-16 bg-transparent border-none text-center font-black text-lg text-secondary focus:ring-0">
+                                <button type="button" class="w-12 h-12 flex-center rounded-full text-secondary hover:bg-white hover:text-primary hover:shadow-sm transition-all" onclick="const input = this.parentNode.querySelector('input'); input.value++">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 min-w-[200px] pt-7">
+                            <button class="w-full btn-primary py-5 text-sm shadow-xl shadow-primary/20 flex items-center justify-center gap-3" type="submit">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Thêm vào giỏ hàng ngay</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="grid grid-cols-2 gap-y-6 pt-4 border-t border-border/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 flex-center rounded-xl bg-surface-dark text-primary">
+                            <i class="fas fa-shipping-fast text-sm"></i>
+                        </div>
+                        <div class="space-y-0.5">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-text-light">Giao hàng</span>
+                            <p class="text-xs font-bold text-secondary">Siêu tốc 30p</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 flex-center rounded-xl bg-surface-dark text-accent">
+                            <i class="fas fa-leaf text-sm"></i>
+                        </div>
+                        <div class="space-y-0.5">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-text-light">Tự nhiên</span>
+                            <p class="text-xs font-bold text-secondary">100% Nguyên chất</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="bg-surface-soft rounded-[48px] p-8 lg:p-16 shadow-inner border border-border/50 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-12 opacity-[0.03] text-[20vw] font-black pointer-events-none select-none">
+                INFO
+            </div>
+            
+            <div class="flex gap-12 border-b border-border/50 mb-12">
+                <button class="pb-6 text-xs font-bold uppercase tracking-[0.2em] text-primary border-b-2 border-primary tab-btn active" data-tab="tab-description">
+                    Mô tả sản phẩm
+                </button>
+                <button class="pb-6 text-xs font-bold uppercase tracking-[0.2em] text-text-muted hover:text-secondary transition-colors border-b-2 border-transparent tab-btn" data-tab="tab-details">
+                    Thông tin thêm
+                </button>
+            </div>
+
+            <div class="tab-content animate-fade-in" id="tab-description">
+                <div class="max-w-3xl">
+                    <h3 class="text-2xl font-black text-secondary mb-6 tracking-tight">Về dòng sản phẩm này</h3>
+                    <p class="text-text-muted leading-loose text-lg">
+                        @Model.Description
+                    </p>
+                </div>
+            </div>
+            
+            <div class="hidden tab-content animate-fade-in" id="tab-details">
+                <div class="max-w-3xl">
+                    <h3 class="text-2xl font-black text-secondary mb-6 tracking-tight">Thông số kỹ thuật</h3>
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+                        <div class="border-b border-border/50 pb-4">
+                            <dt class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Mã sản phẩm</dt>
+                            <dd class="text-secondary font-bold">#@Model.ProductId</dd>
+                        </div>
+                        <div class="border-b border-border/50 pb-4">
+                            <dt class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Loại sản phẩm</dt>
+                            <dd class="text-secondary font-bold">@Model.CategoryName</dd>
+                        </div>
+                        <div class="border-b border-border/50 pb-4">
+                            <dt class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Tình trạng</dt>
+                            <dd class="text-secondary font-bold">Còn hàng</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('text-primary', 'border-primary');
+                b.classList.add('text-text-muted', 'border-transparent');
+            });
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+            // Add active classes to current
+            btn.classList.add('text-primary', 'border-primary');
+            btn.classList.remove('text-text-muted', 'border-transparent');
+            const target = document.getElementById(btn.dataset.tab);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+        });
+    });
+</script>
+
+
+
+

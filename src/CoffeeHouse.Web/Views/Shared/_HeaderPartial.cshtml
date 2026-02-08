@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var tenTaiKhoan = Context.Session.GetString("Username");
+    var role = Context.Session.GetString("Role");
+}
+
+<header class="header-vintage" id="header-navbar">
+    <div class="container-vintage w-full flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+            <a asp-controller="home" asp-action="index" class="logo-vintage group">
+                <div class="logo-icon group-hover:bg-[#C8A96A] group-hover:text-white transition-colors duration-500">
+                    <i class="fas fa-coffee text-xl"></i>
+                </div>
+                <div class="logo-text">
+                    COFFEE <span style="color: var(--faded-red);">HOUSE</span>
+                    <span class="logo-sub">Phiên bản Hà Nội</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="hidden lg:flex items-center gap-2">
+            @{
+                var links = new[] {
+                    new { Controller = "home", Action = "index", Text = "Trang chủ", Key = "Home" },
+                    new { Controller = "products", Action = "index", Text = "Sản phẩm", Key = "Products" },
+                    new { Controller = "news", Action = "index", Text = "Tin tức", Key = "News" },
+                    new { Controller = "about", Action = "index", Text = "Giới thiệu", Key = "About" }
+                };
+            }
+            @foreach (var link in links)
+            {
+                bool isActive = ViewData[link.Key]?.ToString() == "active";
+                <a asp-controller="@link.Controller" asp-action="@link.Action"
+                   class="label-small px-6 py-2 transition-all duration-300 @(isActive ? "text-[#A3483C] font-bold" : "text-[#2B1E16] hover:text-[#A3483C]")">
+                    @link.Text
+                </a>
+            }
+        </nav>
+
+        <!-- Actions Area -->
+        <div class="flex items-center gap-6">
+            <!-- Search -->
+            <button class="search-switch group/search flex items-center gap-2" title="Tìm kiếm">
+                <i class="fas fa-search text-xs text-[#5A3E2B]"></i>
+                <span class="label-small hidden xl:inline">Tìm kiếm</span>
+            </button>
+
+            <div class="w-px h-6 bg-[#E3D7C7]"></div>
+
+            @if (string.IsNullOrEmpty(tenTaiKhoan))
+            {
+                <a asp-controller="Auth" asp-action="Login" 
+                   class="flex items-center gap-2 group/login">
+                    <i class="fas fa-user-circle text-sm text-[#5A3E2B] group-hover/login:text-[#A3483C]"></i>
+                    <span class="label-small hidden xl:inline">Đăng nhập</span>
+                </a>
+            }
+            else
+            {
+                <!-- User Dropdown (Simpler Vintage Style) -->
+                <div class="relative group" id="userDropdown">
+                    <button class="flex items-center gap-2 dropdown-toggle">
+                        <i class="fas fa-user-circle text-sm text-[#C8A96A]"></i>
+                        <span class="label-small hidden xl:inline truncate max-w-[100px]">@tenTaiKhoan</span>
+                    </button>
+                    
+                    <div class="absolute right-0 mt-4 w-64 bg-[#F7F2E8] border border-[#E3D7C7] rounded-xl shadow-xl py-4 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-[#E3D7C7] mb-2">
+                            <p class="label-small" style="font-size: 8px;">Tài khoản</p>
+                            <p class="text-sm font-bold text-[#2B1E16] truncate mt-1">@tenTaiKhoan</p>
+                        </div>
+
+                        <div class="px-2 space-y-1">
+                            <a class="flex items-center gap-4 px-4 py-3 label-small hover:bg-[#E3D7C7]/30 rounded-lg transition-all" 
+                               asp-controller="Account" asp-action="ThongTin">
+                                <i class="fas fa-id-card w-4"></i> Hồ sơ
+                            </a>
+
+                            @if (role == "Admin" || role == "Employee")
+                            {
+                                <a class="flex items-center gap-4 px-4 py-3 label-small text-[#A3483C] hover:bg-[#A3483C]/5 rounded-lg transition-all" 
+                                   asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index">
+                                    <i class="fas fa-tasks w-4"></i> Quản trị
+                                </a>
+                            }
+
+                            <div class="h-px bg-[#E3D7C7] my-2 mx-4"></div>
+
+                            <form asp-controller="Auth" asp-action="Logout" method="post" id="logoutForm" class="block w-full">
+                                <button type="submit" class="flex w-full items-center gap-4 px-4 py-3 label-small text-red-700 hover:bg-red-50 rounded-lg transition-all">
+                                    <i class="fas fa-sign-out-alt w-4"></i> Đăng xuất
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="w-px h-6 bg-[#E3D7C7]"></div>
+
+            <!-- Cart Summary -->
+            <div class="p-1">
+                @await Component.InvokeAsync("ShoppingCartSummary")
+            </div>
+        </div>
+    </div>
+</header>
+<div class="h-[90px]"></div> <!-- Spacer for fixed header -->

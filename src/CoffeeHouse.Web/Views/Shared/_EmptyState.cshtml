@@ -1,0 +1,30 @@
+@model CoffeeHouse.Web.Models.EmptyStateViewModel
+
+@{
+    var icon = Model?.Icon ?? "fa-box-open";
+    var title = Model?.Title ?? "Không có dữ liệu";
+    var message = Model?.Message ?? "Hiện tại chưa có dữ liệu để hiển thị";
+    var buttonText = Model?.ButtonText;
+    var buttonUrl = Model?.ButtonUrl;
+}
+
+<!-- Empty State Component -->
+<div class="empty-state py-16 px-8 text-center fade-in">
+    <div class="empty-state-icon text-6xl text-surface-darker mb-6">
+        <i class="fas @icon"></i>
+    </div>
+    <h3 class="empty-state-title text-2xl font-semibold text-secondary mb-3">
+        @title
+    </h3>
+    <p class="empty-state-message text-base text-text-muted mb-8 max-w-md mx-auto">
+        @message
+    </p>
+    @if (!string.IsNullOrEmpty(buttonText) && !string.IsNullOrEmpty(buttonUrl))
+    {
+        <a href="@buttonUrl" class="btn btn-primary">
+            @buttonText
+        </a>
+    }
+</div>
+
+

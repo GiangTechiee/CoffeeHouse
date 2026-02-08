@@ -1,0 +1,250 @@
+@{
+    ViewData["Title"] = "Component Showcase - Phase 1 & 2";
+}
+
+<!-- Component Showcase Page -->
+<div class="bg-surface-dark py-16">
+    <div class="container mx-auto px-4">
+        
+        <!-- Page Header -->
+        <div class="text-center mb-16 fade-in">
+            <h1 class="text-5xl font-bold text-secondary mb-4">Component Showcase</h1>
+            <p class="text-lg text-text-muted">Phase 1 & 2 - Tailwind Migration + UX Improvements</p>
+        </div>
+
+        <!-- Buttons Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Buttons</h2>
+            <div class="flex flex-wrap gap-4">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-outline">Outline Button</button>
+                <button class="btn btn-primary btn-loading">Loading Button</button>
+            </div>
+        </section>
+
+        <!-- Toast Notifications Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Toast Notifications</h2>
+            <div class="flex flex-wrap gap-4">
+                <button class="btn btn-primary" onclick="toast.success('Thành công! Đã thêm vào giỏ hàng.')">
+                    <i class="fas fa-check-circle mr-2"></i>Success Toast
+                </button>
+                <button class="btn btn-secondary" onclick="toast.error('Lỗi! Không thể xử lý yêu cầu.')">
+                    <i class="fas fa-exclamation-circle mr-2"></i>Error Toast
+                </button>
+                <button class="btn btn-outline" onclick="toast.warning('Cảnh báo! Vui lòng kiểm tra lại.')">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Warning Toast
+                </button>
+                <button class="btn btn-outline" onclick="toast.info('Thông tin đã được cập nhật.')">
+                    <i class="fas fa-info-circle mr-2"></i>Info Toast
+                </button>
+            </div>
+        </section>
+
+        <!-- Form Components Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Form Components</h2>
+            <form class="max-w-2xl" data-validate>
+                <div class="form-group">
+                    <label class="form-label required">Email</label>
+                    <input type="email" class="form-control" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label required">Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-control" rows="4" placeholder="Your message..."></textarea>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="agree">
+                    <label class="form-check-label" for="agree">I agree to the terms and conditions</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Submit Form</button>
+            </form>
+        </section>
+
+        <!-- Loading States Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Loading States</h2>
+            
+            <h3 class="text-xl font-semibold text-secondary mb-4">Spinners</h3>
+            <div class="flex items-center gap-8 mb-8">
+                <div class="text-center">
+                    <div class="spinner-sm mb-2"></div>
+                    <p class="text-sm text-text-muted">Small</p>
+                </div>
+                <div class="text-center">
+                    <div class="spinner mb-2"></div>
+                    <p class="text-sm text-text-muted">Medium</p>
+                </div>
+                <div class="text-center">
+                    <div class="spinner-lg mb-2"></div>
+                    <p class="text-sm text-text-muted">Large</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-secondary mb-4">Skeleton Loader</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image rounded-lg mb-4"></div>
+                    <div class="skeleton skeleton-title mb-2"></div>
+                    <div class="skeleton skeleton-price"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image rounded-lg mb-4"></div>
+                    <div class="skeleton skeleton-title mb-2"></div>
+                    <div class="skeleton skeleton-price"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Card Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Product Card</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="product__item">
+                    <div class="product__item__pic bg-surface-dark rounded-lg">
+                        <img src="https://via.placeholder.com/300x360" alt="Product">
+                        <div class="product__label">
+                            <span class="label new">New</span>
+                        </div>
+                        <div class="product__hover">
+                            <ul>
+                                <li><a href="#" class="add-to-cart"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="#">Cappuccino</a></h6>
+                        <div class="product__price">
+                            45.000đ <span>60.000đ</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product__item">
+                    <div class="product__item__pic bg-surface-dark rounded-lg">
+                        <img src="https://via.placeholder.com/300x360" alt="Product">
+                        <div class="product__label">
+                            <span class="label sale">Sale</span>
+                        </div>
+                        <div class="product__hover">
+                            <ul>
+                                <li><a href="#" class="add-to-cart"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="#">Espresso</a></h6>
+                        <div class="product__price">
+                            35.000đ <span>50.000đ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Empty State Section -->
+        <section class="mb-16 bg-white rounded-lg shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6 p-8 pb-0">Empty State</h2>
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3 class="empty-state-title">Giỏ hàng trống</h3>
+                <p class="empty-state-message">
+                    Bạn chưa có sản phẩm nào trong giỏ hàng. Hãy khám phá các sản phẩm tuyệt vời của chúng tôi!
+                </p>
+                <a href="#" class="btn btn-primary">Tiếp tục mua sắm</a>
+            </div>
+        </section>
+
+        <!-- Animations Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Animations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-surface-dark rounded-lg fade-in">
+                    <i class="fas fa-magic text-4xl text-primary mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Fade In</h4>
+                    <p class="text-sm text-text-muted">Smooth fade in animation</p>
+                </div>
+                <div class="p-6 bg-surface-dark rounded-lg slide-up">
+                    <i class="fas fa-arrow-up text-4xl text-primary mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Slide Up</h4>
+                    <p class="text-sm text-text-muted">Slide up animation</p>
+                </div>
+                <div class="p-6 bg-surface-dark rounded-lg scale-in">
+                    <i class="fas fa-expand text-4xl text-primary mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Scale In</h4>
+                    <p class="text-sm text-text-muted">Scale in animation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hover Effects Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Hover Effects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-surface-dark rounded-lg hover-lift cursor-pointer">
+                    <i class="fas fa-hand-pointer text-4xl text-primary mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Hover Lift</h4>
+                    <p class="text-sm text-text-muted">Hover to see lift effect</p>
+                </div>
+                <div class="p-6 bg-surface-dark rounded-lg hover-scale cursor-pointer">
+                    <i class="fas fa-search-plus text-4xl text-primary mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Hover Scale</h4>
+                    <p class="text-sm text-text-muted">Hover to see scale effect</p>
+                </div>
+                <div class="p-6 bg-surface-dark rounded-lg smooth-transition cursor-pointer hover:bg-primary hover:text-white">
+                    <i class="fas fa-palette text-4xl mb-4"></i>
+                    <h4 class="text-lg font-semibold mb-2">Color Transition</h4>
+                    <p class="text-sm">Hover to see color change</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Palette Section -->
+        <section class="mb-16 bg-white rounded-lg p-8 shadow-md" data-animate>
+            <h2 class="text-3xl font-semibold text-secondary mb-6">Color Palette</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="w-full h-24 bg-primary rounded-lg mb-2"></div>
+                    <p class="text-sm font-semibold">Primary</p>
+                    <p class="text-xs text-text-muted">#ca1515</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 bg-secondary rounded-lg mb-2"></div>
+                    <p class="text-sm font-semibold">Secondary</p>
+                    <p class="text-xs text-text-muted">#111111</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 bg-accent rounded-lg mb-2"></div>
+                    <p class="text-sm font-semibold">Accent</p>
+                    <p class="text-xs text-text-muted">#36a300</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 bg-surface-dark rounded-lg mb-2 border border-surface-darker"></div>
+                    <p class="text-sm font-semibold">Surface</p>
+                    <p class="text-xs text-text-muted">#f4f4f4</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<style>
+    /* Additional showcase styles */
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+</style>

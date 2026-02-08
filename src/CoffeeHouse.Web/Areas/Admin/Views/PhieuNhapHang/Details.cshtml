@@ -1,0 +1,156 @@
+﻿@model CoffeeHouse.Domain.Entities.PurchaseOrder
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Manifest Analysis";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var total = Model.PurchaseOrderItems != null
+                ? Model.PurchaseOrderItems.Sum(detail => detail.LineTotal)
+                : 0;
+}
+
+<div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Supply Chain Matrix</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Manifest Analysis</span>
+    </nav>
+
+    <!-- Header: Manifest Identity -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-secondary group-hover:opacity-[0.05] transition-opacity">
+            ANALYSIS
+        </div>
+        
+        <div class="flex flex-col lg:flex-row lg:items-center gap-12 relative z-10">
+            <div class="w-24 h-24 lg:w-32 lg:h-32 rounded-[32px] bg-secondary text-white flex-center shadow-2xl shadow-secondary/30 border-4 border-white/20">
+                <i class="fas fa-clipboard-check text-3xl lg:text-5xl"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Operational Intelligence</span>
+                <h1 class="text-4xl lg:text-6xl font-black text-secondary tracking-tighter italic leading-none">Manifest <span class="text-primary not-italic">#PN-@Model.PurchaseOrderId.ToString("D3")</span></h1>
+                <div class="flex flex-wrap items-center gap-4">
+                    <span class="px-4 py-1.5 rounded-lg bg-surface-soft text-[9px] font-black uppercase tracking-widest border border-border/50 shadow-inner">Arrival Date: @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</span>
+                    <span class="px-4 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">Status: Processed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Hub: Strategic Data -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white/70 backdrop-blur-xl p-8 rounded-[40px] border border-border/50 shadow-xl space-y-4 group">
+            <div class="flex items-center gap-4 text-primary">
+                <i class="fas fa-shuttle-van text-lg transition-transform group-hover:scale-110"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Destination Hub</span>
+            </div>
+            <p class="text-xl font-black text-secondary italic tracking-tight">@(Model.Store?.StoreName ?? "UNASSIGNED")</p>
+        </div>
+
+        <div class="bg-white/70 backdrop-blur-xl p-8 rounded-[40px] border border-border/50 shadow-xl space-y-4 group">
+            <div class="flex items-center gap-4 text-primary">
+                <i class="fas fa-user-astronaut text-lg transition-transform group-hover:scale-110"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Receiving Operative</span>
+            </div>
+            <p class="text-xl font-black text-secondary italic tracking-tight">@(Model.Employee?.FullName ?? "N/A")</p>
+        </div>
+
+        <div class="bg-white/70 backdrop-blur-xl p-8 rounded-[40px] border border-border/50 shadow-xl space-y-4 group">
+            <div class="flex items-center gap-4 text-primary">
+                <i class="fas fa-handshake text-lg transition-transform group-hover:scale-110"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Merchant Guild</span>
+            </div>
+            <p class="text-xl font-black text-secondary italic tracking-tight">@(Model.Supplier?.SupplierName ?? "INDEPENDENT")</p>
+        </div>
+    </div>
+
+    <!-- Breakdown Matrix: Cargo Manifested -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden">
+        <div class="space-y-12 relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-black text-secondary tracking-tight italic">Cargo Manifest Breakdown</h3>
+                    <p class="text-[10px] font-black uppercase tracking-widest text-text-light">Itemized list of resource intake and valuations.</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-[8px] font-black uppercase tracking-[0.4em] text-primary">Net Resource Valuation</span>
+                    <p class="text-4xl font-black text-emerald-500 italic tracking-tighter mt-1">@total.ToString("n0") <span class="text-xs not-italic">VNĐ</span></p>
+                </div>
+            </div>
+
+            @if (Model.PurchaseOrderItems != null && Model.PurchaseOrderItems.Any())
+            {
+                <div class="overflow-hidden rounded-[32px] border border-border/50 bg-white/50 shadow-inner">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-soft/80 border-b border-border/50">
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-text-light w-16 text-center">ID</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-text-light">Designation</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-text-light text-center">Quantity</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-text-light text-right">Rate</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-text-light text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border/30">
+                            @foreach (var detail in Model.PurchaseOrderItems)
+                            {
+                                <tr class="group/row hover:bg-white/80 transition-colors">
+                                    <td class="px-8 py-6 text-center">
+                                        <span class="text-[10px] font-black text-text-muted font-mono bg-surface-soft px-2 py-1 rounded-lg border border-border/30">#@detail.IngredientId</span>
+                                    </td>
+                                    <td class="px-8 py-6">
+                                        <p class="text-base font-black text-secondary italic">@detail.Ingredient.IngredientName</p>
+                                    </td>
+                                    <td class="px-8 py-6 text-center">
+                                        <span class="text-base font-black text-secondary">x@detail.Quantity</span>
+                                    </td>
+                                    <td class="px-8 py-6 text-right">
+                                        <p class="text-sm font-bold text-text-muted italic">@detail.UnitPrice.ToString("n0") <span class="text-[10px] font-black not-italic ml-1">đ</span></p>
+                                    </td>
+                                    <td class="px-8 py-6 text-right">
+                                        <p class="text-base font-black text-primary italic">@detail.LineTotal.ToString("n0") <span class="text-[10px] not-italic ml-1">đ</span></p>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="p-20 text-center space-y-6 bg-surface-soft/30 rounded-[40px] border border-dashed border-border/50">
+                    <i class="fas fa-box-open text-4xl text-text-muted opacity-20"></i>
+                    <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Manifest contains no cargo data entries.</p>
+                </div>
+            }
+
+            <!-- Intel Log -->
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <div class="p-8 bg-surface-soft/50 rounded-[32px] border border-border/50 space-y-4">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-secondary italic flex items-center gap-3">
+                        <i class="fas fa-clipboard-list text-primary"></i>
+                        Additional Cargo Intel
+                    </h4>
+                    <p class="text-[11px] font-medium text-text-muted leading-relaxed italic">@Model.Description</p>
+                </div>
+            }
+
+            <!-- Execution Strategy -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-8 border-t border-border/50">
+                <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic">Data Integrity verified by logistics hub · Sector G-9</p>
+                <a asp-action="Index" class="w-full sm:w-auto h-16 px-12 bg-secondary text-white rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center justify-center gap-4 shadow-xl shadow-secondary/20 hover:shadow-primary/30 group">
+                    <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i> 
+                    Return to Supply Matrix
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,89 @@
+﻿@model CoffeeHouse.Domain.Entities.NewsArticle
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Broadcast Transcript";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-5xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Broadcast Logs</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Signal Transcript</span>
+    </nav>
+
+    <!-- Header: Strategic Briefing -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 rounded-[48px] border border-border/50 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-secondary transition-opacity group-hover:opacity-[0.05]">
+            TRANSCRIPT
+        </div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Signal Analysis Protocol</span>
+            <h1 class="text-5xl font-black text-secondary tracking-tighter italic leading-tight">@Model.Title</h1>
+            <div class="flex flex-wrap items-center gap-6">
+                <span class="px-4 py-1.5 rounded-lg bg-surface-soft text-[9px] font-black uppercase tracking-widest border border-border/50 shadow-inner">SIG_ID: #NW-@Model.ArticleId.ToString("D3")</span>
+                <span class="px-4 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Transmission Verified
+                </span>
+                <span class="text-[10px] font-black text-text-light uppercase italic">Broadcast on: @Model.PublishedAt.ToString("dd/MM/yyyy")</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Matrix -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Visual Asset -->
+        <div class="lg:col-span-1 space-y-8">
+            <div class="flex items-center gap-6">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Visual Asset</span>
+                <div class="h-px bg-border/50 flex-1"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-2xl p-6 rounded-[48px] border border-border/50 shadow-2xl group/image overflow-hidden text-center">
+                <div class="relative rounded-[32px] overflow-hidden shadow-2xl">
+                    <img class="w-full h-auto object-cover transform transition-transform duration-1000 group-hover/image:scale-105" 
+                         src=@Url.Content("../../img/news/" + Model.ImageUrl) 
+                         alt="Signal Visual" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-secondary/40 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity"></div>
+                </div>
+                <p class="mt-6 text-[8px] font-black uppercase tracking-widest text-text-light italic">Asset Source: @Model.ImageUrl</p>
+            </div>
+        </div>
+
+        <!-- Transcript Body -->
+        <div class="lg:col-span-2 space-y-8">
+            <div class="flex items-center gap-6">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Transcript Body</span>
+                <div class="h-px bg-border/50 flex-1"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-14 rounded-[56px] border border-border/50 shadow-2xl min-h-[400px]">
+                <div class="prose prose-slate max-w-none">
+                    <p class="text-lg font-medium text-secondary leading-relaxed tracking-tight whitespace-pre-wrap">@Model.Content</p>
+                </div>
+                
+                <div class="mt-20 pt-10 border-t border-border/30 flex items-center justify-between opacity-40">
+                    <span class="text-[8px] font-bold font-mono">EOF_TRANSMISSION</span>
+                    <i class="fas fa-terminal text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Execution Script -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between border-t border-border/50 gap-8">
+        <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic max-w-sm">Broadcast Transcript archived in Communications Sector 4. Unauthorized duplication is prohibited.</p>
+        <div class="flex items-center gap-4">
+             <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="h-16 px-10 bg-surface-soft text-text-muted rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-secondary hover:text-white transition-all flex items-center gap-4 border border-border/50 shadow-sm transition-all hover:shadow-xl group">
+                <i class="fas fa-sliders-h transition-transform group-hover:rotate-90"></i> 
+                Modify Stream
+            </a>
+            <a asp-action="Index" class="h-16 px-10 bg-secondary text-white rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 shadow-xl shadow-secondary/20 hover:shadow-primary/30 group">
+                <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i> 
+                Return to Index
+            </a>
+        </div>
+    </div>
+</div>
+

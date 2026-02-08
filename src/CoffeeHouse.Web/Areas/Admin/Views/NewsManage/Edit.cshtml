@@ -1,0 +1,109 @@
+﻿@model CoffeeHouse.Domain.Entities.NewsArticle
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Modulate Broadcast";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Broadcast Logs</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Frequency Modulation</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="pb-10 border-b-2 border-secondary/10 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-12 opacity-[0.02] text-7xl font-black pointer-events-none select-none italic text-secondary">
+            MOD_SIG
+        </div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Calibration Protocol</span>
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">Hiệu chỉnh <span class="text-primary not-italic">Broadcast</span></h1>
+            <div class="flex items-center gap-4">
+                <span class="text-[10px] font-black text-text-muted font-mono bg-surface-soft px-4 py-1 rounded-lg border border-border/50 shadow-inner">SIG_ID: #NW-@Model.ArticleId.ToString("D3")</span>
+                <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Overriding transmission parameters forgalactic signal.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Container: Command Console -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative">
+        <form asp-action="Edit" class="space-y-10">
+            <div asp-validation-summary="ModelOnly" class="rounded-3xl bg-rose-50 border border-rose-100 p-6 text-rose-500 text-[10px] font-black uppercase tracking-widest italic shadow-inner"></div>
+            <input type="hidden" asp-for="ArticleId" />
+
+            <div class="space-y-12">
+                <!-- Segment: Signal Identity -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-6">
+                        <span class="w-10 h-10 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">MOD</span>
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Override Parameters</h3>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="md:col-span-2 space-y-4">
+                            <label asp-for="Title" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Headline Title</label>
+                            <div class="relative group/input">
+                                <input asp-for="Title" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. New Colony Discovery..." required />
+                                <i class="fas fa-edit absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="Title" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label asp-for="PublishedAt" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Relay Timestamp</label>
+                            <div class="relative group/input">
+                                <input asp-for="PublishedAt" type="date" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" required />
+                                <i class="fas fa-calendar-check absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="PublishedAt" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label asp-for="ImageUrl" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Visual Asset Link</label>
+                            <div class="relative group/input">
+                                <input asp-for="ImageUrl" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. station_v2.jpg..." />
+                                <i class="fas fa-images absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="ImageUrl" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segment: Signal Body -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-6">
+                        <span class="w-10 h-10 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">DATA</span>
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Transmission Body</h3>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <label asp-for="Content" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Broadcast Content</label>
+                        <textarea asp-for="Content" rows="8" class="textarea-modern !rounded-[40px] p-8 text-base font-medium shadow-inner leading-relaxed" placeholder="Encoding transmission details..."></textarea>
+                        <span asp-validation-for="Content" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Strategy -->
+            <div class="pt-10 flex flex-col sm:flex-row items-center justify-between border-t border-border/50 gap-8">
+                <a asp-action="Index" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-secondary transition-all group">
+                    <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i>
+                    Abort Modulation
+                </a>
+                
+                <button type="submit" class="w-full sm:w-auto btn-primary h-20 !px-16 !rounded-[32px] flex items-center justify-center gap-6 group shadow-2xl shadow-primary/30">
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em]">Commit Frequency Override</span>
+                    <i class="fas fa-save transition-transform group-hover:scale-110"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

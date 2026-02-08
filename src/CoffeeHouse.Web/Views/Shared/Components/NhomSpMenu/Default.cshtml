@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ProductCategory>
+
+<nav class="flex flex-col gap-1">
+    <a asp-controller="Products" asp-action="Index" 
+       class="flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-bold tracking-wide transition-all group hover:bg-white hover:shadow-sm hover:text-primary @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Products" ? "bg-white shadow-sm text-primary" : "text-secondary/70")">
+        <span>Tất cả sản phẩm</span>
+        <i class="fas fa-chevron-right text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+    </a>
+
+    @foreach (var item in Model)
+    {
+        <a asp-controller="products" asp-action="type" asp-route-target="@item.CategoryId" asp-route-targetName="@item.CategoryName"
+           class="flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-bold tracking-wide transition-all group hover:bg-white hover:shadow-sm hover:text-primary @(Context.Request.Query["target"] == item.CategoryId.ToString() ? "bg-white shadow-sm text-primary" : "text-secondary/70")">
+            <span>@item.CategoryName</span>
+            <i class="fas fa-chevron-right text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+        </a>
+    }
+</nav>
+
+
+

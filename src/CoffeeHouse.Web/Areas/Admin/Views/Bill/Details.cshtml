@@ -1,0 +1,162 @@
+﻿@using CoffeeHouse.Domain.Entities
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<SalesOrderItem>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Manifest Analysis";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Command manifests</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Manifest Analysis</span>
+    </nav>
+
+    @if (Model.Any())
+    {
+        var invoiceDetail = Model.First();
+        var bill = invoiceDetail.Order;
+
+        @if (bill != null)
+        {
+            <!-- Header & Summary: Strategic Overview -->
+            <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-secondary group-hover:opacity-[0.05] transition-opacity">
+                    @bill.OrderId
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+                    <div class="space-y-8">
+                        <div class="space-y-2">
+                            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Manifest Details</span>
+                            <h1 class="text-5xl font-black text-secondary tracking-tighter italic leading-none">ID: @bill.OrderId</h1>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="space-y-1">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Timestamp</p>
+                                <p class="text-sm font-black text-secondary uppercase tracking-tight">@bill.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Terminal</p>
+                                <p class="text-sm font-black text-secondary uppercase tracking-tight">@(bill.Store?.StoreName ?? "HQ CENTRAL")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:pl-16 lg:border-l border-border/50 space-y-8">
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="space-y-1">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Method</p>
+                                <p class="text-sm font-black text-secondary uppercase tracking-tight">@bill.PaymentMethod</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Status</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full @(bill.Status == "Hoàn thành" ? "bg-emerald-500" : "bg-amber-500") animate-pulse"></div>
+                                    <p class="text-sm font-black text-secondary uppercase tracking-tight italic">@bill.Status</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 border-t border-border/50">
+                            <p class="text-[8px] font-black uppercase tracking-widest text-text-light mb-2">Total Fiscal Weight</p>
+                            <p class="text-5xl font-black text-primary italic tracking-tighter">@bill.TotalAmount.ToString("n0") <span class="text-xs not-italic ml-1 opacity-50 uppercase">VNĐ</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Itemized Manifest: Tactical Breakdown -->
+            <div class="space-y-8">
+                <div class="flex items-center gap-6">
+                    <span class="w-12 h-12 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20 transition-transform hover:rotate-12">
+                        <i class="fas fa-boxes"></i>
+                    </span>
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Cargo Breakdown</h3>
+                    <div class="h-px bg-border/50 flex-1"></div>
+                </div>
+
+                <div class="bg-white/70 backdrop-blur-2xl rounded-[56px] border border-border/50 shadow-2xl overflow-hidden group">
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-surface-soft text-text-light">
+                                    <th class="px-12 py-8 text-[10px] font-black uppercase tracking-[0.3em] w-16 text-center">#</th>
+                                    <th class="px-12 py-8 text-[10px] font-black uppercase tracking-[0.3em]">Payload Item</th>
+                                    <th class="px-12 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-right">Unit Price</th>
+                                    <th class="px-12 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-center">Qty</th>
+                                    <th class="px-12 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-right">Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border/20">
+                                @foreach (var (item, index) in Model.Select((v, i) => (v, i)))
+                                {
+                                    <tr class="group/row hover:bg-surface-soft/30 transition-colors">
+                                        <td class="px-12 py-8 text-center">
+                                            <span class="text-[10px] font-black text-text-muted font-mono">@(index + 1)</span>
+                                        </td>
+                                        <td class="px-12 py-8">
+                                            <p class="text-base font-black text-secondary tracking-tight italic group-hover/row:text-primary transition-colors">@(item.Product?.ProductName ?? "Unknown Unit")</p>
+                                        </td>
+                                        <td class="px-12 py-8 text-right">
+                                            <p class="text-[10px] font-black text-text-light">@item.UnitPrice.ToString("n0") đ</p>
+                                        </td>
+                                        <td class="px-12 py-8 text-center text-secondary">
+                                            <span class="text-[10px] font-black font-mono bg-white px-3 py-1 rounded-lg border border-border/50 shadow-sm">x@item.Quantity</span>
+                                        </td>
+                                        <td class="px-12 py-8 text-right">
+                                            <p class="text-sm font-black text-secondary italic tracking-tighter">@item.LineTotal.ToString("n0") đ</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="px-12 py-8 bg-surface-soft/30 border-t border-border/20 flex justify-center">
+                        @Html.PagedListPager(Model, page => Url.Action("Details", new { page }), new PagedListRenderOptions()
+                        {
+                            MaximumPageNumbersToDisplay = 5,
+                            LiElementClasses = new List<string> { "" },
+                            PageClasses = new List<string> { "w-12 h-12 flex items-center justify-center rounded-xl border border-border/50 text-[10px] font-black transition-all hover:bg-primary hover:text-white bg-white mx-1" },
+                            ActiveLiElementClass = "[&_a]:bg-primary [&_a]:text-white [&_a]:border-primary",
+                        })
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="py-32 text-center space-y-8 animate-fade-in bg-white/50 backdrop-blur-xl rounded-[64px] border border-dashed border-border/50 shadow-inner">
+            <div class="w-24 h-24 bg-surface-soft rounded-full flex-center mx-auto shadow-2xl border border-white">
+                <i class="fas fa-radar text-4xl text-text-muted opacity-30 animate-pulse"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-xl font-bold text-secondary uppercase tracking-[0.2em]">Signal Lost</h3>
+                <p class="text-[10px] font-black text-text-light uppercase tracking-widest">No detailed payload data found for this manifest.</p>
+            </div>
+            <a asp-action="Index" class="inline-flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary hover:text-secondary hover:scale-105 transition-all">
+                <i class="fas fa-arrow-left"></i> Re-sync with Command
+            </a>
+        </div>
+    }
+
+    <!-- Footer Action -->
+    <div class="pt-8 flex items-center justify-between border-t border-border/50">
+        <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic">Fiscal Log Integrity: VALIDATED · System Core 2.0</p>
+        <a asp-action="Index" class="h-16 px-12 bg-secondary text-white rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 shadow-xl shadow-secondary/20 hover:shadow-primary/30 group">
+            <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i> 
+            Quay về danh sách
+        </a>
+    </div>
+</div>
+
+
+

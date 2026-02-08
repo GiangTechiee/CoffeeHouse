@@ -1,0 +1,116 @@
+<!-- Footer with Tailwind + UX Improvements -->
+<footer class="bg-secondary text-text-muted py-16">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            
+            <!-- About Section -->
+            <div class="space-y-4" data-animate>
+                <a asp-controller="Home" asp-action="Index" 
+                   class="flex items-center gap-2 text-2xl font-bold text-primary hover:text-primary-light transition-colors duration-300">
+                    <i class="fas fa-coffee"></i>
+                    <span>COFFEE HOUSE</span>
+                </a>
+                <p class="text-sm leading-relaxed">
+                    Đây là một nơi ấm cúng, là nơi mà mọi người đến để gặp gỡ, chia sẻ về cà phê, bánh ngọt và các bữa ăn nhẹ.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="space-y-4" data-animate>
+                <h6 class="text-white text-base font-semibold uppercase mb-6">Các liên kết nhanh</h6>
+                <ul class="space-y-3">
+                    <li>
+                        <a asp-controller="Products" asp-action="Index" 
+                           class="text-sm hover:text-primary hover:pl-2 transition-all duration-300 inline-block">
+                            Sản phẩm
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="News" asp-action="Index" 
+                           class="text-sm hover:text-primary hover:pl-2 transition-all duration-300 inline-block">
+                            Tin tức
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="About" asp-action="Index" 
+                           class="text-sm hover:text-primary hover:pl-2 transition-all duration-300 inline-block">
+                            Về chúng tôi
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Contact" asp-action="Index" 
+                           class="text-sm hover:text-primary hover:pl-2 transition-all duration-300 inline-block">
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="space-y-4" data-animate>
+                <h6 class="text-white text-base font-semibold uppercase mb-6">Thông tin liên hệ</h6>
+                <div class="space-y-4">
+                    <a href="https://maps.app.goo.gl/5ArbZB6iggiZJefg8" 
+                       target="_blank" 
+                       class="flex items-start gap-3 text-sm hover:text-primary transition-colors duration-300 group">
+                        <i class="fas fa-location-arrow text-primary mt-1 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>96 P. Định Công, Phương Liệt, Thanh Xuân, Hà Nội, Việt Nam</span>
+                    </a>
+                    <a href="tel:(84.24) 2436649347" 
+                       class="flex items-center gap-3 text-sm hover:text-primary transition-colors duration-300 group">
+                        <i class="fas fa-phone text-primary group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>(84.24) 2436649347</span>
+                    </a>
+                    <a href="mailto:cntt@hou.edu.vn" 
+                       class="flex items-center gap-3 text-sm hover:text-primary transition-colors duration-300 group">
+                        <i class="fas fa-envelope text-primary group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>cntt@hou.edu.vn</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="space-y-4" data-animate>
+                <h6 class="text-white text-base font-semibold uppercase mb-6">Theo dõi chúng tôi</h6>
+                <div class="flex gap-4">
+                    <a href="https://www.facebook.com/groups/917473374991118" 
+                       title="Facebook" 
+                       target="_blank" 
+                       class="flex items-center justify-center w-10 h-10 bg-[#222] text-text-muted rounded-full hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com" 
+                       title="Instagram" 
+                       target="_blank" 
+                       class="flex items-center justify-center w-10 h-10 bg-[#222] text-text-muted rounded-full hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.twitter.com" 
+                       title="Twitter" 
+                       target="_blank" 
+                       class="flex items-center justify-center w-10 h-10 bg-[#222] text-text-muted rounded-full hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.youtube.com" 
+                       title="Youtube" 
+                       target="_blank" 
+                       class="flex items-center justify-center w-10 h-10 bg-[#222] text-text-muted rounded-full hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-[#333] pt-8 mt-8">
+            <div class="text-center text-sm text-[#666]">
+                <p>Bản quyền &copy; <span id="currentYear"></span>. Mọi quyền bảo lưu</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Update current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>

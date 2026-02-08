@@ -1,0 +1,88 @@
+@{
+    ViewData["Title"] = "500 - Hệ thống gặp sự cố";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="min-h-screen flex items-center justify-center bg-secondary relative overflow-hidden py-32">
+    <!-- Glitchy Space Background -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-gradient-radial from-rose-500/10 via-transparent to-transparent opacity-50 animate-pulse"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-32 opacity-[0.03] text-[30vw] font-black pointer-events-none select-none italic leading-none text-white whitespace-nowrap animate-pulse">
+            CRITICAL
+        </div>
+    </div>
+
+    <div class="container-custom relative z-10 text-center space-y-16">
+        <!-- Error Visual -->
+        <div class="relative inline-block group">
+            <div class="absolute inset-0 bg-rose-500/20 rounded-[64px] blur-3xl animate-ping opacity-30"></div>
+            <div class="relative w-64 h-64 bg-white/5 backdrop-blur-3xl rounded-[64px] border border-white/10 flex-center shadow-2xl overflow-hidden group">
+                <!-- Glitch Effect Layers -->
+                <div class="text-center transition-transform duration-700 group-hover:scale-110">
+                    <span class="block text-8xl font-black text-rose-500 tracking-tighter italic leading-none mb-2 relative">
+                        500
+                        <span class="absolute inset-0 text-primary opacity-30 -translate-x-1 translate-y-1 select-none pointer-events-none">500</span>
+                    </span>
+                    <p class="text-[10px] font-black uppercase tracking-[0.4em] text-white/50 italic">System Failure</p>
+                </div>
+            </div>
+            <!-- Warning Icon -->
+            <div class="absolute -bottom-6 -right-6 w-16 h-16 bg-rose-600 text-white rounded-2xl flex-center shadow-xl shadow-rose-900/50 animate-bounce">
+                <i class="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
+        </div>
+
+        <!-- Error Content -->
+        <div class="max-w-2xl mx-auto space-y-8">
+            <div class="space-y-4">
+                <h1 class="text-5xl font-black text-white tracking-tighter italic">Hệ thống đang rơi tự do</h1>
+                <p class="text-white/60 text-xl font-medium leading-relaxed max-w-xl mx-auto">
+                    Một sự cố nghiêm trọng đã xảy ra tại trạm điều hành. Chúng tôi đang nỗ lực hết mình để khôi phục lại sự ổn định cho hành trình của bạn.
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button onclick="location.reload()" class="w-full sm:w-auto px-12 py-5 bg-rose-600 text-white rounded-[24px] text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-rose-900/50 hover:bg-rose-500 hover:-translate-y-1 transition-all flex items-center justify-center gap-4 group">
+                    <i class="fas fa-redo transition-transform group-hover:rotate-180 duration-700"></i>
+                    Khởi động lại (Thử lại)
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="w-full sm:w-auto px-12 py-5 bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-[24px] text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-secondary transition-all flex items-center justify-center gap-4 group">
+                    <i class="fas fa-home transition-transform group-hover:-translate-y-1"></i>
+                    Về trạm gốc (Trang chủ)
+                </a>
+            </div>
+        </div>
+
+        <!-- Support Terminal -->
+        <div class="max-w-xl mx-auto">
+            <div class="bg-black/20 backdrop-blur-md rounded-[40px] border border-white/5 p-10 space-y-8">
+                <div class="flex items-center gap-6 justify-center text-rose-500/50">
+                    <div class="h-px bg-current flex-1"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em]">Support Protocol</span>
+                    <div class="h-px bg-current flex-1"></div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-10 justify-center items-center">
+                    <a href="tel:(84.24)2436649347" class="flex flex-col items-center gap-3 group">
+                        <div class="w-12 h-12 rounded-xl bg-white/5 flex-center text-white/40 group-hover:bg-primary group-hover:text-white transition-all">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <span class="text-[10px] font-black text-white/30 group-hover:text-white transition-colors tracking-widest uppercase">(84.24) 243 664 9347</span>
+                    </a>
+                    
+                    <a href="mailto:cntt@hou.edu.vn" class="flex flex-col items-center gap-3 group">
+                        <div class="w-12 h-12 rounded-xl bg-white/5 flex-center text-white/40 group-hover:bg-primary group-hover:text-white transition-all">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span class="text-[10px] font-black text-white/30 group-hover:text-white transition-colors tracking-widest uppercase">cntt@hou.edu.vn</span>
+                    </a>
+                </div>
+                
+                <p class="text-[8px] font-black text-white/10 uppercase tracking-[0.5em] select-none italic">Log ID: @Guid.NewGuid().ToString().Substring(0, 8).ToUpper()</p>
+            </div>
+        </div>
+    </div>
+</section>
+

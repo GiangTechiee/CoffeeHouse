@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-controller="cart" asp-action="index" class="text-text-muted hover:text-primary transition-all">Giỏ hàng</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Thành công</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Success Section -->
+<section class="py-32 bg-white min-h-[85vh] flex items-center relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 p-32 opacity-[0.02] text-[15vw] font-black pointer-events-none select-none italic leading-none">
+        SUCCESS
+    </div>
+    <div class="absolute bottom-0 left-0 p-32 opacity-[0.02] text-[15vw] font-black pointer-events-none select-none italic leading-none">
+        MISSION
+    </div>
+    
+    <div class="container-custom relative z-10">
+        <div class="max-w-3xl mx-auto text-center space-y-16 animate-scale-in">
+            <!-- Animated Success Icon -->
+            <div class="relative inline-block group">
+                <div class="absolute inset-0 bg-status-success/20 rounded-[48px] animate-ping opacity-30"></div>
+                <div class="relative w-32 h-32 bg-status-success rounded-[48px] flex-center text-white text-5xl shadow-2xl shadow-status-success/30 transform transition-all duration-700 group-hover:rotate-[15deg] group-hover:scale-110">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <span class="text-status-success font-black uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-status-success/30 after:content-[''] after:w-12 after:h-px after:bg-status-success/30">Confirmation Received</span>
+                <h1 class="text-6xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">
+                    Thanh toán <br/><span class="text-primary not-italic">Thành công!</span>
+                </h1>
+                <p class="text-xl text-text-muted font-medium max-w-xl mx-auto leading-relaxed">
+                    Hệ thống đã ghi nhận tín hiệu thanh toán từ bạn. Phi hành đoàn Coffee House đang bắt đầu chuẩn bị chuyến hành trình hương vị của bạn.
+                </p>
+            </div>
+
+            <!-- Auto-redirect Box -->
+            <div class="bg-surface-soft p-12 rounded-[56px] border border-border/50 shadow-inner relative overflow-hidden max-w-xl mx-auto group">
+                <div class="absolute top-0 right-0 p-8 opacity-[0.03] text-6xl font-black pointer-events-none select-none italic">
+                    AUTO
+                </div>
+                <div class="relative z-10 space-y-8">
+                    <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-text-light">
+                        <span>Chuyển hướng sau</span>
+                        <div class="flex items-baseline gap-1">
+                            <span id="countdownDisplay" class="text-3xl font-black text-primary tracking-tighter">10</span>
+                            <span class="text-[8px]">SECONDS</span>
+                        </div>
+                    </div>
+                    <div class="w-full h-2 bg-border/20 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-primary transition-all duration-1000 ease-linear" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8">
+                <a asp-controller="Home" asp-action="Index" class="btn-primary px-16 py-5 shadow-xl shadow-primary/20">
+                    Về trang chủ ngay
+                </a>
+                <a asp-controller="Products" asp-action="Index" class="text-[10px] font-black uppercase tracking-[0.2em] text-secondary hover:text-primary transition-all flex items-center gap-4 group/btn">
+                    Khám phá thêm
+                    <i class="fas fa-arrow-right group-hover/btn:translate-x-2 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var countdownDisplay = document.getElementById("countdownDisplay");
+        var progressBar = document.getElementById("progress-bar");
+        var seconds = parseInt(countdownDisplay.textContent) || 10;
+        var total = seconds;
+
+        var interval = setInterval(function () {
+            seconds--;
+            countdownDisplay.textContent = seconds;
+            
+            // Update progress bar
+            if(progressBar) {
+                progressBar.style.width = (seconds / total * 100) + "%";
+            }
+
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = '@Url.Action("Index", "Home")';
+            }
+        }, 1000);
+    });
+</script>
+

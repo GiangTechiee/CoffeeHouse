@@ -1,0 +1,256 @@
+:root {
+    --cream-paper: #F7F2E8;
+    --espresso: #2B1E16;
+    --tobacco: #5A3E2B;
+    --brass-gold: #C8A96A;
+    --faded-red: #A3483C;
+    --olive: #6E7B3A;
+    --border-color: #E3D7C7;
+    --overlay-sepia: rgba(43, 30, 22, 0.55);
+    
+    --font-heading: 'Cormorant Garamond', 'Playfair Display', serif;
+    --font-body: 'Lora', 'Libre Baskerville', serif;
+}
+
+/* Global Styles */
+body {
+    background-color: var(--cream-paper);
+    color: var(--espresso);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    /* Paper Texture & Noise */
+    background-image: 
+        url("https://www.transparenttextures.com/patterns/linen.png"),
+        radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
+    background-attachment: fixed;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    z-index: 9999;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--espresso);
+    margin: 0;
+}
+
+h1 { font-style: italic; font-size: 4.5rem; }
+h2 { font-size: 3rem; }
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Container & Spacing */
+.container-vintage {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+}
+
+.section-spacing {
+    padding: 100px 0;
+}
+
+/* Typography Helpers */
+.label-small {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-variant: small-caps;
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    color: var(--tobacco);
+}
+
+.text-ital {
+    font-style: italic;
+}
+
+/* Components */
+.vintage-card {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+}
+
+.vintage-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(43, 30, 22, 0.05);
+}
+
+.btn-vintage {
+    display: inline-block;
+    padding: 16px 32px;
+    background-color: var(--faded-red);
+    color: #F7F2E8 !important;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(163, 72, 60, 0.2);
+}
+
+.btn-vintage:hover {
+    background-color: #8D3B31;
+    transform: scale(1.02);
+}
+
+.btn-outline-vintage {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: transparent;
+    color: var(--espresso) !important;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-outline-vintage:hover {
+    background-color: var(--border-color);
+}
+
+/* Header redone */
+.header-vintage {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(247, 242, 232, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-vintage {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(200, 169, 106, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brass-gold);
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.logo-text span {
+    color: var(--faded-red);
+}
+
+.logo-sub {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: block;
+    margin-top: 4px;
+    color: var(--tobacco);
+}
+
+/* Image Filters */
+.sepia-img {
+    filter: sepia(0.6) contrast(1.1) brightness(0.9);
+    transition: filter 0.5s ease;
+}
+
+.vintage-card:hover .sepia-img {
+    filter: sepia(0.3) contrast(1.1) brightness(1);
+}
+
+.vignette {
+    position: relative;
+}
+
+.vignette::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 80px rgba(0,0,0,0.4);
+    pointer-events: none;
+}
+
+/* Detailed Vintage Rules */
+.thin-rule {
+    height: 1px;
+    background: var(--border-color);
+    width: 100%;
+    margin: 20px 0;
+}
+
+.double-rule {
+    height: 3px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    margin: 20px 0;
+}
+
+.ornament {
+    text-align: center;
+    color: var(--brass-gold);
+    margin: 20px 0;
+    font-size: 24px;
+}
+
+/* Section Specific Overrides for existing Tailwind if necessary */
+section {
+    background-color: transparent !important;
+}
+
+.bg-surface-soft { background-color: rgba(227, 215, 199, 0.2) !important; }
+.bg-secondary { background-color: var(--espresso) !important; }
+
+/* Custom Badge */
+.stamp-badge {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px dashed var(--faded-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--faded-red);
+    transform: rotate(-15deg);
+    padding: 10px;
+    background: rgba(163, 72, 60, 0.05);
+}

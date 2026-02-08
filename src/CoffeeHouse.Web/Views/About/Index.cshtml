@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Về chúng tôi";
+    ViewData["About"] = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Hành trình của chúng tôi</span>
+        </nav>
+    </div>
+</div>
+
+<!-- About Hero Section -->
+<section class="py-32 bg-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 p-32 opacity-[0.03] text-[20vw] font-black pointer-events-none select-none italic leading-none">
+        SPACE
+    </div>
+    
+    <div class="container-custom relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div class="space-y-12">
+                <div class="space-y-6">
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Since 2023 Edition</span>
+                    <h1 class="text-6xl lg:text-8xl font-black text-secondary tracking-tighter leading-[0.9] italic">
+                        Cà phê <br/><span class="text-primary">không giới hạn.</span>
+                    </h1>
+                </div>
+                <p class="text-xl text-text-muted leading-relaxed font-medium">
+                    Bạn có phải là người yêu thích cà phê và luôn tò mò về những bí ẩn của vũ trụ? Hãy đến với <strong class="text-secondary">COFFEE HOUSE</strong> – điểm chạm giữa hiện thực và những giấc mơ xa xăm giữa các vì sao.
+                </p>
+                <div class="flex gap-8">
+                    <div class="flex-1 bg-surface-soft p-10 rounded-[32px] border border-border/50 shadow-inner group hover:bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-500">
+                        <h4 class="text-4xl font-black text-secondary mb-2 tracking-tighter italic">3<span class="text-primary text-xl not-italic ml-1">+</span></h4>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-text-light group-hover:text-primary transition-colors">Năm hành trình</p>
+                    </div>
+                    <div class="flex-1 bg-surface-soft p-10 rounded-[32px] border border-border/50 shadow-inner group hover:bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-500">
+                        <h4 class="text-4xl font-black text-secondary mb-2 tracking-tighter italic">15k<span class="text-primary text-xl not-italic ml-1">+</span></h4>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-text-light group-hover:text-primary transition-colors">Khách hàng tin yêu</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <div class="absolute -top-10 -left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] group-hover:bg-primary/20 transition-all duration-700"></div>
+                <div class="absolute -bottom-10 -right-10 w-80 h-80 bg-accent/5 rounded-full blur-[120px]"></div>
+                <div class="relative rounded-[56px] overflow-hidden shadow-2xl transition-transform duration-700 group-hover:rotate-1">
+                    <img src="../img/blog/details/blog-details.jpg" alt="Về chúng tôi - COFFEE HOUSE" class="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-1000">
+                </div>
+                <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-secondary rounded-[40px] p-8 text-white shadow-2xl flex flex-col justify-center animate-bounce-slow">
+                    <div class="text-4xl font-black italic tracking-tighter mb-1">#1</div>
+                    <p class="text-[8px] font-black uppercase tracking-widest leading-relaxed">Space Theme Coffee in Hanoi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision & Story Section -->
+<section class="py-32 bg-surface-dark/30 relative">
+    <div class="container-custom">
+        <div class="max-w-5xl mx-auto space-y-24">
+            <div class="text-center space-y-4">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px]">The Beginning</span>
+                <h2 class="text-5xl font-black text-secondary tracking-tighter italic">Câu chuyện của chúng tôi</h2>
+                <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div class="space-y-8 animate-slide-up">
+                    <div class="flex items-center gap-4">
+                        <span class="w-12 h-px bg-primary"></span>
+                        <h3 class="text-2xl font-black text-secondary italic tracking-tight">Hành trình bắt đầu</h3>
+                    </div>
+                    <p class="text-lg text-text-muted leading-relaxed font-medium">
+                        Thành lập vào năm 2023, <strong class="text-secondary italic">COFFEE HOUSE</strong> không chỉ là một địa điểm thưởng thức cà phê thông thường, mà là nơi mang đến cho bạn một hành trình trải nghiệm đầy màu sắc và độc đáo.
+                    </p>
+                </div>
+                <div class="space-y-8 animate-slide-up" style="animation-delay: 200ms">
+                    <div class="flex items-center gap-4">
+                        <span class="w-12 h-px bg-primary"></span>
+                        <h3 class="text-2xl font-black text-secondary italic tracking-tight">Không gian thiên hà</h3>
+                    </div>
+                    <p class="text-lg text-text-muted leading-relaxed font-medium">
+                        Mỗi chi tiết trong thiết kế – từ bức tường, trần nhà đến ánh sáng – đều được chăm chút để mô phỏng thế giới vũ trụ kỳ ảo. Chúng tôi tin rằng không gian là chìa khóa khơi nguồn cảm hứng.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-secondary rounded-[64px] p-16 lg:p-24 shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-bl-full transition-all duration-1000 group-hover:scale-125"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
+                
+                <div class="relative z-10 space-y-12">
+                    <div class="flex items-center gap-8">
+                        <div class="w-24 h-24 bg-primary rounded-[32px] flex-center text-white text-4xl shadow-xl shadow-primary/20 rotate-3 group-hover:rotate-0 transition-transform">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-4xl font-black text-white italic tracking-tighter">Menu cà phê độc quyền</h3>
+                    </div>
+                    <p class="text-white/60 leading-[1.8] text-2xl italic font-medium relative">
+                        <i class="fas fa-quote-left absolute -top-8 -left-8 text-white/5 text-8xl"></i>
+                        "Điểm nhấn đặc biệt của quán chính là menu cà phê độc quyền, chế biến từ những hạt cà phê tuyển chọn, hòa quyện cùng sự sáng tạo không giới hạn. Từ Milky Way Latte đến Galaxy Frappe."
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="px-4 py-2 rounded-full border border-white/10 text-white/30 text-[10px] font-black uppercase tracking-widest">Premium Beans</span>
+                        <span class="px-4 py-2 rounded-full border border-white/10 text-white/30 text-[10px] font-black uppercase tracking-widest">Unique Recipes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12">
+                <div class="p-12 bg-white rounded-[48px] border border-border/50 space-y-6 text-center shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+                    <div class="w-20 h-20 bg-surface-dark rounded-[24px] flex-center mx-auto group-hover:bg-primary/5 transition-colors">
+                        <i class="fas fa-wifi text-text-light text-2xl group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <h5 class="text-xl font-black text-secondary italic">Tốc độ cao</h5>
+                    <p class="text-xs text-text-muted font-bold leading-relaxed uppercase tracking-wider">Wifi ổn định & trạm sạc tiện lợi cho Work/Study.</p>
+                </div>
+                <div class="p-12 bg-white rounded-[48px] border border-border/50 space-y-6 text-center shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+                    <div class="w-20 h-20 bg-surface-dark rounded-[24px] flex-center mx-auto group-hover:bg-accent/5 transition-colors">
+                        <i class="fas fa-users text-text-light text-2xl group-hover:text-accent transition-colors"></i>
+                    </div>
+                    <h5 class="text-xl font-black text-secondary italic">Gặp gỡ</h5>
+                    <p class="text-xs text-text-muted font-bold leading-relaxed uppercase tracking-wider">Không gian lý tưởng để học tập và kết nối cộng đồng.</p>
+                </div>
+                <div class="p-12 bg-white rounded-[48px] border border-border/50 space-y-6 text-center shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+                    <div class="w-20 h-20 bg-surface-dark rounded-[24px] flex-center mx-auto group-hover:bg-primary/5 transition-colors">
+                        <i class="fas fa-film text-text-light text-2xl group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <h5 class="text-xl font-black text-secondary italic">Giải trí</h5>
+                    <p class="text-xs text-text-muted font-bold leading-relaxed uppercase tracking-wider">Các hoạt động workshop & sự kiện đậm chất nghệ thuật.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

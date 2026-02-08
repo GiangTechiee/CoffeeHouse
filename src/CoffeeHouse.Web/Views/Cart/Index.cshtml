@@ -1,0 +1,307 @@
+﻿@model IEnumerable<CoffeeHouse.Application.Carts.DTOs.CartItemDto>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fas fa-home"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Giỏ hàng của bạn</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-24 bg-white">
+    <div class="container-custom">
+        <div class="flex items-end justify-between mb-16">
+            <div class="space-y-4">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Shopping Bag</span>
+                <h1 class="text-5xl font-black text-secondary tracking-tighter leading-tight">Hoàn tất lựa chọn của bạn</h1>
+            </div>
+            <p class="text-sm text-text-muted font-bold">Bạn có <span class="text-primary">@Model.Count()</span> món trong túi</p>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-40 bg-surface-soft rounded-[56px] border-2 border-dashed border-border/50 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div class="relative z-10">
+                    <div class="w-32 h-32 bg-white rounded-[40px] shadow-xl flex-center mx-auto mb-10 group-hover:-translate-y-2 transition-transform duration-500">
+                        <i class="fas fa-shopping-basket text-primary text-4xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-black text-secondary mb-6 tracking-tight">Túi hàng đang trống!</h3>
+                    <p class="text-text-muted mb-12 max-w-sm mx-auto text-lg leading-relaxed">Đừng để chiếc túi phải chờ đợi, hãy chọn ngay những hương vị yêu thích của bạn.</p>
+                    <a asp-controller="Products" asp-action="Index" class="btn-primary px-12 py-5 shadow-xl shadow-primary/20">Khám phá thực đơn</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="flex flex-col xl:flex-row gap-16">
+                <!-- Shopping Cart Items -->
+                <div class="flex-1 space-y-6" id="cart-items">
+                    @foreach (var item in Model)
+                    {
+                        <div class="product-item group relative bg-white p-8 rounded-[48px] border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 animate-scale-in" data-product-id="@item.ProductId">
+                            <div class="flex flex-col sm:flex-row items-center gap-10">
+                                <!-- Image -->
+                                <div class="w-40 h-40 rounded-[32px] overflow-hidden shadow-2xl flex-shrink-0 bg-surface-dark group">
+                                    <img src="@Url.Content("~/img/products/" + item.ImageUrl)" 
+                                         alt="@item.ProductName" 
+                                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                                </div>
+
+                                <!-- Details -->
+                                <div class="flex-1 space-y-3 text-center sm:text-left">
+                                    <div class="inline-block px-3 py-1 rounded-full bg-surface-dark text-text-light text-[8px] font-black uppercase tracking-widest mb-1">Cà phê truyền thống</div>
+                                    <h4 class="text-2xl font-black text-secondary tracking-tight italic">@item.ProductName</h4>
+                                    <p class="text-xs text-text-muted font-bold tracking-wide">
+                                        Đơn giá: <span class="text-secondary">@item.Price.ToString("n0") đ</span>
+                                    </p>
+                                    <span class="price hidden">@item.Price</span>
+                                </div>
+
+                                <!-- Quantity Controller -->
+                                <div class="flex items-center bg-surface-soft rounded-full p-2 border border-border focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                                    <button class="w-12 h-12 flex-center rounded-full text-secondary hover:bg-white hover:text-primary hover:shadow-sm transition-all dec-btn" type="button">
+                                        <i class="fas fa-minus text-[10px]"></i>
+                                    </button>
+                                    <input type="number" class="w-12 bg-transparent border-none text-center font-black text-lg text-secondary focus:ring-0 quantity-input" 
+                                           data-product-id="@item.ProductId" value="@item.Quantity" min="1">
+                                    <button class="w-12 h-12 flex-center rounded-full text-secondary hover:bg-white hover:text-primary hover:shadow-sm transition-all inc-btn" type="button">
+                                        <i class="fas fa-plus text-[10px]"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Subtotal -->
+                                <div class="w-40 text-right">
+                                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light mb-2">Thành tiền</p>
+                                    <p class="text-2xl font-black text-primary tracking-tighter italic">
+                                        <span class="row-total">@((item.Quantity * item.Price).ToString("n0"))</span>
+                                        <span class="text-xs uppercase ml-1 font-bold">đ</span>
+                                    </p>
+                                </div>
+
+                                <!-- Remove Action -->
+                                <button class="absolute top-8 right-8 w-12 h-12 rounded-2xl flex-center text-text-light hover:bg-rose-50 hover:text-rose-500 transition-all removeItem shadow-sm hover:shadow-rose-100" data-product-id="@item.ProductId">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Order Summary -->
+                <aside class="w-full xl:w-[450px] space-y-8 lg:sticky lg:top-32 h-fit">
+                    <div class="bg-secondary rounded-[56px] p-12 text-white shadow-2xl relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors duration-700"></div>
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
+                        
+                        <h4 class="text-3xl font-black mb-12 relative z-10 italic">Hóa đơn sơ bộ</h4>
+                        
+                        <div class="space-y-8 relative z-10">
+                            <div class="flex justify-between items-center text-white/50 text-[10px] font-black uppercase tracking-widest">
+                                <span>Giá trị sản phẩm:</span>
+                                <span class="text-white text-base font-bold"><span id="tempAmount">@ViewData["total"]</span> đ</span>
+                            </div>
+                            <div class="flex justify-between items-center text-white/50 text-[10px] font-black uppercase tracking-widest">
+                                <span>Dịch vụ & Vận chuyển:</span>
+                                <span class="text-accent text-base font-bold">Miễn phí</span>
+                            </div>
+                            
+                            <div class="h-px bg-white/10 w-full"></div>
+                            
+                            <div class="flex justify-between items-end pt-4">
+                                <div class="space-y-1">
+                                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Tổng cộng</span>
+                                    <p class="text-xs text-white/40">Đã bao gồm thuế giá trị gia tăng</p>
+                                </div>
+                                <div class="text-right">
+                                    <span id="totalAmount" class="text-5xl font-black tracking-tighter italic text-white">@ViewData["total"]</span>
+                                    <span class="text-sm font-black text-primary/80 uppercase ml-2">đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-16 space-y-6 relative z-10">
+                            <a asp-action="Checkout" id="checkoutLink" class="w-full btn-primary py-6 text-sm flex items-center justify-center gap-4 group/btn shadow-xl shadow-primary/30">
+                                <span>Thanh toán ngay</span>
+                                <i class="fas fa-chevron-right text-[10px] group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a asp-controller="Products" asp-action="Index" class="w-full py-4 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-all flex items-center justify-center gap-3">
+                                <i class="fas fa-arrow-left text-[8px]"></i> 
+                                Tiếp tục mua sắm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Trust Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-surface-soft p-6 rounded-[32px] border border-border/50 flex flex-col items-center text-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex-center text-primary">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-secondary">Bảo mật tuyệt đối</span>
+                        </div>
+                        <div class="bg-surface-soft p-6 rounded-[32px] border border-border/50 flex flex-col items-center text-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex-center text-accent">
+                                <i class="fas fa-truck-loading"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-secondary">Hỗ trợ giao nhanh</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        }
+    </div>
+</section>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script>
+        // Lấy URL từ Razor
+        const updateQuantityUrl = '@Url.Action("Update", "Cart")';
+        const removeUrl = '@Url.Action("Remove", "Cart")';
+        const csrfTokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+        const csrfToken = csrfTokenElement ? csrfTokenElement.value : '';
+
+        // Hàm tính lại tổng của từng dòng
+        function calcRowTotal(row) {
+            const priceEl = row.querySelector('.price');
+            const quantityEl = row.querySelector('.quantity-input');
+            const rowTotalEl = row.querySelector('.row-total');
+
+            let price = parseFloat(priceEl.textContent) || 0; // Changed from parseInt to parseFloat
+            let quantity = parseInt(quantityEl.value) || 0;
+            let rowTotal = price * quantity;
+
+            rowTotalEl.textContent = rowTotal.toLocaleString('en-US');
+        }
+
+        // Hàm tính lại tổng tiền của giỏ hàng
+        function calcTotalAll() {
+            let total = 0;
+            const rows = document.querySelectorAll('.product-item');
+            rows.forEach(row => {
+                const rowTotalEl = row.querySelector('.row-total');
+                let rowTotal = parseInt(rowTotalEl.textContent.replace(/,/g, '')) || 0;
+                total += rowTotal;
+            });
+            document.getElementById('totalAmount').textContent = total.toLocaleString('en-US');
+            document.getElementById('tempAmount').textContent = total.toLocaleString('en-US');
+        }
+
+        // Cập nhật số lượng qua API
+        async function updateQuantity(productId, quantity) {
+            const payload = [{ ProductId: productId, Quantity: quantity }];
+            try {
+                const response = await fetch(updateQuantityUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': csrfToken
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Error updating quantity:", error);
+                return null;
+            }
+        }
+
+        // Xóa sản phẩm qua API
+        async function removeProduct(productId) {
+            try {
+                const response = await fetch(removeUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': csrfToken
+                    },
+                    body: JSON.stringify({ ProductId: parseInt(productId) })
+                });
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Error removing product:", error);
+                return { success: false, message: error.message };
+            }
+        }
+
+        // Xử lý sự kiện tăng/giảm nút bấm
+        document.addEventListener('click', async (e) => {
+            const incBtn = e.target.closest('.inc-btn');
+            const decBtn = e.target.closest('.dec-btn');
+            if (incBtn || decBtn) {
+                const button = incBtn || decBtn;
+                const row = button.closest('.product-item');
+                const input = row.querySelector('.quantity-input');
+                let currentQty = parseInt(input.value) || 1;
+                
+                if (incBtn) currentQty++;
+                else if (decBtn && currentQty > 1) currentQty--;
+
+                input.value = currentQty;
+                calcRowTotal(row);
+                calcTotalAll();
+
+                const productId = input.dataset.productId;
+                const result = await updateQuantity(productId, currentQty);
+                if (result && result.success) {
+                    updateCartBadge();
+                }
+            }
+
+            // Xử lý sự kiện xóa
+            const removeBtn = e.target.closest('.removeItem');
+            if (removeBtn) {
+                e.preventDefault();
+                const productId = removeBtn.dataset.productId;
+                const row = removeBtn.closest('.product-item');
+                
+                if (confirm("Bạn có chắc muốn xóa sản phẩm này khỏi túi hàng?")) {
+                    const result = await removeProduct(productId);
+                    if (result && result.success) {
+                        row.classList.add('scale-75', 'opacity-0');
+                        setTimeout(() => {
+                            row.remove();
+                            calcTotalAll();
+                            updateCartBadge();
+                            if (document.querySelectorAll('.product-item').length === 0) {
+                                window.location.reload();
+                            }
+                        }, 300);
+                    }
+                }
+            }
+        });
+
+        // Xử lý nhập trực tiếp vào input
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', async function () {
+                const row = this.closest('.product-item');
+                calcRowTotal(row);
+                calcTotalAll();
+
+                const productId = this.dataset.productId;
+                const currentQty = parseInt(this.value) || 1;
+                const result = await updateQuantity(productId, currentQty);
+                if (result && result.success) {
+                    updateCartBadge();
+                } else if (result && !result.success) {
+                    alert(result.message);
+                }
+            });
+        });
+    </script>
+}

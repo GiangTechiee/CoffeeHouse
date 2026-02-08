@@ -1,0 +1,84 @@
+﻿<footer class="pt-32 pb-16 relative overflow-hidden" style="background: var(--espresso); color: #F7F2E8;">
+    <div class="container-vintage relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-24">
+            <!-- Brand Column -->
+            <div class="lg:col-span-4 space-y-10">
+                <div class="logo-vintage">
+                    <div class="logo-icon" style="background: rgba(200, 169, 106, 0.2);">
+                        <i class="fas fa-coffee text-xl"></i>
+                    </div>
+                    <div class="logo-text" style="color: #F7F2E8;">
+                        COFFEE <span style="color: var(--faded-red);">HOUSE</span>
+                        <span class="logo-sub" style="color: rgba(247, 242, 232, 0.5);">Phiên bản Hà Nội</span>
+                    </div>
+                </div>
+                <p class="text-lg leading-relaxed max-w-sm opacity-80" style="font-family: var(--font-body);">
+                    Hành trình của chúng tôi là mang đến cho bạn không chỉ là một tách cà phê, mà là một trải nghiệm không gian đậm chất di sản giữa lòng Hà Nội.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 border border-[#E3D7C7]/20 rounded-full flex items-center justify-center hover:bg-[#C8A96A] hover:text-[#2B1E16] transition-all">
+                        <i class="fab fa-facebook-f text-sm"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 border border-[#E3D7C7]/20 rounded-full flex items-center justify-center hover:bg-[#C8A96A] hover:text-[#2B1E16] transition-all">
+                        <i class="fab fa-instagram text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="lg:col-span-2">
+                <h6 class="label-small mb-10" style="color: var(--brass-gold);">ĐIỀU HƯỚNG</h6>
+                <ul class="space-y-6">
+                    <li><a asp-controller="Products" asp-action="Index" class="label-small hover:text-[#C8A96A] transition-all">Sản phẩm</a></li>
+                    <li><a asp-controller="News" asp-action="Index" class="label-small hover:text-[#C8A96A] transition-all">Tin tức</a></li>
+                    <li><a asp-controller="About" asp-action="Index" class="label-small hover:text-[#C8A96A] transition-all">Về chúng tôi</a></li>
+                    <li><a asp-controller="Contact" asp-action="Index" class="label-small hover:text-[#C8A96A] transition-all">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="lg:col-span-3">
+                <h6 class="label-small mb-10" style="color: var(--brass-gold);">LIÊN HỆ</h6>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-map-marker-alt mt-1" style="color: var(--brass-gold);"></i>
+                        <span class="text-sm opacity-80">96 P. Định Công, Phương Liệt, Thanh Xuân, Hà Nội</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <i class="fas fa-phone-alt" style="color: var(--brass-gold);"></i>
+                        <span class="text-sm opacity-80">(84.24) 2436 6493</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <i class="fas fa-envelope" style="color: var(--brass-gold);"></i>
+                        <span class="text-sm opacity-80">contact@coffeehouse.vn</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="lg:col-span-3">
+                <h6 class="label-small mb-10" style="color: var(--brass-gold);">ĐĂNG KÝ NHẬN BẢN TIN</h6>
+                <div class="space-y-6">
+                    <p class="text-sm opacity-80">Nhận những bản tin mới nhất về văn hóa cà phê Hà Nội.</p>
+                    <div class="relative">
+                        <input type="email" placeholder="Email của bạn" 
+                               class="w-full bg-transparent border-b border-[#E3D7C7]/30 py-4 text-sm focus:border-[#C8A96A] outline-none transition-all placeholder:opacity-30">
+                        <button class="absolute right-0 top-4 hover:text-[#C8A96A] transition-all">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-12 border-t border-[#E3D7C7]/10 flex flex-col md:flex-row justify-between items-center gap-8">
+            <p class="label-small" style="font-size: 10px; opacity: 0.5;">
+                Bản quyền © 2026. Mọi quyền bảo lưu.
+            </p>
+            <div class="flex gap-8">
+                <a href="#" class="label-small" style="font-size: 10px; opacity: 0.5; hover:opacity: 1;">Chính sách bảo mật</a>
+                <a href="#" class="label-small" style="font-size: 10px; opacity: 0.5; hover:opacity: 1;">Điều khoản dịch vụ</a>
+            </div>
+        </div>
+    </div>
+</footer>

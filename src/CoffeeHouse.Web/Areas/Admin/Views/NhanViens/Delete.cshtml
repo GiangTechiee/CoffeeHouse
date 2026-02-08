@@ -1,0 +1,103 @@
+﻿@model CoffeeHouse.Domain.Entities.Employee
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Decommission Operative";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Crew Roster</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-rose-500 italic">Operative Termination</span>
+    </nav>
+
+    <!-- Header: Alert Protocol -->
+    <div class="bg-rose-50/50 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-rose-100 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.03] text-8xl font-black pointer-events-none select-none italic text-rose-600 group-hover:opacity-[0.06] transition-opacity">
+            DELETION
+        </div>
+        
+        <div class="flex flex-col lg:flex-row lg:items-center gap-12 relative z-10">
+            <div class="w-24 h-24 lg:w-32 lg:h-32 rounded-[32px] bg-rose-500 text-white flex-center shadow-2xl shadow-rose-500/30 border-4 border-white/20 animate-pulse">
+                <i class="fas fa-user-slash text-3xl lg:text-5xl"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <span class="text-rose-600 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-rose-500">Critical Error Prevention</span>
+                <h1 class="text-4xl lg:text-6xl font-black text-secondary tracking-tighter italic leading-none">Confirm <span class="text-rose-600">Decommission</span></h1>
+                <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Initiating permanent removal of operative data from the core matrix.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Termination Manifest: Personnel Data -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden">
+        <div class="space-y-12 relative z-10">
+            <!-- Warning Terminal -->
+            <div class="bg-slate-900 rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden group/terminal">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-xs font-mono text-white select-none">SYSTEM_OVERRIDE_ACTIVE</div>
+                <div class="flex gap-6">
+                    <i class="fas fa-terminal text-rose-500 text-sm mt-1"></i>
+                    <div class="space-y-4 font-mono text-[11px] leading-relaxed">
+                        <p class="text-white/90 uppercase tracking-widest"><span class="text-rose-500 font-black">WARNING:</span> Permanently purging personnel record for <span class="text-amber-400 font-black">[@Model.FullName]</span>.</p>
+                        <p class="text-white/50">Linking Modules slated for termination:</p>
+                        <ul class="text-white/70 list-none space-y-2">
+                             <li class="flex items-center gap-3 before:content-['>'] before:text-rose-500">Node Access Credentials (Accounts)</li>
+                             <li class="flex items-center gap-3 before:content-['>'] before:text-rose-500">Procurement History (PurchaseOrders)</li>
+                             <li class="flex items-center gap-3 before:content-['>'] before:text-rose-500">Commerce Activity Logs (SalesOrders)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-4 before:content-[''] before:w-8 before:h-px before:bg-primary">Manifest Details</h4>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between border-b border-border/50 pb-4">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-text-light">Operative ID</span>
+                            <span class="text-base font-black text-secondary font-mono italic">#STA-@Model.EmployeeId.ToString("D3")</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-border/50 pb-4">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-text-light">Legal Alias</span>
+                            <span class="text-base font-black text-secondary italic">@Model.FullName</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-border/50 pb-4">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-text-light">Assigned Rank</span>
+                            <span class="text-base font-black text-secondary uppercase tracking-widest">@Model.Position</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-rose-50/30 p-10 rounded-[40px] border border-rose-100 flex flex-col justify-center items-center text-center space-y-6">
+                    <div class="w-16 h-16 rounded-full bg-rose-100 text-rose-500 flex-center text-xl shadow-inner">
+                        <i class="fas fa-radiation"></i>
+                    </div>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-rose-600 leading-relaxed italic">
+                        By proceeding, you authorize the irrecoverable <br/> deletion of this entity from the <br/> CoffeeHouse Command Matrix.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Execution Strategy -->
+            <form asp-action="Delete" method="post" class="pt-10 flex flex-col sm:flex-row items-center justify-between border-t border-border/50 gap-8">
+                <input type="hidden" name="id" value="@Model.EmployeeId" />
+                
+                <a asp-action="Index" class="h-16 px-12 bg-surface-soft text-text-muted rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-border/30 transition-all flex items-center gap-4 group">
+                    <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i> 
+                    Abort Termination
+                </a>
+
+                <button type="submit" class="w-full sm:w-auto h-20 px-16 bg-rose-500 text-white rounded-[32px] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rose-600 hover:shadow-2xl hover:shadow-rose-500/40 transition-all flexitems-center justify-center gap-6 group">
+                    Purge All Records
+                    <i class="fas fa-fire-alt transition-transform group-hover:scale-125"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

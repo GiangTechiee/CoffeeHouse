@@ -1,0 +1,198 @@
+﻿@model CoffeeHouse.ViewModels.AccountInfoViewModel
+@{
+    ViewData["Title"] = "Cập nhật hồ sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-controller="Account" asp-action="ThongTin" class="text-text-muted hover:text-primary transition-all">Hồ sơ</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Cập nhật</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 p-32 opacity-[0.02] text-[15vw] font-black pointer-events-none select-none italic leading-none">
+        UPDATE
+    </div>
+
+    <div class="container-custom relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-16 pb-10 border-b-2 border-secondary/10 flex items-center justify-between">
+                <div>
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Access Terminal</span>
+                    <h1 class="text-5xl font-black text-secondary tracking-tighter italic mt-4">Chỉnh sửa <span class="text-primary not-italic">Thông tin</span></h1>
+                </div>
+                <div class="w-20 h-20 bg-surface-soft rounded-3xl flex-center text-secondary/10 border border-border/50">
+                    <i class="fas fa-terminal text-3xl"></i>
+                </div>
+            </div>
+
+            <form asp-action="EditThongTin" method="post" class="space-y-12">
+                <div asp-validation-summary="All" class="bg-rose-50 text-rose-600 p-8 rounded-[40px] text-xs font-bold border border-rose-100 flex items-center gap-6 animate-slide-up">
+                    <div class="w-12 h-12 bg-rose-500 text-white rounded-2xl flex-center flex-shrink-0 shadow-lg shadow-rose-200">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <div>Yêu cầu hiệu chỉnh bị từ chối. <br/><span class="opacity-70 font-medium">Vui lòng kiểm tra lại các trường thông tin bên dưới.</span></div>
+                </div>
+
+                <!-- Section: Core Security -->
+                <div class="space-y-8 animate-slide-up">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-secondary text-white flex-center text-[10px] font-black">01</span>
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Identity Verification</h3>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label asp-for="Username" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Mã danh tính (Không thể đổi)</label>
+                            <div class="relative">
+                                <input asp-for="Username" class="input-modern bg-surface-dark/5 !rounded-[24px] pl-14 h-16 text-base font-black text-secondary/40 border-transparent cursor-not-allowed opacity-60" readonly />
+                                <i class="fas fa-id-card absolute left-6 top-1/2 -translate-y-1/2 text-text-light/50"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label asp-for="Password" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Mật mã bảo mật mới</label>
+                            <div class="relative group/input">
+                                <input asp-for="Password" type="password" class="input-modern bg-surface-soft !rounded-[24px] pl-14 h-16 text-base font-bold transition-all shadow-inner focus:bg-white" placeholder="Để trống nếu giữ nguyên" />
+                                <i class="fas fa-key absolute left-6 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Role == "Admin")
+                {
+                    <!-- Section: Professional Dossier -->
+                    <div class="space-y-8 animate-slide-up" style="animation-delay: 100ms">
+                         <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-xl bg-secondary text-white flex-center text-[10px] font-black">02</span>
+                            <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Professional Dossier</h3>
+                            <div class="h-px bg-border/50 flex-1"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-surface-soft p-10 rounded-[56px] border border-border/50">
+                            <div class="space-y-3">
+                                <label asp-for="EmployeeInfo.FullName" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Họ và tên</label>
+                                <input asp-for="EmployeeInfo.FullName" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="EmployeeInfo.FullName" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label asp-for="EmployeeInfo.PhoneNumber" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Số điện thoại</label>
+                                <input asp-for="EmployeeInfo.PhoneNumber" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="EmployeeInfo.PhoneNumber" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+
+                            <div class="space-y-3 md:col-span-2">
+                                <label asp-for="EmployeeInfo.Email" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Địa chỉ Email</label>
+                                <input asp-for="EmployeeInfo.Email" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="EmployeeInfo.Email" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label asp-for="EmployeeInfo.DateOfBirth" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Ngày sinh</label>
+                                <input asp-for="EmployeeInfo.DateOfBirth" class="input-modern !rounded-[20px] h-14 bg-white" type="date" />
+                            </div>
+
+                            <div class="space-y-3">
+                                <label asp-for="EmployeeInfo.Gender" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Giới tính</label>
+                                <select asp-for="EmployeeInfo.Gender" class="input-modern !rounded-[20px] h-14 bg-white cursor-pointer appearance-none">
+                                    <option value="">-- Chọn giới tính --</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+
+                            @if (User.IsInRole("Admin")) {
+                                <div class="space-y-3">
+                                    <label asp-for="EmployeeInfo.Position" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Chức vụ</label>
+                                    <select asp-for="EmployeeInfo.Position" class="input-modern !rounded-[20px] h-14 bg-white cursor-pointer appearance-none">
+                                        <option value="">-- Chọn chức vụ --</option>
+                                        <option value="Quản lý">Quản lý</option>
+                                        <option value="Nhân viên">Nhân viên</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-3">
+                                    <label asp-for="EmployeeInfo.StoreId" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Cơ sở</label>
+                                    <select asp-for="EmployeeInfo.StoreId" class="input-modern !rounded-[20px] h-14 bg-white cursor-pointer appearance-none" asp-items="ViewBag.StoreId"></select>
+                                </div>
+                            } else {
+                                <input type="hidden" asp-for="EmployeeInfo.Position" />
+                                <input type="hidden" asp-for="EmployeeInfo.StoreId" />
+                            }
+
+                            <div class="space-y-3 md:col-span-2">
+                                <label asp-for="EmployeeInfo.Address" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Địa chỉ cư trú</label>
+                                <input asp-for="EmployeeInfo.Address" class="input-modern !rounded-[20px] h-14 bg-white" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (Model.Role == "User")
+                {
+                    <!-- Section: Member Dossier -->
+                    <div class="space-y-8 animate-slide-up" style="animation-delay: 100ms">
+                         <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-xl bg-secondary text-white flex-center text-[10px] font-black">02</span>
+                            <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Member Dossier</h3>
+                            <div class="h-px bg-border/50 flex-1"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-surface-soft p-10 rounded-[56px] border border-border/50">
+                            <div class="space-y-3">
+                                <label asp-for="CustomerInfo.CustomerName" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Họ và tên khách hàng</label>
+                                <input asp-for="CustomerInfo.CustomerName" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="CustomerInfo.CustomerName" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label asp-for="CustomerInfo.PhoneNumber" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Số điện thoại liên lạc</label>
+                                <input asp-for="CustomerInfo.PhoneNumber" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="CustomerInfo.PhoneNumber" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+
+                            <div class="space-y-3 md:col-span-2">
+                                <label asp-for="CustomerInfo.Address" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Tọa độ cung ứng (Địa chỉ)</label>
+                                <input asp-for="CustomerInfo.Address" class="input-modern !rounded-[20px] h-14 bg-white" />
+                                <span asp-validation-for="CustomerInfo.Address" class="text-rose-500 text-[8px] font-bold uppercase tracking-widest block ml-4"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="pt-8 flex flex-col sm:flex-row items-center gap-6 border-t border-border/50">
+                    <button type="submit" class="w-full sm:w-auto btn-primary px-16 py-5 shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all flex items-center justify-center gap-4 group/btn">
+                        Lưu thay đổi hồ sơ
+                        <i class="fas fa-save group-hover/btn:scale-110 transition-transform"></i>
+                    </button>
+                    <a asp-action="ThongTin" class="w-full sm:w-auto px-10 py-5 bg-surface-soft text-secondary rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-secondary hover:text-white transition-all text-center">
+                        Hủy tác vụ
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+

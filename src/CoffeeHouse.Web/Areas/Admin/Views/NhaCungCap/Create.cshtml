@@ -1,0 +1,115 @@
+﻿@model CoffeeHouse.Domain.Entities.Supplier
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Onboard Trade Partner";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Partner Registry</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Partner Initialization</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="pb-10 border-b-2 border-secondary/10 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-12 opacity-[0.02] text-7xl font-black pointer-events-none select-none italic text-secondary">
+            INIT_PARTNER
+        </div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Onboarding Protocol</span>
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">Hợp tác <span class="text-primary not-italic">Nhà cung cấp mới</span></h1>
+            <p class="text-[10px] font-black uppercase tracking-widest text-text-light max-w-lg leading-loose">Establishing a new diplomatic and logistical alliance with a galactic supply guild.</p>
+        </div>
+    </div>
+
+    <!-- Form Container: Command Console -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative">
+        <form asp-action="Create" method="post" class="space-y-10">
+            <div asp-validation-summary="ModelOnly" class="rounded-3xl bg-rose-50 border border-rose-100 p-6 text-rose-500 text-[10px] font-black uppercase tracking-widest italic shadow-inner"></div>
+
+            <div class="space-y-12">
+                <!-- Segment: Identity -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-6">
+                        <span class="w-10 h-10 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">INFO</span>
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Partner Identity</h3>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="md:col-span-2 space-y-4">
+                            <label asp-for="SupplierName" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Guild Name / Organization</label>
+                            <div class="relative group/input">
+                                <input asp-for="SupplierName" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. Orion Logistics Collective..." required />
+                                <i class="fas fa-building absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="SupplierName" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+
+                        <div class="md:col-span-2 space-y-4">
+                            <label asp-for="Address" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Sector Coordinates / Address</label>
+                            <div class="relative group/input">
+                                <input asp-for="Address" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. Sector 7G, Lunar Base Aurora..." required />
+                                <i class="fas fa-map-marker-alt absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="Address" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segment: Communication & Finance -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-6">
+                        <span class="w-10 h-10 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">BANK</span>
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Channel & Commerce</h3>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <label asp-for="PhoneNumber" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Comm Link (Phone)</label>
+                            <div class="relative group/input">
+                                <input asp-for="PhoneNumber" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. +84 000 000 000..." required />
+                                <i class="fas fa-satellite-dish absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label asp-for="Stk" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Credit Vault (Account Number)</label>
+                            <div class="relative group/input">
+                                <input asp-for="Stk" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. 1900123456789..." />
+                                <i class="fas fa-credit-card absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            </div>
+                            <span asp-validation-for="Stk" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Strategy -->
+            <div class="pt-10 flex flex-col sm:flex-row items-center justify-between border-t border-border/50 gap-8">
+                <a asp-action="Index" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-secondary transition-all group">
+                    <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i>
+                    Abort Onboarding
+                </a>
+                
+                <button type="submit" class="w-full sm:w-auto btn-primary h-20 !px-16 !rounded-[32px] flex items-center justify-center gap-6 group shadow-2xl shadow-primary/30">
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em]">Commit Alliance</span>
+                    <i class="fas fa-check-double transition-transform group-hover:scale-110"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

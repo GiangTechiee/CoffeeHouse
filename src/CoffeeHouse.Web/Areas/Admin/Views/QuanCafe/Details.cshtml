@@ -1,0 +1,430 @@
+﻿@model CoffeeHouse.Domain.Entities.CafeStore
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Sector Hub Intel";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-7xl mx-auto space-y-12 animate-fade-in pb-20">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Sector Hub Directory</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Hub Intel: @Model.StoreName</span>
+    </nav>
+
+    <!-- Header: Hub Identification -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-9xl font-black pointer-events-none select-none italic text-secondary">
+            INTEL
+        </div>
+        
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-12 relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-10">
+                <div class="w-24 h-24 lg:w-32 lg:h-32 rounded-[32px] bg-secondary text-white flex-center shadow-2xl shadow-secondary/20 border-4 border-white/20">
+                    <i class="fas fa-satellite text-3xl lg:text-5xl"></i>
+                </div>
+                
+                <div class="space-y-4">
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Command HQ Intel</span>
+                    <h1 class="text-4xl lg:text-6xl font-black text-secondary tracking-tighter italic leading-none">@Model.StoreName</h1>
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] font-black text-text-muted font-mono bg-surface-soft px-4 py-1 rounded-lg border border-border/50">HUB_ID: #HUB-@Model.StoreId.ToString("D3")</span>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Operational</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a asp-action="Edit" asp-route-id="@Model.StoreId" class="btn-primary h-16 !px-10 !rounded-2xl flex items-center gap-4 group/btn shadow-xl shadow-primary/20">
+                    <span class="text-[10px] font-black uppercase tracking-widest">Re-align Parameters</span>
+                    <i class="fas fa-sync-alt group-hover:rotate-180 transition-transform duration-700"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content: Command Tabs -->
+    <div class="space-y-10">
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap gap-4" id="detailsTab" role="tablist">
+            <button class="nav-tab active group" data-target="#info">
+                <i class="fas fa-info-circle text-[10px] group-[.active]:text-primary"></i>
+                <span>Core Specs</span>
+            </button>
+            <button class="nav-tab group" data-target="#orders">
+                <i class="fas fa-receipt text-[10px] group-[.active]:text-primary"></i>
+                <span>Trade Records</span>
+            </button>
+            <button class="nav-tab group" data-target="#nhap">
+                <i class="fas fa-file-invoice text-[10px] group-[.active]:text-primary"></i>
+                <span>Inbound Cargo</span>
+            </button>
+            <button class="nav-tab group" data-target="#employee">
+                <i class="fas fa-user-astronaut text-[10px] group-[.active]:text-primary"></i>
+                <span>Operative Team</span>
+            </button>
+            <button class="nav-tab group" data-target="#report">
+                <i class="fas fa-chart-pie text-[10px] group-[.active]:text-primary"></i>
+                <span>Financial Analytics</span>
+            </button>
+        </div>
+
+        <!-- Tab Panes -->
+        <div class="bg-white/70 backdrop-blur-2xl rounded-[56px] border border-border/50 shadow-2xl overflow-hidden min-h-[500px]">
+            
+            <!-- Tab: Core Specs -->
+            <div class="tab-pane active p-10 lg:p-16 animate-fade-in" id="info">
+                <div class="max-w-3xl space-y-12">
+                    <div class="flex items-center gap-6">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px]">Territorial Data</span>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-10">
+                        <div class="space-y-2">
+                            <span class="text-[9px] font-black text-text-light uppercase tracking-widest">Hub Designation</span>
+                            <p class="text-xl font-black text-secondary italic">@Model.StoreName</p>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[9px] font-black text-text-light uppercase tracking-widest">Territorial ID</span>
+                            <p class="text-xl font-black text-secondary font-mono tracking-tighter">#SEC-HUB-@Model.StoreId.ToString("D3")</p>
+                        </div>
+                        <div class="space-y-2 col-span-full">
+                            <span class="text-[9px] font-black text-text-light uppercase tracking-widest">Physical Coordinates</span>
+                            <p class="text-lg font-bold text-text-muted leading-relaxed italic">@Model.Address</p>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[9px] font-black text-text-light uppercase tracking-widest">Communication Signal</span>
+                            <p class="text-xl font-black text-secondary italic tracking-widest">@Model.PhoneNumber</p>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[9px] font-black text-text-light uppercase tracking-widest">Subspace Frequency</span>
+                            <p class="text-lg font-bold text-primary italic">@Model.Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Trade Records -->
+            <div class="tab-pane p-0 animate-fade-in hidden" id="orders">
+                @if (Model.SalesOrders != null && Model.SalesOrders.Any())
+                {
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-secondary text-white">
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest w-20 text-center">ID</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Trade Timestamp</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-right">Value (VNĐ)</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-center">Protocol Status</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-center">Log Details</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border/30">
+                                @foreach (var order in Model.SalesOrders)
+                                {
+                                    <tr class="group/row hover:bg-surface-soft/50 transition-colors">
+                                        <td class="px-8 py-8 text-center text-[10px] font-black text-text-light font-mono bg-surface-soft/20">#OD-@order.OrderId</td>
+                                        <td class="px-8 py-8 text-[11px] font-black text-secondary italic uppercase tracking-tighter">@order.OrderDate.ToString("dd/MM/yyyy · HH:mm")</td>
+                                        <td class="px-8 py-8 text-right text-base font-black text-secondary italic">@order.TotalAmount.ToString("N0")</td>
+                                        <td class="px-8 py-8 text-center">
+                                            <span class="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-[8px] font-black uppercase tracking-[0.2em] border border-emerald-100">@order.Status</span>
+                                        </td>
+                                        <td class="px-8 py-8 text-center">
+                                            @if (order.SalesOrderItems != null && order.SalesOrderItems.Any())
+                                            {
+                                                <button class="toggle-details-btn text-[9px] font-black text-primary uppercase tracking-widest hover:text-secondary transition-colors" data-target="#order-details-@order.OrderId">
+                                                    Analyze Log <i class="fas fa-search-plus ml-2"></i>
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                    @if (order.SalesOrderItems != null && order.SalesOrderItems.Any())
+                                    {
+                                        <tr class="details-row hidden" id="order-details-@order.OrderId">
+                                            <td colspan="5" class="p-10 bg-surface-soft/50">
+                                                <div class="bg-white rounded-3xl border border-border/50 shadow-inner overflow-hidden">
+                                                    <table class="w-full text-left bg-transparent">
+                                                        <thead>
+                                                            <tr class="border-b border-border/30 bg-surface-soft/30">
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest">Resource Code</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest">Unit Designation</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-center">Qty</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-right">Unit Rate</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-right">Sub-Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="divide-y divide-border/20">
+                                                            @foreach (var detail in order.SalesOrderItems)
+                                                            {
+                                                                <tr>
+                                                                    <td class="px-6 py-4 text-[9px] font-mono text-text-muted">#RES-@detail.ProductId</td>
+                                                                    <td class="px-6 py-4 text-[10px] font-black text-secondary italic">@detail.Product?.ProductName</td>
+                                                                    <td class="px-6 py-4 text-center text-[10px] font-bold">@detail.Quantity</td>
+                                                                    <td class="px-6 py-4 text-right text-[10px] font-bold">@detail.UnitPrice.ToString("N0")</td>
+                                                                    <td class="px-6 py-4 text-right text-[10px] font-black text-primary">@detail.LineTotal.ToString("N0")</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-20 text-center space-y-4 opacity-40">
+                        <i class="fas fa-box-open text-4xl text-text-light"></i>
+                        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-text-light">No trade records found for this sector.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Tab: Inbound Cargo -->
+            <div class="tab-pane p-0 animate-fade-in hidden" id="nhap">
+                @if (Model.PurchaseOrders != null && Model.PurchaseOrders.Any())
+                {
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-secondary text-white">
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest w-20 text-center">ID</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Inbound Date</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Commanding Operative</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-right">Cargo Value</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-center">Cargo Matrix</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border/30">
+                                @foreach (var phieuNhap in Model.PurchaseOrders)
+                                {
+                                    var tongTien = phieuNhap.PurchaseOrderItems?.Sum(ct => ct.Quantity * ct.UnitPrice) ?? 0;
+                                    <tr class="group/row hover:bg-surface-soft/50 transition-colors">
+                                        <td class="px-8 py-8 text-center text-[10px] font-black text-text-light font-mono bg-surface-soft/20">#IN-@phieuNhap.PurchaseOrderId</td>
+                                        <td class="px-8 py-8 text-[11px] font-black text-secondary italic uppercase tracking-tighter">@phieuNhap.OrderDate.ToString("dd/MM/yyyy · HH:mm")</td>
+                                        <td class="px-8 py-8">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-surface-soft text-text-muted flex-center text-[10px]">
+                                                    <i class="fas fa-user-tie"></i>
+                                                </div>
+                                                <span class="text-[10px] font-black text-secondary uppercase tracking-widest">@(phieuNhap.Employee?.FullName ?? "Unknown")</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-8 text-right text-base font-black text-primary italic">@tongTien.ToString("N0")</td>
+                                        <td class="px-8 py-8 text-center">
+                                            @if (phieuNhap.PurchaseOrderItems != null && phieuNhap.PurchaseOrderItems.Any())
+                                            {
+                                                <button class="toggle-details-btn text-[9px] font-black text-primary uppercase tracking-widest hover:text-secondary transition-colors" data-target="#nhap-details-@phieuNhap.PurchaseOrderId">
+                                                    Scan Cargo <i class="fas fa-microscope ml-2"></i>
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                    @if (phieuNhap.PurchaseOrderItems != null && phieuNhap.PurchaseOrderItems.Any())
+                                    {
+                                        <tr class="details-row hidden" id="nhap-details-@phieuNhap.PurchaseOrderId">
+                                            <td colspan="5" class="p-10 bg-surface-soft/50">
+                                                <div class="bg-white rounded-3xl border border-border/50 shadow-inner overflow-hidden">
+                                                    <table class="w-full text-left bg-transparent">
+                                                        <thead>
+                                                            <tr class="border-b border-border/30 bg-surface-soft/30">
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest">Material Code</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest">Material Designation</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-center">Qty</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-right">Inbound Rate</th>
+                                                                <th class="px-6 py-4 text-[8px] font-black text-text-light uppercase tracking-widest text-right">Valuation</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="divide-y divide-border/20">
+                                                            @foreach (var detail in phieuNhap.PurchaseOrderItems)
+                                                            {
+                                                                <tr>
+                                                                    <td class="px-6 py-4 text-[9px] font-mono text-text-muted">#MAT-@detail.IngredientId</td>
+                                                                    <td class="px-6 py-4 text-[10px] font-black text-secondary italic">@detail.Ingredient?.IngredientName</td>
+                                                                    <td class="px-6 py-4 text-center text-[10px] font-bold">@detail.Quantity</td>
+                                                                    <td class="px-6 py-4 text-right text-[10px] font-bold">@detail.UnitPrice.ToString("N0")</td>
+                                                                    <td class="px-6 py-4 text-right text-[10px] font-black text-primary">@detail.LineTotal.ToString("N0")</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-20 text-center space-y-4 opacity-40">
+                        <i class="fas fa-truck-loading text-4xl text-text-light"></i>
+                        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-text-light">No inbound cargo manifest found.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Tab: Operative Team -->
+            <div class="tab-pane p-0 animate-fade-in hidden" id="employee">
+                @if (Model.Employees != null && Model.Employees.Any())
+                {
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-secondary text-white">
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Operative</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Rank/Designation</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest">Communication</th>
+                                    <th class="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-right">Compensation (E.C)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border/30">
+                                @foreach (var nv in Model.Employees)
+                                {
+                                    <tr class="group/row hover:bg-surface-soft/50 transition-colors">
+                                        <td class="px-8 py-8">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex-center shadow-inner group-hover/row:scale-110 transition-transform">
+                                                    <i class="fas fa-user-astronaut"></i>
+                                                </div>
+                                                <div class="space-y-1">
+                                                    <p class="text-sm font-black text-secondary italic">@nv.FullName</p>
+                                                    <p class="text-[8px] font-black text-text-light uppercase tracking-widest font-mono">ID: #OP-@nv.EmployeeId</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-8">
+                                            <span class="px-4 py-1.5 rounded-xl bg-secondary/5 text-secondary text-[9px] font-black uppercase tracking-widest border border-secondary/10">@nv.Position</span>
+                                        </td>
+                                        <td class="px-8 py-8">
+                                            <div class="space-y-1">
+                                                <div class="flex items-center gap-2 text-[10px] font-black text-secondary">
+                                                    <i class="fas fa-phone text-[7px] text-text-light"></i> @nv.PhoneNumber
+                                                </div>
+                                                <div class="flex items-center gap-2 text-[9px] font-bold text-text-muted">
+                                                    <i class="fas fa-envelope text-[7px] text-text-light"></i> @nv.Email
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-8 py-8 text-right">
+                                            <p class="text-sm font-black text-primary font-mono italic">@((nv.SalaryCoefficient * nv.BaseSalary).ToString("N0"))</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-20 text-center space-y-4 opacity-40">
+                        <i class="fas fa-users-slash text-4xl text-text-light"></i>
+                        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-text-light">No operatives deployed to this hub.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Tab: Financial Analytics -->
+            <div class="tab-pane p-10 lg:p-16 animate-fade-in hidden" id="report">
+                @{
+                    decimal totalSales = Model.SalesOrders?.Sum(x => x.TotalAmount) ?? 0;
+                    decimal totalImports = Model.PurchaseOrders?.SelectMany(pn => pn.PurchaseOrderItems).Sum(ct => ct.LineTotal) ?? 0;
+                    decimal profit = totalSales - totalImports;
+                }
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Revenue -->
+                    <div class="bg-emerald-50/50 p-10 rounded-[48px] border border-emerald-100 shadow-xl relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-8 opacity-[0.05] text-6xl text-emerald-600 italic font-black pointer-events-none group-hover:scale-110 transition-transform">REV</div>
+                        <div class="relative z-10 space-y-4">
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Total Output Revenue</span>
+                            <p class="text-3xl font-black text-secondary italic tracking-tighter">@totalSales.ToString("N0") <span class="text-xs not-italic">VNĐ</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Expense -->
+                    <div class="bg-rose-50/50 p-10 rounded-[48px] border border-rose-100 shadow-xl relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-8 opacity-[0.05] text-6xl text-rose-600 italic font-black pointer-events-none group-hover:scale-110 transition-transform">EXP</div>
+                        <div class="relative z-10 space-y-4">
+                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-widest">Inbound Resource Cost</span>
+                            <p class="text-3xl font-black text-secondary italic tracking-tighter">@totalImports.ToString("N0") <span class="text-xs not-italic">VNĐ</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Profit -->
+                    <div class="@(profit >= 0 ? "bg-primary/5" : "bg-rose-50/50") p-10 rounded-[48px] border border-primary/20 shadow-2xl relative overflow-hidden group border-2">
+                        <div class="absolute top-0 right-0 p-8 opacity-[0.08] text-6xl text-primary italic font-black pointer-events-none group-hover:scale-110 transition-transform">CAL</div>
+                        <div class="relative z-10 space-y-4">
+                            <span class="text-[9px] font-black text-primary uppercase tracking-widest">Net Sector Calibration</span>
+                            <p class="text-4xl font-black text-secondary italic tracking-tighter">@profit.ToString("N0") <span class="text-sm not-italic">VNĐ</span></p>
+                            <p class="text-[8px] font-black @(profit >= 0 ? "text-emerald-500" : "text-rose-500") uppercase tracking-widest italic">
+                                @(profit >= 0 ? "Positive Surplus Detected" : "Warning: Deficit detected in current cycle")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="pt-8 border-t border-border/30 flex items-center justify-between">
+        <a asp-action="Index" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-secondary transition-all group">
+            <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i>
+            Return to Hub Directory
+        </a>
+        <p class="text-[9px] font-black text-text-light italic uppercase tracking-widest">Intel Feed Synchronized · CoffeeHouse HQ</p>
+    </div>
+</div>
+
+<style>
+    .nav-tab {
+        @@apply h-14 px-8 rounded-2xl bg-white/50 backdrop-blur-md border border-border/50 text-[10px] font-black uppercase tracking-widest text-text-muted flex items-center gap-4 transition-all hover:bg-white hover:shadow-xl hover:-translate-y-1;
+    }
+    .nav-tab.active {
+        @@apply bg-secondary text-white border-secondary shadow-xl shadow-secondary/20 -translate-y-1;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Tab switching logic
+            $('.nav-tab').on('click', function () {
+                var target = $(this).data('target');
+                
+                $('.nav-tab').removeClass('active');
+                $(this).addClass('active');
+                
+                $('.tab-pane').addClass('hidden').removeClass('active');
+                $(target).removeClass('hidden').addClass('active');
+            });
+
+            // Details toggling
+            $('.toggle-details-btn').on('click', function () {
+                var target = $(this).data('target');
+                $(target).toggleClass('hidden');
+                
+                var isHidden = $(target).hasClass('hidden');
+                $(this).find('i').toggleClass('fa-search-plus', isHidden).toggleClass('fa-search-minus', !isHidden);
+                $(this).contents().get(0).nodeValue = isHidden ? "Analyze Log " : "Close Analysis ";
+            });
+        });
+    </script>
+}
+
+
+
+

@@ -1,0 +1,291 @@
+﻿@model CoffeeHouse.Domain.Entities.Customer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Entity Intelligence Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Population tracking</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Intelligence Profile</span>
+    </nav>
+
+    <!-- Header: Strategic Dossier -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 rounded-[48px] border border-border/50 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-secondary transition-opacity group-hover:opacity-[0.05]">
+            DOSSIER
+        </div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+            <div class="w-32 h-32 rounded-[40px] bg-secondary text-white flex-center text-4xl shadow-2xl shadow-secondary/20 relative group/avatar overflow-hidden">
+                <i class="fas fa-user-astronaut group-hover:scale-110 transition-transform duration-700"></i>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover/avatar:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="space-y-4 text-center md:text-left">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center justify-center md:justify-start gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Biological Entity Profile</span>
+                <h1 class="text-5xl font-black text-secondary tracking-tighter italic leading-none">@Model.CustomerName</h1>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                    <span class="px-4 py-1.5 rounded-lg bg-surface-soft text-[9px] font-black uppercase tracking-widest border border-border/50 shadow-inner">ID: USR-@Model.CustomerId.ToString("D4")</span>
+                    <span class="px-4 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">Status: Verified Entity</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Intelligence Matrix -->
+    <div class="bg-white/70 backdrop-blur-2xl rounded-[64px] border border-border/50 shadow-2xl overflow-hidden flex flex-col xl:flex-row min-h-[600px]">
+        <!-- Vertical Tabs Side -->
+        <div class="xl:w-80 border-b xl:border-b-0 xl:border-r border-border/30 bg-surface-soft/30 p-8 space-y-4">
+            <h4 class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light px-4 mb-8">Navigation Node</h4>
+            
+            <button onclick="switchTab(event, 'info')" class="tab-trigger active w-full p-6 h-16 rounded-[24px] flex items-center gap-8 transition-all duration-500 hover:bg-white group">
+                <i class="fas fa-id-card text-lg group-[.active]:text-primary transition-colors"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest group-[.active]:text-secondary">Core Bio</span>
+                <div class="ml-auto w-1 h-1 rounded-full bg-primary opacity-0 group-[.active]:opacity-100 animate-pulse"></div>
+            </button>
+
+            <button onclick="switchTab(event, 'account')" class="tab-trigger w-full p-6 h-16 rounded-[24px] flex items-center gap-8 transition-all duration-500 hover:bg-white group">
+                <i class="fas fa-shield-alt text-lg group-[.active]:text-primary transition-colors"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest group-[.active]:text-secondary">Security Ops</span>
+            </button>
+
+            <button onclick="switchTab(event, 'invoice')" class="tab-trigger w-full p-6 h-16 rounded-[24px] flex items-center gap-8 transition-all duration-500 hover:bg-white group">
+                <i class="fas fa-history text-lg group-[.active]:text-primary transition-colors"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest group-[.active]:text-secondary">Mission History</span>
+            </button>
+
+            <button onclick="switchTab(event, 'cart')" class="tab-trigger w-full p-6 h-16 rounded-[24px] flex items-center gap-8 transition-all duration-500 hover:bg-white group">
+                <i class="fas fa-shopping-cart text-lg group-[.active]:text-primary transition-colors"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest group-[.active]:text-secondary">Cargo Staging</span>
+            </button>
+        </div>
+
+        <!-- Tab Content Feed -->
+        <div class="flex-1 p-10 lg:p-16 relative">
+            <!-- Info Tab -->
+            <div id="info" class="tab-content group active animate-slide-up">
+                <div class="space-y-12">
+                    <div class="flex items-center gap-6">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Core Biological Data</span>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="space-y-2 group/field">
+                            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Entity Identifier</p>
+                            <div class="p-8 bg-white rounded-[32px] border border-border/50 shadow-inner group-hover/field:border-primary/30 transition-all">
+                                <p class="text-lg font-black text-secondary tracking-tight">@Model.CustomerName</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 group/field">
+                            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Communication Link</p>
+                            <div class="p-8 bg-white rounded-[32px] border border-border/50 shadow-inner group-hover/field:border-primary/30 transition-all">
+                                <p class="text-lg font-black text-secondary tracking-tight">@Model.PhoneNumber</p>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 space-y-2 group/field">
+                            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Sector Residence</p>
+                            <div class="p-8 bg-white rounded-[32px] border border-border/50 shadow-inner group-hover/field:border-primary/30 transition-all">
+                                <p class="text-lg font-black text-secondary tracking-tight leading-relaxed lg:max-w-xl">@Model.Address</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Tab -->
+            <div id="account" class="tab-content group hidden animate-slide-up">
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Security Protocol Details</span>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    @if (Model.Accounts != null && Model.Accounts.Any())
+                    {
+                        <div class="bg-white rounded-[40px] border border-border/50 shadow-inner overflow-hidden">
+                            <table class="w-full text-left">
+                                <thead class="bg-surface-soft text-[9px] font-black uppercase tracking-widest text-text-light">
+                                    <tr>
+                                        <th class="px-8 py-6">Link ID</th>
+                                        <th class="px-8 py-6">Signature</th>
+                                        <th class="px-8 py-6">Operation</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-border/20">
+                                    @foreach (var acc in Model.Accounts)
+                                    {
+                                        <tr class="group/row hover:bg-surface-soft/50 transition-colors">
+                                            <td class="px-8 py-6 text-[10px] font-black text-text-muted">#ACC-@acc.AccountId</td>
+                                            <td class="px-8 py-6 text-sm font-black text-secondary italic">@acc.Username</td>
+                                            <td class="px-8 py-6">
+                                                <span class="px-4 py-1.5 rounded-lg bg-surface-soft text-[8px] font-black uppercase text-text-light group-hover/row:bg-primary group-hover/row:text-white transition-all">Passive Access</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-20 text-center space-y-6">
+                            <i class="fas fa-user-lock text-4xl text-text-muted opacity-20"></i>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">No active security credentials detected for this entity.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Invoice Tab -->
+            <div id="invoice" class="tab-content group hidden animate-slide-up">
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Tactical Fiscal logs</span>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    @if (Model.SalesOrders != null && Model.SalesOrders.Any())
+                    {
+                        <div class="space-y-6">
+                            @foreach (var invoice in Model.SalesOrders)
+                            {
+                                <div class="bg-white rounded-[40px] border border-border/50 shadow-inner overflow-hidden transition-all duration-500 hover:shadow-xl group/card">
+                                    <div class="p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer" onclick="toggleDetails('@invoice.OrderId')">
+                                        <div class="flex items-center gap-6">
+                                            <span class="text-[9px] font-black font-mono text-text-light">#INV-@invoice.OrderId</span>
+                                            <div class="space-y-1">
+                                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Mission Date</p>
+                                                <p class="text-xs font-black text-secondary italic">@invoice.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-10">
+                                            <div class="text-right">
+                                                <p class="text-[8px] font-black uppercase tracking-widest text-text-light mb-1">Fiscal Weight</p>
+                                                <p class="text-lg font-black text-primary italic tracking-tighter">@invoice.TotalAmount.ToString("n0") đ</p>
+                                            </div>
+                                            <i class="fas fa-chevron-down text-text-light group-hover/card:text-primary transition-all duration-500" id="icon-@invoice.OrderId"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Detailed Grid -->
+                                    <div id="details-@invoice.OrderId" class="hidden px-8 pb-10 border-t border-border/20 py-8 bg-surface-soft/20 animate-slide-up">
+                                        @if (invoice.SalesOrderItems != null && invoice.SalesOrderItems.Any())
+                                        {
+                                            <div class="space-y-4">
+                                                <h5 class="text-[8px] font-black uppercase tracking-[0.4em] text-secondary ml-4">Cargo manifest breakdown</h5>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                    @foreach (var detail in invoice.SalesOrderItems)
+                                                    {
+                                                        <div class="p-5 bg-white rounded-3xl border border-border/50 flex items-center justify-between shadow-sm">
+                                                            <div class="space-y-1">
+                                                                <p class="text-[10px] font-black text-secondary tracking-tight italic">@detail.Product?.ProductName</p>
+                                                                <p class="text-[8px] font-bold text-text-light tracking-widest uppercase">Qty: x@detail.Quantity</p>
+                                                            </div>
+                                                            <p class="text-[10px] font-black text-primary italic">@detail.LineTotal.ToString("n0") đ</p>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-20 text-center space-y-6">
+                            <i class="fas fa-radar text-4xl text-text-muted opacity-20 animate-pulse"></i>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Signal empty. No mission transcripts recorded.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Cart Tab -->
+            <div id="cart" class="tab-content group hidden animate-slide-up">
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] italic">Cargo Staging Sector</span>
+                        <div class="h-px bg-border/50 flex-1"></div>
+                    </div>
+                    @if (Model.CartItems != null && Model.CartItems.Any())
+                    {
+                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            @foreach (var cart in Model.CartItems)
+                            {
+                                <div class="bg-white p-8 rounded-[40px] border border-border/50 shadow-inner group/cart transition-all hover:shadow-xl relative overflow-hidden">
+                                    <div class="absolute -top-4 -right-4 w-12 h-12 bg-surface-soft rounded-full flex-center group-hover/cart:bg-primary transition-all">
+                                        <i class="fas fa-box text-[8px] text-text-light group-hover/cart:text-white"></i>
+                                    </div>
+                                    <p class="text-[8px] font-black uppercase tracking-widest text-text-light mb-4 flex items-center gap-2">
+                                        Payload ID: <span class="text-secondary font-mono">#@cart.ProductId</span>
+                                    </p>
+                                    <h4 class="text-lg font-black text-secondary tracking-tight italic mb-8">@cart.Product?.ProductName</h4>
+                                    <div class="flex items-center justify-between border-t border-border/30 pt-4">
+                                        <span class="text-[9px] font-black uppercase tracking-widest text-text-muted">Reserved qty</span>
+                                        <span class="text-xl font-black text-primary italic">x@cart.Quantity</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-20 text-center space-y-6">
+                            <i class="fas fa-parachute-box text-4xl text-text-muted opacity-20"></i>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Clean payload sector. No units in staging area.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Execution Script -->
+    <div class="pt-8 flex items-center justify-between border-t border-border/50">
+        <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic">Intelligence Data verified by Command HQ · Sector 7G</p>
+        <a asp-action="Index" class="h-16 px-12 bg-secondary text-white rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 shadow-xl shadow-secondary/20 hover:shadow-primary/30 group">
+            <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i> 
+            Return to Index
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function switchTab(evt, tabName) {
+            const tabs = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.add("hidden");
+                tabs[i].classList.remove("active");
+            }
+            const triggers = document.getElementsByClassName("tab-trigger");
+            for (let i = 0; i < triggers.length; i++) {
+                triggers[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.remove("hidden");
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function toggleDetails(id) {
+            const details = document.getElementById('details-' + id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                details.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+    </script>
+}
+
+
+
+

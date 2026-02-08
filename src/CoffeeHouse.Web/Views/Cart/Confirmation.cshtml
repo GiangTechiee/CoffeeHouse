@@ -1,0 +1,73 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Xác nhận giao dịch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Xác nhận</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-32 bg-white relative overflow-hidden min-h-[80vh] flex items-center">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 p-32 opacity-[0.02] text-[15vw] font-black pointer-events-none select-none italic leading-none">
+        CONFIRM
+    </div>
+    
+    <div class="container-custom relative z-10">
+        <div class="max-w-3xl mx-auto text-center space-y-16 animate-scale-in">
+            <!-- Icon with pulse effect -->
+            <div class="relative inline-block group">
+                <div class="absolute inset-0 bg-primary/20 rounded-[40px] animate-ping opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                <div class="relative w-32 h-32 bg-secondary rounded-[40px] flex-center text-primary text-5xl shadow-2xl shadow-primary/10 transition-transform duration-700 group-hover:rotate-[15deg] group-hover:scale-110">
+                    <i class="fas fa-satellite-dish"></i>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary after:content-[''] after:w-12 after:h-px after:bg-primary">Transaction Secured</span>
+                <h1 class="text-6xl font-black text-secondary tracking-tighter italic leading-none">
+                    Giao dịch đang được <span class="text-primary not-italic">Xác thực</span>
+                </h1>
+                <p class="text-xl text-text-muted font-medium max-w-xl mx-auto leading-relaxed">
+                    Hệ thống của chúng tôi đang đồng bộ hóa với vệ tinh thanh toán. Hành động này sẽ hoàn tất trong giây lát.
+                </p>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="bg-surface-soft p-12 rounded-[56px] border border-border/50 shadow-inner relative overflow-hidden max-w-xl mx-auto">
+                <div class="absolute top-0 right-0 p-8 opacity-[0.03] text-6xl font-black pointer-events-none select-none italic">
+                    CORE
+                </div>
+                <div class="relative z-10 space-y-8">
+                    <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-text-light">
+                        <span>Status</span>
+                        <span class="text-primary animate-pulse">Syncing...</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-border/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-2/3 animate-[pulse_2s_infinite]"></div>
+                    </div>
+                    <p class="text-xs font-bold text-secondary italic">"Đang kết nối với cổng thanh toán an toàn..."</p>
+                </div>
+            </div>
+
+            <div class="pt-8">
+                <a asp-controller="home" asp-action="index" class="btn-primary px-16 py-5 shadow-xl shadow-primary/20">
+                    Hủy và về trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+

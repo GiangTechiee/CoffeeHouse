@@ -1,0 +1,84 @@
+﻿@model CoffeeHouse.Domain.Entities.Customer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Entity Termination Protocol";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Population tracking</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Termination Protocol</span>
+    </nav>
+
+    <!-- Header: Strategic Warning -->
+    <div class="bg-rose-500/5 backdrop-blur-2xl p-10 lg:p-16 rounded-[48px] border border-rose-500/20 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.05] text-8xl font-black pointer-events-none select-none italic text-rose-500 group-hover:scale-110 transition-transform duration-1000">
+            DANGER
+        </div>
+        <div class="relative z-10 space-y-6">
+            <span class="text-rose-500 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-rose-500">Critical Protocol</span>
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">Xác nhận <span class="text-rose-500 not-italic">Xoá Entity</span></h1>
+            <p class="text-[10px] font-black uppercase tracking-widest text-text-light max-w-lg leading-loose italic">WARNING: This action will initiate a total system severance. All linked data including accounts, mission manifests, and cargo records will be PERMANENTLY DELETED.</p>
+        </div>
+    </div>
+
+    <!-- Entity Synopsis -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative">
+        <div class="space-y-12">
+            <div class="flex items-center gap-6">
+                <span class="w-12 h-12 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">BIO</span>
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Entity Synopsis</h3>
+                <div class="h-px bg-border/50 flex-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-2">
+                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Entity Identifier</p>
+                    <div class="p-6 bg-surface-soft/50 rounded-2xl border border-border/30">
+                        <p class="text-lg font-black text-secondary italic">@Model.CustomerName</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">System UID</p>
+                    <div class="p-6 bg-surface-soft/50 rounded-2xl border border-border/30">
+                        <p class="text-lg font-black text-text-muted font-mono tracking-tighter">USR-@Model.CustomerId.ToString("D4")</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Comm Link</p>
+                    <div class="p-6 bg-surface-soft/50 rounded-2xl border border-border/30">
+                        <p class="text-lg font-black text-secondary">@Model.PhoneNumber</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-text-light ml-4">Sector Residence</p>
+                    <div class="p-6 bg-surface-soft/50 rounded-2xl border border-border/30">
+                        <p class="text-[11px] font-black text-secondary uppercase leading-relaxed">@Model.Address</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Action -->
+            <div class="pt-10 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-8">
+                <a asp-action="Index" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-secondary transition-all group">
+                    <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i>
+                    Abort Severance
+                </a>
+                
+                <form asp-action="Delete" method="post" class="w-full sm:w-auto">
+                    <input type="hidden" name="id" value="@Model.CustomerId" />
+                    <button type="submit" class="w-full sm:w-auto h-20 px-16 rounded-[32px] bg-rose-500 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rose-600 transition-all shadow-2xl shadow-rose-500/30 hover:scale-105 active:scale-95 flex items-center justify-center gap-6 group">
+                        <i class="fas fa-biohazard group-hover:rotate-12 transition-transform"></i>
+                        Confirm Total Severance
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

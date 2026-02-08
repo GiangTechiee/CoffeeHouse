@@ -1,0 +1,111 @@
+﻿@model IEnumerable<CoffeeHouse.Domain.Entities.Supplier>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Trading Guilds Directory";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="space-y-10 animate-fade-in">
+    <!-- Page Header: Diplomatic Hub -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 rounded-[48px] border border-border/50 shadow-2xl flex flex-col xl:flex-row xl:items-center justify-between gap-8 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-secondary">
+            PARTNERS
+        </div>
+
+        <div class="relative z-10 space-y-2">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Diplomatic Relations</span>
+            <h1 class="text-5xl font-black text-secondary tracking-tighter italic">Hợp tác <span class="text-primary not-italic">Nhà cung cấp</span></h1>
+            <p class="text-[10px] font-black uppercase tracking-widest text-text-light">Directory of authorized galactic trade guilds and logistical partners.</p>
+        </div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">
+            <a asp-action="Create" class="w-full md:w-auto btn-primary h-[60px] !rounded-3xl px-10 flex items-center justify-center gap-4 group shadow-xl shadow-primary/20">
+                <span class="text-[10px] font-black uppercase tracking-widest">Onboard Partner</span>
+                <i class="fas fa-handshake transition-transform group-hover:scale-110"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Partner Registry Matrix -->
+    <div class="bg-white/70 backdrop-blur-2xl rounded-[56px] border border-border/50 shadow-2xl overflow-hidden group">
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-secondary text-white border-b border-white/10">
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em] w-16 text-center">GUILD_ID</th>
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em]">Guild / Organization</th>
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em]">Sector Coordinates</th>
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em]">Comm Link</th>
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em]">Credit Vault</th>
+                        <th class="px-8 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-center">Operations</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border/30">
+                    @foreach (var (item, index) in Model.Select((v, i) => (v, i)))
+                    {
+                        <tr class="group/row hover:bg-surface-soft/50 transition-colors duration-500 @(index % 2 != 0 ? "bg-surface-soft/20" : "")">
+                            <td class="px-8 py-8 text-center">
+                                <span class="text-[9px] font-black text-text-light font-mono bg-surface-soft px-3 py-1 rounded-lg border border-border/50">#SUP-@item.SupplierId.ToString("D3")</span>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-12 h-12 rounded-2xl bg-surface-soft text-secondary flex-center border border-border/50 group-hover/row:bg-primary group-hover/row:text-white transition-all shadow-sm">
+                                        <i class="fas fa-building text-xs"></i>
+                                    </div>
+                                    <p class="text-base font-black text-secondary tracking-tight italic group-hover/row:text-primary transition-colors">@item.SupplierName</p>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-map-marker-alt text-text-muted text-xs"></i>
+                                    <p class="text-[10px] font-black text-secondary tracking-widest uppercase truncate max-w-[200px]">@item.Address</p>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-phone-alt text-emerald-500 text-xs text-secondary/30"></i>
+                                    <p class="text-[11px] font-black text-emerald-600 font-mono">@item.PhoneNumber</p>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-credit-card text-text-muted text-xs"></i>
+                                    <p class="text-[10px] font-black text-secondary font-mono">@item.Stk</p>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center justify-center gap-3">
+                                    <a asp-action="Details" asp-route-id="@item.SupplierId" 
+                                       class="w-12 h-12 flex-center rounded-2xl bg-surface-soft text-text-muted hover:bg-primary hover:text-white transition-all shadow-sm border border-border/50 hover:border-primary">
+                                        <i class="fas fa-eye text-xs"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.SupplierId" 
+                                       class="w-12 h-12 flex-center rounded-2xl bg-surface-soft text-text-muted hover:bg-secondary hover:text-white transition-all shadow-sm border border-border/50 hover:border-secondary">
+                                        <i class="fas fa-sliders-h text-xs"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.SupplierId" 
+                                       class="w-12 h-12 flex-center rounded-2xl bg-surface-soft text-text-muted hover:bg-rose-500 hover:text-white transition-all shadow-sm border border-border/50 hover:border-rose-500">
+                                        <i class="fas fa-trash-alt text-xs"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Matrix Footer -->
+        <div class="px-12 py-10 bg-surface-soft/50 border-t border-border/30 flex items-center justify-between">
+            <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic">Guild database version 2.4.0. Authorized logistics viewing only.</p>
+            <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[8px] font-black uppercase tracking-widest text-emerald-600">Sync Active</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

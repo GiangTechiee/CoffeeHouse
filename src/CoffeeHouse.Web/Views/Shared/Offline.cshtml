@@ -1,0 +1,208 @@
+@{
+    ViewData["Title"] = "Offline - Không có kết nối";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e1e1e1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 600px;
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .offline-icon {
+            font-size: 6rem;
+            color: #ca1515;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #111111;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .retry-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #ca1515;
+            color: white;
+            text-decoration: none;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .retry-btn:hover {
+            background: #a01010;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(202, 21, 21, 0.3);
+        }
+
+        .tips {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e1e1e1;
+        }
+
+        .tips h3 {
+            font-size: 1rem;
+            color: #111111;
+            margin-bottom: 1rem;
+        }
+
+        .tips ul {
+            list-style: none;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .tips li {
+            color: #666666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tips li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #36a300;
+            font-weight: bold;
+        }
+
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #fff5f5;
+            border: 1px solid #ca1515;
+            border-radius: 9999px;
+            color: #ca1515;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .connection-status.online {
+            background: #f0fff0;
+            border-color: #36a300;
+            color: #36a300;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @@keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        
+        <div class="connection-status" id="connectionStatus">
+            <span class="status-dot"></span>
+            <span id="statusText">Không có kết nối</span>
+        </div>
+
+        <h1>Bạn đang offline</h1>
+        <p>
+            Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối internet của bạn và thử lại.
+        </p>
+
+        <button class="retry-btn" onclick="location.reload()">
+            🔄 Thử lại
+        </button>
+
+        <div class="tips">
+            <h3>Gợi ý khắc phục:</h3>
+            <ul>
+                <li>Kiểm tra kết nối Wi-Fi hoặc dữ liệu di động</li>
+                <li>Tắt chế độ máy bay nếu đang bật</li>
+                <li>Khởi động lại router hoặc modem</li>
+                <li>Thử kết nối lại sau vài phút</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check connection status
+        function updateConnectionStatus() {
+            const status = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('statusText');
+
+            if (navigator.onLine) {
+                status.classList.add('online');
+                statusText.textContent = 'Đã kết nối - Đang tải lại...';
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            } else {
+                status.classList.remove('online');
+                statusText.textContent = 'Không có kết nối';
+            }
+        }
+
+        // Listen for online/offline events
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        // Check status on load
+        updateConnectionStatus();
+
+        // Periodic check
+        setInterval(updateConnectionStatus, 5000);
+    </script>
+</body>
+</html>

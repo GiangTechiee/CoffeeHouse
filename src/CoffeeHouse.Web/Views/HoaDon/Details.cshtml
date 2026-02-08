@@ -1,0 +1,153 @@
+﻿@model CoffeeHouse.Domain.Entities.SalesOrder
+
+@{
+    ViewData["Title"] = "Chi tiết vận đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-action="Index" class="text-text-muted hover:text-primary transition-all">Lịch sử đơn hàng</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Chi tiết vận đơn</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 p-32 opacity-[0.02] text-[15vw] font-black pointer-events-none select-none italic leading-none">
+        MANIFEST
+    </div>
+
+    <div class="container-custom relative z-10">
+        <div class="max-w-5xl mx-auto space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b-2 border-secondary/10">
+                <div>
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Order Identity</span>
+                    <h1 class="text-5xl font-black text-secondary tracking-tighter italic mt-4">Vận đơn <span class="text-primary not-italic">#@Model.OrderId</span></h1>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-text-light mb-2">Timestamp</p>
+                    <p class="text-xl font-black text-secondary italic">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-surface-soft p-8 rounded-[40px] border border-border/50 shadow-inner">
+                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light block mb-4">Payment Method</span>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-secondary text-white flex-center">
+                            <i class="fas fa-credit-card text-xs"></i>
+                        </div>
+                        <p class="text-sm font-black text-secondary uppercase tracking-widest">@Model.PaymentMethod</p>
+                    </div>
+                </div>
+
+                <div class="bg-surface-soft p-8 rounded-[40px] border border-border/50 shadow-inner">
+                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light block mb-4">Current Status</span>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary text-white flex-center">
+                            <i class="fas fa-satellite text-xs"></i>
+                        </div>
+                        <p class="text-sm font-black text-secondary uppercase tracking-widest">@Model.Status</p>
+                    </div>
+                </div>
+
+                <div class="bg-secondary p-8 rounded-[40px] text-white shadow-2xl shadow-secondary/20">
+                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-primary block mb-4">Total Budget</span>
+                    <div class="flex items-baseline gap-2">
+                        <p class="text-3xl font-black italic tracking-tighter">@Model.TotalAmount.ToString("n0")</p>
+                        <span class="text-xs font-black uppercase opacity-50">vnđ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Itemized List -->
+            <div class="space-y-8 pt-6">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-secondary flex items-center gap-4">
+                    <span class="w-12 h-px bg-secondary"></span> Cargo Manifest
+                </h3>
+
+                <div class="bg-white rounded-[56px] border border-border/50 shadow-xl overflow-hidden animate-slide-up">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-surface-soft text-text-light">
+                                    <th class="px-10 py-6 text-[8px] font-black uppercase tracking-widest">Sản phẩm</th>
+                                    <th class="px-10 py-6 text-[8px] font-black uppercase tracking-widest text-center">Số lượng</th>
+                                    <th class="px-10 py-6 text-[8px] font-black uppercase tracking-widest text-right">Đơn giá</th>
+                                    <th class="px-10 py-6 text-[8px] font-black uppercase tracking-widest text-right">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border/20">
+                                @if (Model.SalesOrderItems != null)
+                                {
+                                    @foreach (var ct in Model.SalesOrderItems)
+                                    {
+                                        <tr class="group hover:bg-surface-soft/30 transition-colors">
+                                            <td class="px-10 py-8">
+                                                <div class="flex items-center gap-6">
+                                                    <div class="w-16 h-16 bg-surface-soft rounded-2xl overflow-hidden shrink-0 border border-border/50">
+                                                        <img src="@Url.Content("~/img/products/" + ct.Product.ImageUrl)" 
+                                                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-base font-black text-secondary tracking-tight group-hover:text-primary transition-colors italic">@ct.Product.ProductName</p>
+                                                        <p class="text-[8px] font-black uppercase tracking-[0.2em] text-text-light mt-1">Cargo ID: #@ct.ProductId</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-10 py-8 text-center">
+                                                <span class="text-sm font-black text-secondary">x@ct.Quantity</span>
+                                            </td>
+                                            <td class="px-10 py-8 text-right">
+                                                <p class="text-sm font-bold text-text-muted">@ct.UnitPrice.ToString("n0")</p>
+                                            </td>
+                                            <td class="px-10 py-8 text-right">
+                                                <p class="text-lg font-black text-secondary italic tracking-tighter">@((ct.Quantity * ct.UnitPrice).ToString("n0")) <span class="text-[10px] not-italic ml-1">đ</span></p>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-surface-soft/50">
+                                    <td colspan="3" class="px-10 py-8 text-right">
+                                        <span class="text-[10px] font-black uppercase tracking-widest text-text-light">Grand Total Manifest Expenditure</span>
+                                    </td>
+                                    <td class="px-10 py-8 text-right">
+                                        <p class="text-3xl font-black text-primary italic tracking-tighter">@Model.TotalAmount.ToString("n0") <span class="text-xs not-italic ml-1">đ</span></p>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-12 flex items-center justify-between border-t border-border/50">
+                <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-muted italic select-none">Coffee House Logistical System v4.1</p>
+                <div class="flex items-center gap-6">
+                    <button onclick="window.print()" class="text-[10px] font-black uppercase tracking-widest text-secondary hover:text-primary transition-all flex items-center gap-3">
+                         <i class="fas fa-print"></i> In vận đơn
+                    </button>
+                    <a asp-action="Index" class="btn-primary px-10 py-4 text-[10px]">
+                       <i class="fas fa-arrow-left mr-3"></i> Quay lại danh sách
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

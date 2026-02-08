@@ -1,0 +1,85 @@
+﻿@model CoffeeHouse.Domain.Entities.Ingredient
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Terminate Cargo Asset";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Cargo Inventory</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-rose-500 italic">Asset Termination</span>
+    </nav>
+
+    <!-- Header: Critical Alert -->
+    <div class="bg-rose-500/10 backdrop-blur-2xl p-10 rounded-[48px] border border-rose-500/20 shadow-2xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-16 opacity-[0.02] text-8xl font-black pointer-events-none select-none italic text-rose-500">
+            DELETE
+        </div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-rose-500 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-rose-500">Critical Protocol</span>
+            <h1 class="text-5xl font-black text-secondary tracking-tighter italic leading-tight">Yêu cầu <span class="text-rose-500 not-italic">Gỡ bỏ tài sản</span></h1>
+            <p class="text-[10px] font-black uppercase tracking-widest text-text-light">Warning: This operation will permanently remove the resource from the galactic supply registry.</p>
+        </div>
+    </div>
+
+    <!-- Termination Manifest -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-rose-500 via-rose-400 to-rose-500"></div>
+        
+        <div class="space-y-12">
+            <div class="flex items-center gap-6">
+                <span class="w-10 h-10 rounded-2xl bg-rose-500 text-white flex-center text-[10px] font-black italic shadow-lg shadow-rose-500/20">NL_ID</span>
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">Asset Specification</h3>
+                <div class="h-px bg-border/50 flex-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-2">
+                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">Định danh tài sản</span>
+                    <p class="text-2xl font-black text-secondary tracking-tight italic">@Model.IngredientName</p>
+                </div>
+                <div class="space-y-2">
+                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">Mã hệ thống</span>
+                    <p class="text-[11px] font-black text-secondary font-mono bg-surface-soft px-4 py-2 rounded-xl border border-border/50 inline-block">#NL-@Model.IngredientId.ToString("D3")</p>
+                </div>
+                <div class="space-y-2">
+                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">Tải trọng hiện tại</span>
+                    <p class="text-2xl font-black text-secondary tracking-tight">@Model.Quantity <span class="text-sm font-black text-text-light uppercase tracking-widest ml-1">@Model.Unit</span></p>
+                </div>
+                <div class="space-y-2">
+                    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">Đơn vị đo lường</span>
+                    <p class="text-xl font-black text-secondary uppercase tracking-widest">@Model.Unit</p>
+                </div>
+            </div>
+
+            <!-- Execution Strategy -->
+            <div class="pt-10 border-t border-border/50">
+                <form asp-action="Delete" method="post" class="flex flex-col sm:flex-row items-center justify-between gap-8">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="IngredientId" />
+                    
+                    <a asp-action="Index" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-secondary transition-all group">
+                        <i class="fas fa-chevron-left transition-transform group-hover:-translate-x-2"></i>
+                        Abort Decommission
+                    </a>
+                    
+                    <button type="submit" class="w-full sm:w-auto h-20 px-16 bg-rose-500 text-white rounded-[32px] text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-6 group shadow-2xl shadow-rose-500/30 hover:bg-rose-600 transition-all active:scale-95">
+                        <span>Execute Termination</span>
+                        <i class="fas fa-skull-crossbones transition-transform group-hover:rotate-12"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Footer -->
+    <div class="flex items-center gap-6 p-8 bg-surface-soft/50 rounded-[32px] border border-border/50">
+        <i class="fas fa-info-circle text-text-light text-xl"></i>
+        <p class="text-[9px] font-black uppercase tracking-widest text-text-light leading-loose">Decommissioning protocol 419-A. All linked procurement records will be archived as "System Void". This action is final and logged by Command Hub.</p>
+    </div>
+</div>
+

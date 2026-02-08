@@ -1,0 +1,461 @@
+/* ============================================
+   Accessibility Styles - WCAG 2.1 AA Compliance
+   Phase 3: Focus Management, Screen Reader, Keyboard Navigation
+   ============================================ */
+
+/* ===== SCREEN READER ONLY ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ===== SKIP TO CONTENT LINK ===== */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 10000;
+  padding: 1rem 2rem;
+  background: #ca1515;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+  transition: top 0.3s ease;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ===== FOCUS INDICATORS ===== */
+/* High contrast focus ring for keyboard navigation */
+body.keyboard-navigation *:focus {
+  outline: 3px solid #ca1515;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(202, 21, 21, 0.2);
+}
+
+/* Remove focus outline for mouse users */
+body:not(.keyboard-navigation) *:focus {
+  outline: none;
+}
+
+/* Specific focus styles for interactive elements */
+body.keyboard-navigation a:focus,
+body.keyboard-navigation button:focus,
+body.keyboard-navigation input:focus,
+body.keyboard-navigation select:focus,
+body.keyboard-navigation textarea:focus {
+  outline: 3px solid #ca1515;
+  outline-offset: 2px;
+}
+
+/* Focus within for containers */
+.focus-within:focus-within {
+  outline: 2px solid #ca1515;
+  outline-offset: 2px;
+}
+
+/* ===== REDUCED MOTION ===== */
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  /* Increase border thickness */
+  button,
+  input,
+  select,
+  textarea {
+    border-width: 2px;
+  }
+
+  /* Stronger shadows */
+  .btn,
+  .card,
+  .product__item {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Higher contrast text */
+  body {
+    color: #000;
+  }
+
+  .text-muted {
+    color: #333 !important;
+  }
+}
+
+/* ===== FOCUS VISIBLE POLYFILL ===== */
+/* Modern focus-visible support */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+.js-focus-visible .focus-visible {
+  outline: 3px solid #ca1515;
+  outline-offset: 2px;
+}
+
+/* ===== ARIA LIVE REGION ===== */
+#aria-live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===== ACCESSIBLE BUTTONS ===== */
+/* Ensure buttons have minimum touch target size (44x44px) */
+button,
+a.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Icon-only buttons should have visible focus */
+button:focus-visible i,
+a:focus-visible i {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ===== ACCESSIBLE FORMS ===== */
+/* Required field indicator */
+.form-label.required::after,
+label.required::after {
+  content: '*';
+  color: #ca1515;
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+/* Error state with high contrast */
+input.error,
+textarea.error,
+select.error,
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: #ca1515;
+  border-width: 2px;
+  background-color: #fff5f5;
+}
+
+/* Success state */
+input.success,
+textarea.success,
+select.success {
+  border-color: #36a300;
+  border-width: 2px;
+  background-color: #f0fff0;
+}
+
+/* Error message styling */
+.form-error,
+[role="alert"] {
+  color: #ca1515;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.form-error::before {
+  content: '⚠';
+  font-size: 1.2em;
+}
+
+/* ===== ACCESSIBLE LINKS ===== */
+/* Ensure links are distinguishable */
+a {
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+}
+
+a:hover,
+a:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Exception for navigation links */
+nav a,
+.btn {
+  text-decoration: none;
+}
+
+/* External links indicator */
+a[target="_blank"]::after {
+  content: ' ↗';
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+/* ===== ACCESSIBLE TABLES ===== */
+/* Ensure table headers are properly styled */
+th {
+  font-weight: 600;
+  text-align: left;
+  background-color: #f4f4f4;
+}
+
+/* Zebra striping for better readability */
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* ===== ACCESSIBLE MODALS ===== */
+/* Prevent background scrolling when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+/* Modal focus trap indicator */
+.modal:focus {
+  outline: none;
+}
+
+/* ===== ACCESSIBLE DROPDOWNS ===== */
+/* Dropdown menu accessibility */
+.dropdown-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-item:focus {
+  background-color: #f4f4f4;
+  outline: 2px solid #ca1515;
+  outline-offset: -2px;
+}
+
+/* ===== ACCESSIBLE IMAGES ===== */
+/* Ensure images don't break layout */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Decorative images */
+img[alt=""],
+img[role="presentation"] {
+  user-select: none;
+}
+
+/* ===== TEXT SIZING ===== */
+/* Ensure text can be resized up to 200% */
+html {
+  font-size: 16px; /* Base font size */
+}
+
+/* Use rem units for scalability */
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+/* ===== COLOR CONTRAST ===== */
+/* Ensure minimum contrast ratios */
+/* Text: 4.5:1 for normal text, 3:1 for large text */
+
+/* Primary text on white background */
+.text-primary {
+  color: #ca1515; /* Contrast ratio: 5.5:1 ✓ */
+}
+
+/* Secondary text */
+.text-secondary {
+  color: #111111; /* Contrast ratio: 19:1 ✓ */
+}
+
+/* Muted text - ensure it meets 4.5:1 */
+.text-muted {
+  color: #666666; /* Contrast ratio: 5.7:1 ✓ */
+}
+
+/* Link color */
+a {
+  color: #ca1515; /* Contrast ratio: 5.5:1 ✓ */
+}
+
+/* ===== TOUCH TARGETS ===== */
+/* Ensure touch targets are at least 44x44px */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="link"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Increase spacing between interactive elements */
+  nav a,
+  .header__menu li {
+    margin: 0.5rem;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  /* Hide non-essential elements */
+  .skip-to-content,
+  nav,
+  .header,
+  .footer,
+  .toast-container,
+  .modal-backdrop,
+  button,
+  .btn {
+    display: none !important;
+  }
+
+  /* Ensure good contrast for printing */
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  /* Show link URLs */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+
+  /* Prevent page breaks inside elements */
+  h1, h2, h3, h4, h5, h6,
+  p, li, img {
+    page-break-inside: avoid;
+  }
+}
+
+/* ===== LOADING STATES ACCESSIBILITY ===== */
+/* Announce loading states to screen readers */
+[aria-busy="true"] {
+  cursor: wait;
+}
+
+.loading::after {
+  content: 'Đang tải...';
+  position: absolute;
+  left: -10000px;
+}
+
+/* ===== DISABLED STATES ===== */
+/* Clear visual indication of disabled elements */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== LANGUAGE SUPPORT ===== */
+/* Support for RTL languages */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* ===== RESPONSIVE ACCESSIBILITY ===== */
+@media (max-width: 768px) {
+  /* Larger touch targets on mobile */
+  button,
+  a,
+  input,
+  select {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  /* Increase spacing */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* ===== FOCUS TRAP INDICATOR ===== */
+.focus-trap-active {
+  position: relative;
+}
+
+.focus-trap-active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  pointer-events: none;
+}

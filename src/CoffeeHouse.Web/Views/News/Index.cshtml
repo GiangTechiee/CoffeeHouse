@@ -1,0 +1,95 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<NewsArticle>
+@{
+    ViewData["Title"] = "Tin tức";
+    ViewData["News"] = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a asp-controller="Home" asp-action="Index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary underline decoration-primary decoration-4 underline-offset-[12px]">Tin tức & Sự kiện</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Blog Section -->
+<section class="py-24 bg-white">
+    <div class="container-custom">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <div class="space-y-6 max-w-2xl">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Inside Coffee House</span>
+                <h2 class="text-5xl font-black text-secondary tracking-tighter leading-tight">Cùng chúng tôi kể những câu chuyện tuyệt vời về cà phê</h2>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+            @foreach(var item in Model)
+            {
+                <article class="group relative bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 border border-border/50 flex flex-col h-full">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="@Url.Content("~/img/news/" + item.ImageUrl)" 
+                             alt="@item.Title"
+                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-6 py-2.5 rounded-[20px] shadow-xl border border-white/20">
+                            <p class="text-[10px] font-black text-primary uppercase tracking-widest flex items-center gap-2">
+                                <i class="far fa-calendar-alt"></i>
+                                @item.PublishedAt.ToString("dd MMM, yyyy")
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-10 flex-1 flex flex-col">
+                        <h3 class="text-2xl font-black text-secondary mb-8 leading-tight group-hover:text-primary transition-colors line-clamp-2 italic">
+                            <a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.ArticleId">
+                                @item.Title
+                            </a>
+                        </h3>
+                        
+                        <div class="mt-auto pt-8 border-t border-border/50 flex items-center justify-between">
+                            <a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.ArticleId"
+                               class="inline-flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-secondary hover:text-primary transition-all group/btn">
+                                Khám phá ngay
+                                <div class="w-8 h-8 flex-center rounded-full bg-surface-dark ml-4 group-hover/btn:bg-primary group-hover/btn:text-white transition-all">
+                                    <i class="fas fa-arrow-right text-[10px]"></i>
+                                </div>
+                            </a>
+                            
+                            <div class="flex items-center gap-3 text-text-light">
+                                <i class="far fa-eye text-xs"></i>
+                                <span class="text-[10px] font-bold">1.2k</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div class="flex justify-center pt-8">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {
+                page = page,
+                target = ViewBag.target,
+                targetname = ViewBag.targetname
+            }),
+            new PagedListRenderOptions() {
+                MaximumPageNumbersToDisplay = 5,
+                ContainerDivClasses = new[] { "flex items-center gap-3" },
+                UlElementClasses = new[] { "flex items-center gap-3" },
+                LiElementClasses = new[] { "w-12 h-12 rounded-2xl border border-border flex-center group transition-all hover:border-primary hover:bg-primary/5 hover:-translate-y-1" },
+                PageClasses = new[] { "text-xs font-black text-text-muted group-hover:text-primary transition-all uppercase tracking-widest" },
+                ActiveLiElementClass = "bg-primary !border-primary !text-white !translate-y-0 shadow-lg shadow-primary/30",
+            })
+        </div>
+    </div>
+</section>
+
+

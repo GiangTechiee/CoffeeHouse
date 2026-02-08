@@ -1,0 +1,119 @@
+﻿@model CoffeeHouse.Domain.Entities.NewsArticle
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["News"] = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="bg-surface-dark/30 py-6 border-b border-border/50">
+    <div class="container-custom">
+        <nav class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a asp-controller="home" asp-action="index" class="text-text-muted hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <a asp-controller="news" asp-action="index" class="text-text-muted hover:text-primary transition-colors">Tin tức & Sự kiện</a>
+            <i class="fas fa-chevron-right text-[8px] text-text-muted"></i>
+            <span class="text-secondary line-clamp-1">@Model.Title</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Blog Details Section -->
+<section class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+        <!-- Article Header -->
+        <header class="text-center space-y-10 mb-20 animate-slide-up">
+            <div class="flex items-center justify-center gap-6">
+                <span class="w-16 h-px bg-primary/30"></span>
+                <p class="text-[10px] font-black text-primary uppercase tracking-[0.5em]">Tạp chí Coffee House</p>
+                <span class="w-16 h-px bg-primary/30"></span>
+            </div>
+            
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter leading-[1.1] italic">@Model.Title</h1>
+            
+            <div class="flex flex-wrap items-center justify-center gap-8 text-[10px] font-bold uppercase tracking-widest text-text-muted">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-surface-dark flex-center text-primary">
+                        <i class="far fa-calendar-alt"></i>
+                    </div>
+                    <span>@Model.PublishedAt.ToString("dd MMMM, yyyy")</span>
+                </div>
+                <div class="w-1.5 h-1.5 rounded-full bg-border"></div>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-surface-dark flex-center text-accent">
+                        <i class="far fa-user"></i>
+                    </div>
+                    <span>By Editor Team</span>
+                </div>
+                <div class="w-1.5 h-1.5 rounded-full bg-border"></div>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-surface-dark flex-center text-blue-500">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <span>5 phút đọc</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Image -->
+        <div class="mb-20 rounded-[56px] overflow-hidden shadow-2xl border border-border/50 group bg-surface-dark">
+            <img src="@Url.Content("~/img/news/" + Model.ImageUrl)" alt="@Model.Title" 
+                 class="w-full h-[600px] object-cover transition-transform duration-[2000ms] group-hover:scale-105">
+        </div>
+
+        <!-- Article Content -->
+        <article class="relative">
+            <div class="absolute -left-20 top-0 hidden xl:block text-border/20 text-9xl font-black select-none pointer-events-none rotate-90 origin-left">
+                DISCOVER
+            </div>
+            
+            <div class="prose prose-slate prose-xl max-w-none text-text-muted leading-[2] tracking-wide">
+                <p class="first-letter:text-8xl first-letter:font-black first-letter:text-secondary first-letter:mr-4 first-letter:float-left first-letter:leading-[0.8] first-letter:mt-2 italic">
+                    @Model.Content
+                </p>
+                
+                <div class="my-20 p-12 lg:p-20 bg-surface-soft rounded-[48px] border border-border/50 text-secondary text-2xl lg:text-3xl font-black text-center relative overflow-hidden italic leading-tight">
+                    <i class="fas fa-quote-left absolute -top-4 -left-4 text-primary/5 text-9xl"></i>
+                    <p class="relative z-10">
+                        "Cà phê không chỉ là một thức uống, nó là một khởi đầu cho những cuộc trò chuyện tuyệt vời nhất."
+                    </p>
+                    <div class="mt-8 text-primary uppercase tracking-[0.4em] text-[10px] font-black not-italic">Team Coffee House</div>
+                </div>
+
+                <p>
+                    Hương vị đặc trưng của cà phê Robusta và Arabica hòa quyện tạo nên một trải nghiệm khó quên. Tại Coffee House, chúng tôi luôn trân trọng từng hạt cà phê và quy trình rang xay truyền thống để giữ trọn vẹn tinh túy từ tự nhiên.
+                </p>
+            </div>
+        </article>
+
+        <!-- Article Footer / Share -->
+        <footer class="mt-24 pt-12 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-10">
+            <div class="flex items-center gap-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-secondary">Chia sẻ câu chuyện:</span>
+                <div class="flex gap-3">
+                    <a href="#" class="w-12 h-12 rounded-2xl bg-surface-soft flex-center text-text-muted hover:bg-[#1877F2] hover:text-white hover:-translate-y-1 transition-all shadow-sm">
+                        <i class="fab fa-facebook-f text-sm"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-2xl bg-surface-soft flex-center text-text-muted hover:bg-[#1DA1F2] hover:text-white hover:-translate-y-1 transition-all shadow-sm">
+                        <i class="fab fa-twitter text-sm"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-2xl bg-surface-soft flex-center text-text-muted hover:bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] hover:text-white hover:-translate-y-1 transition-all shadow-sm">
+                        <i class="fab fa-instagram text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <a asp-controller="news" asp-action="index" class="group flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-secondary hover:text-primary transition-all">
+                <div class="w-10 h-10 flex-center rounded-2xl bg-surface-dark group-hover:bg-primary/10 transition-all">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                Quay lại danh sách
+            </a>
+        </footer>
+    </div>
+</section>
+
+

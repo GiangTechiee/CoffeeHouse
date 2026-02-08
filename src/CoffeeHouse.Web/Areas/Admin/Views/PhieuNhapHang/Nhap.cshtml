@@ -1,0 +1,222 @@
+﻿@model CoffeeHouse.ViewModels.PhieuNhapViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Cargo Intake Protocol";
+}
+
+<div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Supply Chain Matrix</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">New Intake Protocol</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="pb-10 border-b-2 border-secondary/10 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-12 opacity-[0.02] text-7xl font-black pointer-events-none select-none italic text-secondary">
+            INIT_CARGO
+        </div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Operational Registration</span>
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">Register <span class="text-primary not-italic">New Arrival</span></h1>
+            <p class="text-[10px] font-black uppercase tracking-widest text-text-light italic">Manifesting incoming resources into the galactic inventory system.</p>
+        </div>
+    </div>
+
+    <!-- Form Container: Command Console -->
+    <div class="bg-white/70 backdrop-blur-2xl p-10 lg:p-16 rounded-[64px] border border-border/50 shadow-2xl relative">
+        <form asp-action="Nhap" method="post" class="space-y-16">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="rounded-3xl bg-rose-50 border border-rose-100 p-6 text-rose-500 text-[10px] font-black uppercase tracking-widest italic shadow-inner"></div>
+
+            <!-- Segment: Operational Anchors -->
+            <div class="space-y-10">
+                <div class="flex items-center gap-6">
+                    <span class="w-10 h-10 rounded-2xl bg-secondary text-white flex-center text-[10px] font-black italic shadow-lg shadow-secondary/20">ANC</span>
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Logistical Anchors</h3>
+                    <div class="h-px bg-border/50 flex-1"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Date -->
+                    <div class="space-y-4">
+                        <label asp-for="OrderDate" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Arrival Timestamp</label>
+                        <div class="relative group/input">
+                            <input asp-for="OrderDate" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" type="date" />
+                            <i class="fas fa-calendar-alt absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                        </div>
+                        <span asp-validation-for="OrderDate" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                    </div>
+
+                    <!-- Hub -->
+                    <div class="space-y-4">
+                        <label asp-for="StoreId" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Destination Hub</label>
+                        <div class="relative group/select">
+                            <select asp-for="StoreId" class="input-modern h-20 !rounded-[28px] pl-8 pr-12 text-base font-bold appearance-none shadow-inner" asp-items="ViewBag.StoreId"></select>
+                            <i class="fas fa-shuttle-van absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/select:text-primary pointer-events-none transition-all"></i>
+                        </div>
+                        <span asp-validation-for="StoreId" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                    </div>
+
+                    <!-- Supplier -->
+                    <div class="space-y-4">
+                        <label asp-for="SupplierId" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Merchant Guild</label>
+                        <div class="relative group/select">
+                            <select asp-for="SupplierId" class="input-modern h-20 !rounded-[28px] pl-8 pr-12 text-base font-bold appearance-none shadow-inner" asp-items="ViewBag.SupplierId"></select>
+                            <i class="fas fa-handshake absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/select:text-primary pointer-events-none transition-all"></i>
+                        </div>
+                        <span asp-validation-for="SupplierId" class="text-rose-500 text-[8px] font-black uppercase tracking-widest ml-4"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Operative (ReadOnly) -->
+                    <div class="space-y-4">
+                        <label class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Receiving Operative</label>
+                        <div class="relative">
+                            <input type="text" class="input-modern h-20 !rounded-[28px] pl-8 text-base font-black text-secondary bg-surface-soft/50 cursor-not-allowed opacity-70" value="@ViewBag.FullName" readonly />
+                            <i class="fas fa-user-astronaut absolute right-8 top-1/2 -translate-y-1/2 text-text-light"></i>
+                        </div>
+                        <input type="hidden" value="@ViewBag.EmployeeId" />
+                    </div>
+
+                    <!-- Ghi chu -->
+                    <div class="space-y-4">
+                        <label asp-for="Description" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-4">Manifest Intel (Ghi chú)</label>
+                        <div class="relative group/input">
+                            <textarea asp-for="Description" rows="1" class="input-modern !py-6 !h-20 !rounded-[28px] pl-8 text-base font-bold shadow-inner" placeholder="E.g. Cargo integrity verified..."></textarea>
+                            <i class="fas fa-clipboard-list absolute right-8 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segment: Resource Stream -->
+            <div class="space-y-10">
+                <div class="flex items-center gap-6">
+                    <span class="w-10 h-10 rounded-2xl bg-primary text-white flex-center text-[10px] font-black italic shadow-lg shadow-primary/20">MAT</span>
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">Incoming Resource Stream</h3>
+                    <div class="h-px bg-border/50 flex-1"></div>
+                </div>
+
+                <div class="bg-surface-soft/30 rounded-[48px] border border-border/50 overflow-hidden shadow-inner">
+                    <table class="w-full text-left border-collapse" id="cart-table">
+                        <thead>
+                            <tr class="bg-secondary text-white">
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest w-20 text-center">ID</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest">Designation</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-center">Quantity</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-right">Inbound Rate</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-right">Valuation</th>
+                                <th class="px-8 py-6 text-[9px] font-black uppercase tracking-widest text-center w-16">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border/30">
+                            <!-- Injected via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-8 pt-4">
+                    <div class="text-left space-y-2">
+                        <span class="text-[8px] font-black uppercase tracking-[0.4em] text-text-light">Integrity Status</span>
+                        <div class="flex items-center gap-3 text-emerald-500 font-mono text-[10px] font-black uppercase">
+                            <span class="relative flex h-2 w-2">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            Dynamic Stream active
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-[36px] border border-border/50 shadow-2xl flex items-center gap-12 group">
+                        <div class="space-y-1">
+                            <p class="text-[9px] font-black text-text-light uppercase tracking-widest">Projected Resource Value</p>
+                            <p class="text-3xl font-black text-secondary italic tracking-tighter group-hover:text-primary transition-colors">
+                                <span id="cart-total">0</span> <span class="text-xs not-italic">VNĐ</span>
+                            </p>
+                        </div>
+                        <button type="submit" class="btn-primary h-16 !px-12 !rounded-[24px] flex items-center gap-4 group/btn shadow-xl shadow-primary/20">
+                            <span class="text-[10px] font-black uppercase tracking-widest">Initialize Intake</span>
+                            <i class="fas fa-check-double transition-transform group-hover/btn:scale-125"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var cart = JSON.parse(localStorage.getItem("cartNhap")) || [];
+
+        function updateCartView() {
+            var html = "";
+            var total = 0;
+            if (cart.length === 0) {
+                html = `<tr><td colspan="6" class="p-20 text-center italic text-text-light text-[10px] font-black uppercase tracking-widest opacity-40">No resource telemetry data found in stream.</td></tr>`;
+            } else {
+                for (var i = 0; i < cart.length; i++) {
+                    var item = cart[i];
+                    var thanhtien = item.QuantityNhap * item.UnitPriceNhap;
+                    total += thanhtien;
+                    html += `
+                        <tr class="group/row hover:bg-white/50 transition-colors">
+                            <td class="px-8 py-6 text-center">
+                                <span class="text-[9px] font-black text-text-muted font-mono bg-white px-2 py-1 rounded-lg border border-border/40">#${item.IngredientId}</span>
+                                <input type='hidden' name='ChiTietNhap[${i}].IngredientId' value='${item.IngredientId}' />
+                            </td>
+                            <td class="px-8 py-6">
+                                <p class="text-[13px] font-black text-secondary italic uppercase tracking-tight">${item.IngredientName}</p>
+                                <input type='hidden' name='ChiTietNhap[${i}].IngredientName' value='${item.IngredientName}' />
+                            </td>
+                            <td class="px-8 py-6 text-center w-32">
+                                <input type='number' name='ChiTietNhap[${i}].QuantityNhap' 
+                                       class='w-24 h-12 bg-white border border-border/60 rounded-xl text-center text-sm font-black text-secondary focus:ring-4 focus:ring-primary/10 transition-all shadow-inner' 
+                                       value='${item.QuantityNhap}' onchange='updateQuantity(${i}, this.value)' />
+                            </td>
+                            <td class="px-8 py-6 text-right">
+                                <p class="text-[13px] font-bold text-text-muted italic">${item.UnitPriceNhap.toLocaleString()} <span class="text-[9px] not-italic ml-1">đ</span></p>
+                                <input type='hidden' name='ChiTietNhap[${i}].UnitPriceNhap' value='${item.UnitPriceNhap}' />
+                            </td>
+                            <td class="px-8 py-6 text-right">
+                                <p class="text-base font-black text-primary italic tracking-tight">${thanhtien.toLocaleString()} <span class="text-[9px] not-italic ml-1">đ</span></p>
+                            </td>
+                            <td class="px-8 py-6 text-center">
+                                <button type='button' class='w-10 h-10 flex-center rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white transition-all shadow-sm' onclick='deleteItem(${i})'>
+                                    <i class="fas fa-trash-alt text-[10px]"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+                }
+            }
+            $("#cart-table tbody").html(html);
+            $("#cart-total").text(total.toLocaleString());
+        }
+
+        function updateQuantity(index, value) {
+            cart[index].QuantityNhap = parseFloat(value);
+            localStorage.setItem("cartNhap", JSON.stringify(cart));
+            updateCartView();
+        }
+
+        function deleteItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem("cartNhap", JSON.stringify(cart));
+            updateCartView();
+        }
+
+        $(document).ready(function(){
+            updateCartView();
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

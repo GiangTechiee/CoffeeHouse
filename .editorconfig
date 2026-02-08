@@ -1,0 +1,26 @@
+# Top-most EditorConfig file
+root = true
+
+# All files
+[*]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C# files
+[*.cs]
+# Prefer "var" instead of explicit type
+dotnet_diagnostic.IDE0007.severity = suggestion
+# Prefer using blocks
+dotnet_diagnostic.IDE0063.severity = warning
+# Unused private members should be removed
+dotnet_diagnostic.IDE0051.severity = warning
+# Unused variables should be removed
+dotnet_diagnostic.IDE0059.severity = warning
+# Order usings alphabetically, with "System" first
+dotnet_separate_import_directive_groups = true
+dotnet_sort_system_directives_first = true
+
+# Formatting - use braces for all control structures
+csharp_prefer_braces = true:warning

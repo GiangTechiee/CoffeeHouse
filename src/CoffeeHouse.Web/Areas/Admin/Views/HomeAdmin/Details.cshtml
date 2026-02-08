@@ -1,0 +1,110 @@
+﻿@model CoffeeHouse.ViewModels.ProductViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Cargo Technical Specs";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+    <!-- Breadcrumb: Navigation Path -->
+    <nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-text-light">
+        <a asp-action="Index" class="hover:text-primary transition-colors">Inventory logs</a>
+        <i class="fas fa-chevron-right text-[8px]"></i>
+        <span class="text-secondary italic">Technical Specifications</span>
+    </nav>
+
+    <!-- Header: Identification -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b-2 border-secondary/10">
+        <div class="space-y-4">
+            <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-4 before:content-[''] before:w-12 before:h-px before:bg-primary">Technical Analysis</span>
+            <h1 class="text-5xl lg:text-7xl font-black text-secondary tracking-tighter italic leading-none">@Model.ProductName</h1>
+            <div class="flex items-center gap-4">
+                <span class="px-4 py-1.5 rounded-lg bg-secondary text-white text-[8px] font-black uppercase tracking-widest shadow-lg shadow-black/10">Sector: @Model.CategoryName</span>
+                <span class="text-[10px] font-black text-text-muted font-mono">CODE: #@Model.ProductId</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a asp-action="Edit" asp-route-id="@Model.ProductId" asp-route-name="@Model.ProductName" 
+               class="btn-primary h-16 px-10 rounded-2xl flex items-center gap-4 shadow-xl shadow-primary/20 group">
+                <span class="text-[10px] font-black uppercase tracking-widest">Hiệu chỉnh tham số</span>
+                <i class="fas fa-edit group-hover:rotate-12 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content: Data Visualization -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Visual Component -->
+        <div class="lg:col-span-5 space-y-8">
+            <div class="relative group">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
+                
+                <div class="relative bg-white p-6 rounded-[56px] border border-border/50 shadow-2xl relative overflow-hidden">
+                    <div class="aspect-square rounded-[40px] overflow-hidden bg-surface-soft border border-border/30">
+                        <img src="@Url.Content("~/img/products/" + Model.ImageUrl)" alt="@Model.ProductName" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-surface-soft p-8 rounded-[40px] border border-border/50 shadow-inner space-y-4">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-secondary italic">Budgetary Status</h4>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-4xl font-black text-primary italic tracking-tighter">@(Model.Price?.ToString("n0") ?? "0")</span>
+                    <span class="text-xs font-black uppercase text-text-light opacity-50">VNĐ / UNIT</span>
+                </div>
+                <p class="text-[8px] font-black text-text-light uppercase tracking-widest">Market value verified by HQ</p>
+            </div>
+        </div>
+
+        <!-- Spec Sheet -->
+        <div class="lg:col-span-7 space-y-10">
+            <div class="pb-6 border-b border-border/50">
+                <h3 class="text-xl font-black text-secondary italic tracking-tight">Cargo Description</h3>
+                <p class="mt-4 text-text-muted text-base font-medium leading-relaxed">
+                    @if (string.IsNullOrEmpty(Model.Description)) {
+                        <span class="italic opacity-50 tracking-widest uppercase text-[10px]">No description data available for this payload.</span>
+                    } else {
+                        @Model.Description
+                    }
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div class="space-y-3">
+                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light">Operational Notes</span>
+                    <div class="p-6 bg-white border border-border/50 rounded-3xl shadow-sm italic text-[10px] font-bold text-secondary tracking-wide">
+                        @if (string.IsNullOrEmpty(Model.Notes)) {
+                            <span class="opacity-30">N/A</span>
+                        } else {
+                            @Model.Notes
+                        }
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light">Verification Signature</span>
+                    <div class="p-6 bg-white border border-border/50 rounded-3xl shadow-sm text-center">
+                        <div class="w-12 h-12 bg-secondary text-white rounded-xl flex-center mx-auto mb-2 shadow-lg shadow-secondary/20 transition-transform hover:rotate-12">
+                            <i class="fas fa-shield-alt text-xs"></i>
+                        </div>
+                        <p class="text-[8px] font-black uppercase tracking-widest text-text-light">Logistics Authority 4.1</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-10 flex items-center justify-between border-t border-border/50">
+                <p class="text-[8px] font-black uppercase tracking-[0.3em] text-text-light italic max-w-[200px]">Coffee House Logistical System - Integrity Verified © 2024</p>
+                <div class="flex gap-4">
+                    <a asp-action="Index" class="px-10 py-5 bg-surface-soft text-secondary rounded-[24px] text-[10px] font-black uppercase tracking-widest hover:bg-white hover:shadow-lg transition-all flex items-center gap-4 border border-border/50 shadow-inner">
+                        <i class="fas fa-arrow-left"></i> Return to Command
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
