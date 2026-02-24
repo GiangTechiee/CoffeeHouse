@@ -5,10 +5,9 @@ namespace CoffeeHouse.ViewModels;
 
 public class RegisterViewModel
 {
-    [Required(ErrorMessage = "Tên tài khoản là bắt buộc")]
-    [Sanitized]
-    [StringLength(50, MinimumLength = 3, ErrorMessage = "Tên tài khoản phải từ 3 đến 50 ký tự")]
-    public string Username { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Email là bắt buộc")]
+    [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
+    public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
     [DataType(DataType.Password)]

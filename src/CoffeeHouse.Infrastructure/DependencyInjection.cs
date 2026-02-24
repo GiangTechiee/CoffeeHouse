@@ -32,10 +32,10 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString, npgsqlOptions =>
             {
                 npgsqlOptions.MigrationsAssembly(typeof(CoffeeHouseContext).Assembly.FullName);
-                npgsqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 3,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorCodesToAdd: null);
+                //npgsqlOptions.EnableRetryOnFailure(
+                //    maxRetryCount: 3,
+                //    maxRetryDelay: TimeSpan.FromSeconds(30),
+                //    errorCodesToAdd: null);
             });
 
             options.EnableSensitiveDataLogging(false);
@@ -55,6 +55,10 @@ public static class DependencyInjection
         services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
         services.AddScoped<ICafeStoreRepository, CafeStoreRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ISupplierRepository, SupplierRepository>();
+        services.AddScoped<IIngredientRepository, IngredientRepository>();
+        services.AddScoped<INewsRepository, NewsRepository>();
+        services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
         
         // Register Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -82,7 +86,12 @@ public static class DependencyInjection
         // Register ICacheService implementation which uses IDistributedCache internally
         services.AddScoped<ICacheService, RedisCacheService>();
 
+        // Register ImageKit service
+        services.AddScoped<IImageService, Infrastructure.Services.ImageKitService>();
+        services.AddScoped<IReportService, Infrastructure.Services.ReportService>();
+
         return services;
+
     }
 }
 

@@ -1,0 +1,30 @@
+@model CoffeeHouse.ViewModels.HomeViewModel
+<section class="max-w-[1440px] mx-auto px-10 py-16 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="space-y-8">
+            <h1 class="serif-heading text-6xl md:text-7xl leading-tight text-background-dark dark:text-white">
+                Khởi đầu ngày mới <br/>
+                <span class="italic text-primary">bằng sự tinh tế</span>
+            </h1>
+            <p class="text-lg text-warm-gray dark:text-gray-400 max-w-md leading-relaxed">
+                Khám phá hương vị cà phê nguyên bản trong không gian tối giản và ấm cúng, nơi mỗi hạt cà phê là một câu chuyện.
+            </p>
+            <div class="pt-4">
+                <a asp-controller="Products" asp-action="Index" class="bg-primary hover:bg-[#d47f11] text-white px-10 py-4 rounded-lg font-bold transition-all shadow-lg shadow-primary/20">
+                    Khám phá thực đơn
+                </a>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
+                <img alt="Premium coffee cup in a minimalist setting" 
+                     class="w-full h-full object-cover" 
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6tPwlFVoZAfFQD9y4efNKD1D5CE9mf8RLIqRB2mBZJLOBgEzKQsZfAcmuAjZMfpDsYIytjWBiscGWHuvkP5OxDVlIFal1qnOrinjP0xCf70r5G9UJZ8q5MjnGhJVG977HGLNOdOI_4UQLlGIbzZLNP8PxCqbE96djssObBIZQRnJTboQfbYbT8feq0bLf29OaH4cbb6Yk4duFKKyIcrbMj8QVXpBD0NR3reKg0CVl8CWcw9hH_O0Th-0BiaDwO5NqPSYWKKaeGuI"/>
+            </div>
+            <div class="absolute -bottom-8 -left-8 bg-beige-soft dark:bg-background-dark p-8 rounded-lg shadow-xl hidden lg:block">
+                <p class="serif-heading text-2xl italic">Signature Blend</p>
+                <p class="text-sm text-warm-gray mt-1">100% Arabica Cầu Đất</p>
+            </div>
+        </div>
+    </div>
+</section>

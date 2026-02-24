@@ -56,6 +56,26 @@ public interface IUnitOfWork : IDisposable
     IRepository<CoffeeHouse.Domain.Entities.RefreshToken> RefreshTokens { get; }
 
     /// <summary>
+    /// Gets the Supplier repository
+    /// </summary>
+    ISupplierRepository Suppliers { get; }
+
+    /// <summary>
+    /// Gets the Ingredient repository
+    /// </summary>
+    IIngredientRepository Ingredients { get; }
+
+    /// <summary>
+    /// Gets the News repository
+    /// </summary>
+    INewsRepository NewsArticles { get; }
+
+    /// <summary>
+    /// Gets the PurchaseOrder repository
+    /// </summary>
+    IPurchaseOrderRepository PurchaseOrders { get; }
+
+    /// <summary>
     /// Saves all changes made in this unit of work to the database asynchronously
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>

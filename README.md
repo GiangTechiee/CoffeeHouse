@@ -1,66 +1,66 @@
-# Coffee Shop Management System
+﻿# Coffee Shop Management System
 
-Hệ thống quản lý quán cà phê được phát triển bằng .NET với MVC, cung cấp giải pháp toàn diện cho việc quản lý vận hành quán cà phê.
+Há»‡ thá»‘ng quáº£n lÃ½ quÃ¡n cÃ  phÃª Ä‘Æ°á»£c phÃ¡t triá»ƒn báº±ng .NET vá»›i MVC, cung cáº¥p giáº£i phÃ¡p toÃ n diá»‡n cho viá»‡c quáº£n lÃ½ váº­n hÃ nh quÃ¡n cÃ  phÃª.
 
-## 📋 Mục lục
+## ðŸ“‹ Má»¥c lá»¥c
 
-- [Tổng quan](#tổng-quan)
-- [Tính năng](#tính-năng)
-- [Công nghệ sử dụng](#công-nghệ-sử-dụng)
-- [Cài đặt](#cài-đặt)
-- [Cấu hình](#cấu-hình)
-- [Sử dụng](#sử-dụng)
-- [Đóng góp](#đóng-góp)
-- [Giấy phép](#giấy-phép)
+- [Tá»•ng quan](#tá»•ng-quan)
+- [TÃ­nh nÄƒng](#tÃ­nh-nÄƒng)
+- [CÃ´ng nghá»‡ sá»­ dá»¥ng](#cÃ´ng-nghá»‡-sá»­-dá»¥ng)
+- [CÃ i Ä‘áº·t](#cÃ i-Ä‘áº·t)
+- [Cáº¥u hÃ¬nh](#cáº¥u-hÃ¬nh)
+- [Sá»­ dá»¥ng](#sá»­-dá»¥ng)
+- [ÄÃ³ng gÃ³p](#Ä‘Ã³ng-gÃ³p)
+- [Giáº¥y phÃ©p](#giáº¥y-phÃ©p)
 
-## 🎯 Tổng quan
+## ðŸŽ¯ Tá»•ng quan
 
-Hệ thống quản lý quán cà phê là một ứng dụng web được thiết kế để hỗ trợ quản lý toàn diện các hoạt động của quán cà phê, từ quản lý kho hàng, khách hàng, nhà cung cấp đến việc tạo hóa đơn và báo cáo thống kê.
+Há»‡ thá»‘ng quáº£n lÃ½ quÃ¡n cÃ  phÃª lÃ  má»™t á»©ng dá»¥ng web Ä‘Æ°á»£c thiáº¿t káº¿ Ä‘á»ƒ há»— trá»£ quáº£n lÃ½ toÃ n diá»‡n cÃ¡c hoáº¡t Ä‘á»™ng cá»§a quÃ¡n cÃ  phÃª, tá»« quáº£n lÃ½ kho hÃ ng, khÃ¡ch hÃ ng, nhÃ  cung cáº¥p Ä‘áº¿n viá»‡c táº¡o hÃ³a Ä‘Æ¡n vÃ  bÃ¡o cÃ¡o thá»‘ng kÃª.
 
-## ✨ Tính năng
+## âœ¨ TÃ­nh nÄƒng
 
-### 🏪 Quản lý cửa hàng
-- **Dashboard Admin**: Tổng quan thống kê doanh thu, sản phẩm bán chạy, khách hàng
-- **Quản lý danh mục**: Phân loại sản phẩm theo danh mục
-- **Quản lý sản phẩm**: Thêm, sửa, xóa thông tin sản phẩm
+### ðŸª Quáº£n lÃ½ cá»­a hÃ ng
+- **Dashboard Admin**: Tá»•ng quan thá»‘ng kÃª doanh thu, sáº£n pháº©m bÃ¡n cháº¡y, khÃ¡ch hÃ ng
+- **Quáº£n lÃ½ danh má»¥c**: PhÃ¢n loáº¡i sáº£n pháº©m theo danh má»¥c
+- **Quáº£n lÃ½ sáº£n pháº©m**: ThÃªm, sá»­a, xÃ³a thÃ´ng tin sáº£n pháº©m
 
-### 📦 Quản lý kho
-- **Xuất nhập kho**: Theo dõi hàng hóa vào ra
-- **Tồn kho**: Kiểm soát số lượng tồn kho theo thời gian thực
-- **Báo cáo kho**: Thống kê xuất nhập tồn
+### ðŸ“¦ Quáº£n lÃ½ kho
+- **Xuáº¥t nháº­p kho**: Theo dÃµi hÃ ng hÃ³a vÃ o ra
+- **Tá»“n kho**: Kiá»ƒm soÃ¡t sá»‘ lÆ°á»£ng tá»“n kho theo thá»i gian thá»±c
+- **BÃ¡o cÃ¡o kho**: Thá»‘ng kÃª xuáº¥t nháº­p tá»“n
 
-### 👥 Quản lý quan hệ
-- **Quản lý khách hàng**: Thông tin, lịch sử mua hàng
-- **Quản lý nhà cung cấp**: Danh sách nhà cung cấp, lịch sử giao dịch
+### ðŸ‘¥ Quáº£n lÃ½ quan há»‡
+- **Quáº£n lÃ½ khÃ¡ch hÃ ng**: ThÃ´ng tin, lá»‹ch sá»­ mua hÃ ng
+- **Quáº£n lÃ½ nhÃ  cung cáº¥p**: Danh sÃ¡ch nhÃ  cung cáº¥p, lá»‹ch sá»­ giao dá»‹ch
 
-### 💰 Quản lý bán hàng
-- **Tạo hóa đơn**: Xử lý đơn hàng và thanh toán
-- **Lịch sử giao dịch**: Theo dõi các giao dịch đã thực hiện
-- **Báo cáo doanh thu**: Thống kê theo ngày, tháng, năm
+### ðŸ’° Quáº£n lÃ½ bÃ¡n hÃ ng
+- **Táº¡o hÃ³a Ä‘Æ¡n**: Xá»­ lÃ½ Ä‘Æ¡n hÃ ng vÃ  thanh toÃ¡n
+- **Lá»‹ch sá»­ giao dá»‹ch**: Theo dÃµi cÃ¡c giao dá»‹ch Ä‘Ã£ thá»±c hiá»‡n
+- **BÃ¡o cÃ¡o doanh thu**: Thá»‘ng kÃª theo ngÃ y, thÃ¡ng, nÄƒm
 
-## 🛠️ Công nghệ sử dụng
+## ðŸ› ï¸ CÃ´ng nghá»‡ sá»­ dá»¥ng
 
 ### Backend
-- **.NET 8.0**: Framework chính
-- **ASP.NET Core MVC**: Web framework với pattern MVC
+- **.NET 8.0**: Framework chÃ­nh
+- **ASP.NET Core MVC**: Web framework vá»›i pattern MVC
 - **Razor Pages**: View engine cho UI
 - **Entity Framework Core**: ORM
-- **PostgreSQL**: Cơ sở dữ liệu
+- **Neon PostgreSQL**: Co so du lieu
 
 ### Frontend
-- **HTML5 & CSS3**: Markup và styling
-- **JavaScript/jQuery**: Tương tác client-side
+- **HTML5 & CSS3**: Markup vÃ  styling
+- **JavaScript/jQuery**: TÆ°Æ¡ng tÃ¡c client-side
 - **Bootstrap 5**: CSS framework
-- **Chart.js**: Biểu đồ thống kê
+- **Chart.js**: Biá»ƒu Ä‘á»“ thá»‘ng kÃª
 
-## 🚀 Cài đặt
+## ðŸš€ CÃ i Ä‘áº·t
 
-### Yêu cầu hệ thống
+### YÃªu cáº§u há»‡ thá»‘ng
 - .NET 8.0 SDK
-- PostgreSQL 13+
-- Visual Studio 2022 hoặc VS Code
+- Neon PostgreSQL (connection string)
+- Visual Studio 2022 hoáº·c VS Code
 
-### Bước cài đặt
+### BÆ°á»›c cÃ i Ä‘áº·t
 
 1. **Clone repository**
 ```bash
@@ -73,40 +73,40 @@ cd coffee-shop-management
 dotnet restore
 ```
 
-3. **Cài đặt PostgreSQL**
-- Tải và cài đặt PostgreSQL
-- Tạo database mới: `coffee_shop_db`
+3. **Cau hinh Neon PostgreSQL**
+- Tao database tren Neon
+- Lay connection string va set vao `ConnectionStrings__CoffeeHouseDb`
 
-4. **Cấu hình connection string**
+4. **Cáº¥u hÃ¬nh connection string**
 ```bash
-# Sao chép file cấu hình
+# Sao chÃ©p file cáº¥u hÃ¬nh
 cp appsettings.example.json appsettings.json
 ```
 
-5. **Chạy migration**
+5. **Cháº¡y migration**
 ```bash
 dotnet ef database update
 ```
 
-6. **Seed dữ liệu mẫu** (tùy chọn)
+6. **Seed dá»¯ liá»‡u máº«u** (tÃ¹y chá»n)
 ```bash
 dotnet run --seed-data
 ```
 
-7. **Chạy ứng dụng**
+7. **Cháº¡y á»©ng dá»¥ng**
 ```bash
 dotnet run
 ```
 
-Ứng dụng sẽ chạy tại: `https://localhost:5001`
+á»¨ng dá»¥ng sáº½ cháº¡y táº¡i: `https://localhost:5001`
 
-## ⚙️ Cấu hình
+## âš™ï¸ Cáº¥u hÃ¬nh
 
 ### Database Configuration (appsettings.json)
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=coffee_shop_db;Username=your_username;Password=your_password"
+    "CoffeeHouseDb": "Host=YOUR_NEON_HOST;Port=5432;Database=YOUR_DB;Username=YOUR_USER;Password=YOUR_PASSWORD;Ssl Mode=Require;Trust Server Certificate=true"
   },
   "Logging": {
     "LogLevel": {
@@ -117,23 +117,23 @@ dotnet run
 }
 ```
 
-## 📖 Sử dụng
+## ðŸ“– Sá»­ dá»¥ng
 
-### Đăng nhập Admin
+### ÄÄƒng nháº­p Admin
 - URL: `https://localhost:5001/admin`
 - Username: `admin@coffeeshop.com`
 - Password: `Admin123!`
 
-### Các chức năng chính
+### CÃ¡c chá»©c nÄƒng chÃ­nh
 
-1. **Dashboard**: Xem tổng quan thống kê
-2. **Sản phẩm**: Quản lý menu và giá cả
-3. **Kho hàng**: Theo dõi tồn kho và xuất nhập
-4. **Khách hàng**: Quản lý thông tin khách hàng
-5. **Hóa đơn**: Tạo và quản lý đơn hàng
-6. **Báo cáo**: Xem báo cáo doanh thu và thống kê
+1. **Dashboard**: Xem tá»•ng quan thá»‘ng kÃª
+2. **Sáº£n pháº©m**: Quáº£n lÃ½ menu vÃ  giÃ¡ cáº£
+3. **Kho hÃ ng**: Theo dÃµi tá»“n kho vÃ  xuáº¥t nháº­p
+4. **KhÃ¡ch hÃ ng**: Quáº£n lÃ½ thÃ´ng tin khÃ¡ch hÃ ng
+5. **HÃ³a Ä‘Æ¡n**: Táº¡o vÃ  quáº£n lÃ½ Ä‘Æ¡n hÃ ng
+6. **BÃ¡o cÃ¡o**: Xem bÃ¡o cÃ¡o doanh thu vÃ  thá»‘ng kÃª
 
-## 🚀 Deployment
+## ðŸš€ Deployment
 
 ### Docker
 ```bash
@@ -145,33 +145,33 @@ docker-compose up -d
 ```
 
 ### Production Setup
-1. Cấu hình production database
-2. Thiết lập HTTPS certificates
-3. Cấu hình logging và monitoring
+1. Cáº¥u hÃ¬nh production database
+2. Thiáº¿t láº­p HTTPS certificates
+3. Cáº¥u hÃ¬nh logging vÃ  monitoring
 4. Setup backup strategy
 
-## 🤝 Đóng góp
+## ðŸ¤ ÄÃ³ng gÃ³p
 
 1. Fork repository
-2. Tạo feature branch: `git checkout -b feature/new-feature`
+2. Táº¡o feature branch: `git checkout -b feature/new-feature`
 3. Commit changes: `git commit -am 'Add new feature'`
 4. Push to branch: `git push origin feature/new-feature`
-5. Tạo Pull Request
+5. Táº¡o Pull Request
 
 ### Coding Standards
-- Sử dụng C# naming conventions
-- Tuân thủ clean code principles
-- Sử dụng async/await pattern
+- Sá»­ dá»¥ng C# naming conventions
+- TuÃ¢n thá»§ clean code principles
+- Sá»­ dá»¥ng async/await pattern
 
-## 📄 Giấy phép
+## ðŸ“„ Giáº¥y phÃ©p
 
-Dự án này được cấp phép dưới [MIT License](LICENSE).
+Dá»± Ã¡n nÃ y Ä‘Æ°á»£c cáº¥p phÃ©p dÆ°á»›i [MIT License](LICENSE).
 
-## 👥 Tác giả
+## ðŸ‘¥ TÃ¡c giáº£
 
 - **GiangTechiee** - *Developer* - [GitHub](https://github.com/GiangTechiee)
 
-## 🙏 Acknowledgments
+## ðŸ™ Acknowledgments
 
 - Entity Framework Core documentation
 - ASP.NET Core community
@@ -180,4 +180,6 @@ Dự án này được cấp phép dưới [MIT License](LICENSE).
 
 ---
 
-**Lưu ý**: Đây là phiên bản development. Vui lòng không sử dụng trong production mà không thực hiện security audit và performance testing.
+**LÆ°u Ã½**: ÄÃ¢y lÃ  phiÃªn báº£n development. Vui lÃ²ng khÃ´ng sá»­ dá»¥ng trong production mÃ  khÃ´ng thá»±c hiá»‡n security audit vÃ  performance testing.
+
+

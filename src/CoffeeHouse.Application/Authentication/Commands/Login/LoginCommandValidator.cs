@@ -6,10 +6,10 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
     public LoginCommandValidator()
     {
-        RuleFor(x => x.Username)
-            .NotEmpty().WithMessage("Username or Email is required");
+        RuleFor(x => x.Email)
+            .NotEmpty().WithMessage("Email không được để trống");
 
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("Password is required");
+            .NotEmpty().WithMessage("Mật khẩu không được để trống");
     }
 }

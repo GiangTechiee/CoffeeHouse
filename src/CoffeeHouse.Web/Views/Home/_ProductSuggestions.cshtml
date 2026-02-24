@@ -1,0 +1,74 @@
+@model IEnumerable<CoffeeHouse.Domain.Entities.Product>
+
+<section class="max-w-[1440px] mx-auto px-10 py-24">
+    <div class="flex items-end justify-between mb-12">
+        <div>
+            <h2 class="serif-heading text-4xl mb-2">Gợi ý hôm nay</h2>
+            <p class="text-warm-gray text-sm">Những món uống được yêu thích nhất trong tuần</p>
+        </div>
+        <a asp-controller="Products" asp-action="Index" class="text-primary font-bold text-sm uppercase tracking-widest border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
+            Xem tất cả
+        </a>
+    </div>
+    
+    <div id="product-suggestions-container" class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Skeleton Loaders -->
+        @for (int i = 0; i < 4; i++)
+        {
+            <div class="animate-pulse">
+                <div class="aspect-square rounded-xl bg-gray-200 dark:bg-gray-800 mb-4"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-3/4 mb-2"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2"></div>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('product-suggestions-container');
+        const designImages = [
+            "https://lh3.googleusercontent.com/aida-public/AB6AXuD-adsfE7Dl2Mn_jITtXmMNcX8D1xoacVVvUn3U0aJntH7ynW7nVZXPS2oGk2e2AMCmc7j9HK49DkmfPlEqFPO63u3kfhOoayMmkICfptjgcSkxZWnidgkVq7lXiAuocshoQ67ZDtTz0sUWM_BxLmCEYtm1EQDON2C-vW5EetUVBk7AK-xGx-1VBUCHRoWLzqofyuuwHuyamGuxRaaV_76lM_mSeOB-89An5ZPycGqGc3f_Fz13hDjB8L2RxC5iV6IHhN90JAKS__Y",
+            "https://lh3.googleusercontent.com/aida-public/AB6AXuAUdPH-lteO0An2eFac1wb8OeaPWABoy4IQq_9AF56ANd0TGfFbV2BGRTIvaJUUKb-mzviBDxdT25P1ehD1BKLIHidLvigaeMU50etDDVZsxNddlsTuOgNBeQLfcKyluySbVzfAzH2eNs6nzscewlt2p63zqFDTlzrz5UgX77iFLAJOztrp_wt3sHN5i3NEeVVFTD-H674nbPy-hzENNzIKcMGcHOjVDKoM2fl51DZMkEt8cCU8aDb1TqrbxwXgdlCm7ffN5l28oUI",
+            "https://lh3.googleusercontent.com/aida-public/AB6AXuCtLe_MFHGqpFpmlpeieOsIRzPa9vRB-Y6QI3MTrNBu7x_iWeRwwOukqJU-lmemenu67OzoPrkX5xPeggg0479ioq_AwUKT1IaO6Kd-0rVqqKvMFl8bqjgIurSP1IMdHURS7D0lrFrV0fAANY2GqAe2VmwvaoWmhz-L-Yag34DRfgoI6yZB89O4c_dwnBeM8p0lblr4HTgL_Zu4gz0desT-avo_HC2Z1NgmEvvK1LRGBhJAuhko1O3m-Bj2W7XRlsIbplK5IchflTI",
+            "https://lh3.googleusercontent.com/aida-public/AB6AXuD5jzeqn9fLXtJLsA2mAGu_iYnq2qlw8Zxhk1_7AzQZy7kGa8zzJBYC0NlTdAq4xcIsnvIVfjdANdBVlF5BX6TElVudp35O28nxo4VTPDIxWNbVOqIeQqwSuLQtwRrkWzTEcYlPSuxT2BNm0z6QnCwyJj_LJI7t6Yy5mz3UPrNxunl1uU4wL1Mm42CEKoN_JpiGKqwqTAjsWL-a-q9pD5ePlFURGbGOBiY7v0-qV1uh94Rd4vGCc81juEhHmyKETcyia84hXoyE2lA"
+        ];
+
+        try {
+            const response = await fetch('/api/v1/products?pageSize=4');
+            const result = await response.json();
+
+            if (result.success && result.data && result.data.items) {
+                const products = result.data.items;
+                container.innerHTML = products.map((item, i) => {
+                    const displayImg = i < designImages.length ? designImages[i] : (item.imageUrl ? `/img/products/${item.imageUrl}` : '');
+                    return `
+                        <div class="product-card group cursor-pointer">
+                            <div class="relative aspect-square rounded-xl overflow-hidden bg-beige-soft mb-4">
+                                <img src="${displayImg}" 
+                                     alt="${item.name}" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div class="quick-add absolute inset-x-0 bottom-4 px-4">
+                                    <a href="/Cart/Add/${item.id}?quantity=1"
+                                       class="block w-full bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg text-sm font-bold shadow-xl text-center">
+                                        Thêm nhanh
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="font-medium text-lg">
+                                <a href="/Products/Details/${item.id}">${item.name}</a>
+                            </h3>
+                            <p class="text-primary font-bold">${new Intl.NumberFormat('vi-VN').format(item.price)}đ</p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                container.innerHTML = '<p class="text-warm-gray text-center col-span-4">Không có sản phẩm nào được hiển thị.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            container.innerHTML = '<p class="text-red-500 text-center col-span-4">Không thể tải danh sách sản phẩm.</p>';
+        }
+    });
+</script>
+

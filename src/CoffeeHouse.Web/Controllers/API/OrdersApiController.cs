@@ -1,5 +1,7 @@
 using CoffeeHouse.Application.Common.Models;
 using CoffeeHouse.Application.Orders.Commands.CreateOrder;
+using CoffeeHouse.Application.Orders.Commands.AddOrderItem;
+using CoffeeHouse.Application.Orders.Commands.RemoveOrderItem;
 using CoffeeHouse.Application.Orders.Commands.UpdateOrderStatus;
 using CoffeeHouse.Application.Orders.DTOs;
 using CoffeeHouse.Application.Orders.Queries.GetOrderById;
@@ -8,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeHouse.Controllers.API;
 
@@ -391,4 +394,176 @@ public class OrdersApiController : ControllerBase
             );
         }
     }
+
+    /// <summary>
+    /// Add an item to an order (pending orders only)
+    /// </summary>
+    [HttpPost("{id}/items")]
+    [ProducesResponseType(typeof(ApiResponse<OrderDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> AddOrderItem(Guid id, [FromBody] AddOrderItemRequest request)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ApiResponse<object>.ErrorResult(
+                    "VALIDATION_ERROR",
+                    "Request validation failed",
+                    ModelState
+                ));
+            }
+
+            if (id != request.OrderId)
+            {
+                return BadRequest(ApiResponse<object>.ErrorResult(
+                    "ID_MISMATCH",
+                    "Order ID in URL does not match ID in request body"
+                ));
+            }
+
+            if (!await IsOrderAccessibleAsync(id))
+            {
+                return NotFound(ApiResponse<object>.ErrorResult(
+                    "ORDER_NOT_FOUND",
+                    $"Order with ID {id} was not found"
+                ));
+            }
+
+            var command = new AddOrderItemCommand
+            {
+                OrderId = request.OrderId,
+                ProductId = request.ProductId,
+                Quantity = request.Quantity
+            };
+
+            var result = await _mediator.Send(command);
+
+            return Ok(ApiResponse<OrderDto>.SuccessResult(
+                result,
+                new ApiMetadata { RequestId = HttpContext.TraceIdentifier }
+            ));
+        }
+        catch (Domain.Exceptions.NotFoundException ex)
+        {
+            return NotFound(ApiResponse<object>.ErrorResult(
+                "NOT_FOUND",
+                ex.Message
+            ));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return UnprocessableEntity(ApiResponse<object>.ErrorResult(
+                "INVALID_ORDER_STATE",
+                ex.Message
+            ));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while adding item to order {OrderId}", id);
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+                ApiResponse<object>.ErrorResult(
+                    "INTERNAL_ERROR",
+                    "An error occurred while processing your request"
+                )
+            );
+        }
+    }
+
+    /// <summary>
+    /// Remove an item from an order (pending orders only)
+    /// </summary>
+    [HttpDelete("{id}/items/{productId:int}")]
+    [ProducesResponseType(typeof(ApiResponse<OrderDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveOrderItem(Guid id, int productId)
+    {
+        try
+        {
+            if (!await IsOrderAccessibleAsync(id))
+            {
+                return NotFound(ApiResponse<object>.ErrorResult(
+                    "ORDER_NOT_FOUND",
+                    $"Order with ID {id} was not found"
+                ));
+            }
+
+            var command = new RemoveOrderItemCommand
+            {
+                OrderId = id,
+                ProductId = productId
+            };
+
+            var result = await _mediator.Send(command);
+
+            return Ok(ApiResponse<OrderDto>.SuccessResult(
+                result,
+                new ApiMetadata { RequestId = HttpContext.TraceIdentifier }
+            ));
+        }
+        catch (Domain.Exceptions.NotFoundException ex)
+        {
+            return NotFound(ApiResponse<object>.ErrorResult(
+                "NOT_FOUND",
+                ex.Message
+            ));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return UnprocessableEntity(ApiResponse<object>.ErrorResult(
+                "INVALID_ORDER_STATE",
+                ex.Message
+            ));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while removing item from order {OrderId}", id);
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+                ApiResponse<object>.ErrorResult(
+                    "INTERNAL_ERROR",
+                    "An error occurred while processing your request"
+                )
+            );
+        }
+    }
+
+    private async Task<bool> IsOrderAccessibleAsync(Guid orderId)
+    {
+        if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Employee"))
+        {
+            return true;
+        }
+
+        var customerIdClaim = User.FindFirst("CustomerId");
+        if (customerIdClaim == null || !int.TryParse(customerIdClaim.Value, out int cid))
+        {
+            return false;
+        }
+
+        try
+        {
+            var query = new GetOrderByIdQuery { OrderId = orderId };
+            var order = await _mediator.Send(query);
+            return order.CustomerId == cid;
+        }
+        catch (Domain.Exceptions.NotFoundException)
+        {
+            return false;
+        }
+    }
+}
+
+public class AddOrderItemRequest
+{
+    [Required]
+    public Guid OrderId { get; set; }
+
+    [Required]
+    public int ProductId { get; set; }
+
+    [Range(1, 999)]
+    public int Quantity { get; set; } = 1;
 }

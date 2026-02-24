@@ -1,0 +1,22 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  CoffeeHouse.Domain -> D:\CoffeeHouse\src\CoffeeHouse.Domain\bin\Debug\net8.0\CoffeeHouse.Domain.dll
+D:\CoffeeHouse\src\CoffeeHouse.Application\Authentication\Commands\AuthenticateUser\AuthenticateUserCommandHandler.cs(72,13): error CS0117: 'AuthResultDto' does not contain a definition for 'Username' [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\Categories\DTOs\CategoryDto.cs(6,19): warning CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountsSpec.cs(17,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountsSpec.cs(18,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountByIdSpec.cs(12,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountByIdSpec.cs(13,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+
+Build FAILED.
+
+D:\CoffeeHouse\src\CoffeeHouse.Application\Categories\DTOs\CategoryDto.cs(6,19): warning CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountsSpec.cs(17,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountsSpec.cs(18,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountByIdSpec.cs(12,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\LegacyAccounts\Specifications\LegacyAccountByIdSpec.cs(13,25): warning CS8603: Possible null reference return. [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+D:\CoffeeHouse\src\CoffeeHouse.Application\Authentication\Commands\AuthenticateUser\AuthenticateUserCommandHandler.cs(72,13): error CS0117: 'AuthResultDto' does not contain a definition for 'Username' [D:\CoffeeHouse\src\CoffeeHouse.Application\CoffeeHouse.Application.csproj]
+    5 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.99

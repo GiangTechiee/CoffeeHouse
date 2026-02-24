@@ -7,7 +7,7 @@
     --olive: #6E7B3A;
     --border-color: #E3D7C7;
     --overlay-sepia: rgba(43, 30, 22, 0.55);
-    
+
     --font-heading: 'Cormorant Garamond', 'Playfair Display', serif;
     --font-body: 'Lora', 'Libre Baskerville', serif;
 }
@@ -23,7 +23,7 @@ body {
     padding: 0;
     position: relative;
     /* Paper Texture & Noise */
-    background-image: 
+    background-image:
         url("https://www.transparenttextures.com/patterns/linen.png"),
         radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
     background-attachment: fixed;
@@ -42,15 +42,26 @@ body::after {
     z-index: 9999;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     color: var(--espresso);
     margin: 0;
 }
 
-h1 { font-style: italic; font-size: 4.5rem; }
-h2 { font-size: 3rem; }
+h1 {
+    font-style: italic;
+    font-size: 4.5rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
 
 a {
     color: inherit;
@@ -62,7 +73,13 @@ a {
 .container-vintage {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 48px;
+    padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+    .container-vintage {
+        padding: 0 48px;
+    }
 }
 
 .section-spacing {
@@ -137,14 +154,16 @@ a {
 .header-vintage {
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     z-index: 1000;
-    background: rgba(247, 242, 232, 0.85);
+    background: rgba(247, 242, 232, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     height: 90px;
     display: flex;
     align-items: center;
+    transition: all 0.3s ease;
 }
 
 .logo-vintage {
@@ -202,7 +221,7 @@ a {
     content: "";
     position: absolute;
     inset: 0;
-    box-shadow: inset 0 0 80px rgba(0,0,0,0.4);
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
     pointer-events: none;
 }
 
@@ -234,8 +253,13 @@ section {
     background-color: transparent !important;
 }
 
-.bg-surface-soft { background-color: rgba(227, 215, 199, 0.2) !important; }
-.bg-secondary { background-color: var(--espresso) !important; }
+.bg-surface-soft {
+    background-color: rgba(227, 215, 199, 0.2) !important;
+}
+
+.bg-secondary {
+    background-color: var(--espresso) !important;
+}
 
 /* Custom Badge */
 .stamp-badge {

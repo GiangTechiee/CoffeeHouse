@@ -287,22 +287,22 @@ try
     {
         app.UseExceptionHandler("/Home/Error");
         app.UseHsts();
+        app.UseHttpsRedirection();
     }
 
     app.UseMiddleware<ExceptionHandlingMiddleware>();
-    app.UseHttpsRedirection();
     app.UseStaticFiles();
 
     app.UseRouting();
+
+    // CORS must be after UseRouting and before any other middleware that might block the request
+    app.UseCors("ReactApp");
 
     app.UseResponseCaching();
 
     app.UseRateLimiter();
 
     app.UseAntiforgery();
-
-    // CORS must be after UseRouting and before UseAuthentication
-    app.UseCors("ReactApp");
 
     // Session must be before Authentication
     app.UseSession();
@@ -316,20 +316,73 @@ try
     {
         ResponseWriter = async (context, report) =>
         {
-            context.Response.ContentType = "application/json";
-            var result = JsonSerializer.Serialize(new
-            {
-                status = report.Status.ToString(),
-                checks = report.Entries.Select(e => new
-                {
-                    name = e.Key,
-                    status = e.Value.Status.ToString(),
-                    description = e.Value.Description,
-                    duration = e.Value.Duration.TotalMilliseconds
-                }),
-                totalDuration = report.TotalDuration.TotalMilliseconds
-            });
-            await context.Response.WriteAsync(result);
+            context.Response.ContentType = "text/html";
+            var statusColor = report.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy ? "#2D6A4F" : "#BC4749";
+            var statusIcon = report.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy ? "✅" : "⚠️";
+
+            var rows = string.Join("", report.Entries.Select(e => $@"
+                <tr>
+                    <td style=""padding: 15px; border-bottom: 1px solid #eee;""><b>{e.Key}</b></td>
+                    <td style=""padding: 15px; border-bottom: 1px solid #eee;"">
+                        <span style=""padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; background: {(e.Value.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy ? "#E8F5E9; color: #2D6A4F" : "#FFEBEE; color: #C62828")}"">
+                            {(e.Value.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy ? "Đang hoạt động" : "Gặp sự cố")}
+                        </span>
+                    </td>
+                    <td style=""padding: 15px; border-bottom: 1px solid #eee; color: #666; font-size: 0.9rem;"">{e.Value.Description ?? "Hệ thống hoạt động ổn định"}</td>
+                    <td style=""padding: 15px; border-bottom: 1px solid #eee; text-align: right; color: #999;"">{e.Value.Duration.TotalMilliseconds:N0}ms</td>
+                </tr>"));
+
+            await context.Response.WriteAsync($@"
+<!DOCTYPE html>
+<html lang=""vi"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>Trạng thái Hệ thống - CoffeeHouse</title>
+    <link href=""https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"" rel=""stylesheet"">
+    <style>
+        body {{ font-family: 'Outfit', sans-serif; background: #F8F9FA; color: #2C1810; margin: 0; padding: 40px; }}
+        .card {{ background: white; max-width: 900px; margin: 0 auto; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; }}
+        .header {{ background: {statusColor}; color: white; padding: 40px; text-align: center; }}
+        .content {{ padding: 40px; }}
+        table {{ width: 100%; border-collapse: collapse; }}
+        .tech-note {{ background: #F1F8E9; border-left: 4px solid #4CAF50; padding: 20px; margin-top: 30px; border-radius: 0 12px 12px 0; font-size: 0.9rem; line-height: 1.6; color: #33691E; }}
+    </style>
+</head>
+<body>
+    <div class=""card"">
+        <div class=""header"">
+            <div style=""font-size: 3rem; margin-bottom: 10px;"">{statusIcon}</div>
+            <h1 style=""margin: 0; font-weight: 600;"">Kiểm tra Sức khỏe Hệ thống</h1>
+            <p style=""opacity: 0.8;"">Trạng thái tổng quát: <b>{(report.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy ? "ỔN ĐỊNH" : "CẦN KIỂM TRA")}</b> &bull; Cập nhật lúc {DateTime.Now:HH:mm:ss}</p>
+        </div>
+        <div class=""content"">
+            <table>
+                <thead>
+                    <tr style=""text-align: left; color: #999; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em;"">
+                        <th style=""padding: 15px;"">Thành phần</th>
+                        <th style=""padding: 15px;"">Trạng thái</th>
+                        <th style=""padding: 15px;"">Chi tiết</th>
+                        <th style=""padding: 15px; text-align: right;"">Độ trễ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+
+            <div class=""tech-note"">
+                <b>📌 Đặc điểm kỹ thuật:</b><br/>
+                Hệ thống áp dụng kiến trúc <b>Duy trì Tính sẵn sàng (High Availability)</b>. Các bộ kiểm tra (Health Checks) được cấu hình riêng biệt cho tầng dữ liệu (PostgreSQL) và tầng ứng dụng (Entity Framework Core). 
+                Cơ chế này cho phép các hệ thống điều phối (Orchestrator) tự động phát hiện và xử lý sự cố mà không cần can thiệp thủ công.
+            </div>
+            
+            <div style=""margin-top: 20px; text-align: center;"">
+                <a href=""/"" style=""color: #999; text-decoration: none; font-size: 0.8rem;"">← Quay lại Bảng điều khiển</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>");
         }
     });
 
@@ -347,3 +400,5 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+public partial class Program { }

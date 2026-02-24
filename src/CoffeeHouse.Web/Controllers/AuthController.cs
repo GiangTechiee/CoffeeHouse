@@ -39,7 +39,7 @@ namespace CoffeeHouse.Controllers
 
             var command = new RegisterCustomerCommand
             {
-                Username = model.Username,
+                Email = model.Email,
                 Password = model.Password,
                 ConfirmPassword = model.ConfirmPassword,
                 FullName = model.CustomerName,
@@ -71,11 +71,11 @@ namespace CoffeeHouse.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(model.Username);
+                var user = await _userManager.FindByNameAsync(model.Email);
                 if (user != null)
                 {
                     // For backward compatibility with legacy code that checks Session

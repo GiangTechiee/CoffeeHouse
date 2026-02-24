@@ -122,7 +122,7 @@
                                     <p class="text-[8px] font-black text-center text-text-light uppercase tracking-widest">Current Signature</p>
                                     <div id="assetPreview" class="h-48 rounded-[40px] border border-border/50 bg-white p-3 shadow-2xl relative overflow-hidden group/preview">
                                         <div class="w-full h-full rounded-[30px] overflow-hidden bg-surface-soft border border-border/30">
-                                            <img id="imgCurrent" src="@Url.Content("../../img/Products/" + currentImageUrl)" class="w-full h-full object-cover grayscale group-hover/preview:grayscale-0 transition-all duration-1000 scale-110 group-hover/preview:scale-100" />
+                                            <img id="imgCurrent" src="@(currentImageUrl?.StartsWith("http") == true ? currentImageUrl : Url.Content("~/img/products/" + currentImageUrl))" class="w-full h-full object-cover grayscale group-hover/preview:grayscale-0 transition-all duration-1000 scale-110 group-hover/preview:scale-100" />
                                         </div>
                                         <div class="absolute inset-0 bg-secondary/80 backdrop-blur-sm opacity-0 group-hover/preview:opacity-100 transition-all duration-500 flex-center">
                                             <p class="text-[8px] font-black text-white uppercase tracking-[0.5em] italic">Active Asset</p>

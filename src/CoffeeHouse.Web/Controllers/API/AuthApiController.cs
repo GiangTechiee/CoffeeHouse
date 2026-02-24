@@ -1,7 +1,9 @@
 using CoffeeHouse.Application.Authentication.Commands.Login;
 using CoffeeHouse.Application.Authentication.Commands.RegisterCustomer;
 using CoffeeHouse.Application.Common.Models;
+using CoffeeHouse.Domain.Identity;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
@@ -21,11 +23,15 @@ public class AuthApiController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ILogger<AuthApiController> _logger;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly RoleManager<AppRole> _roleManager;
 
-    public AuthApiController(IMediator mediator, ILogger<AuthApiController> logger)
+    public AuthApiController(IMediator mediator, ILogger<AuthApiController> logger, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
         _mediator = mediator;
         _logger = logger;
+        _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     /// <summary>
@@ -60,9 +66,10 @@ public class AuthApiController : ControllerBase
 
             var response = new LoginResponse
             {
-                UserId = result.Id,
+                Id = result.Id,
                 Email = result.Email ?? string.Empty,
-                Name = result.FullName ?? result.Username,
+                Name = result.FullName ?? result.Email,
+                Role = result.Role ?? "Customer",
                 Token = result.Token ?? string.Empty
             };
 
@@ -127,9 +134,9 @@ public class AuthApiController : ControllerBase
 
             var response = new RegisterResponse
             {
-                UserId = result.CustomerId ?? result.EmployeeId ?? 0, // Fallback logic
-                Email = string.Empty,
-                Name = result.Username ?? string.Empty,
+                Id = result.CustomerId ?? result.EmployeeId ?? 0,
+                Email = command.Email,
+                Name = result.Email ?? command.Email,
                 Message = result.Message ?? "Registration successful"
             };
 
@@ -144,6 +151,15 @@ public class AuthApiController : ControllerBase
                     }
                 )
             );
+        }
+        catch (FluentValidation.ValidationException ex)
+        {
+            return BadRequest(ApiResponse<object>.ErrorResult(
+                "VALIDATION_ERROR",
+                "Validation failed",
+                ex.Errors.GroupBy(e => e.PropertyName)
+                         .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray())
+            ));
         }
         catch (Exception ex)
         {
@@ -185,6 +201,7 @@ public class AuthApiController : ControllerBase
             var userIdClaim = User.FindFirst(JwtRegisteredClaimNames.Sub) ?? User.FindFirst(ClaimTypes.NameIdentifier);
             var userNameClaim = User.FindFirst(JwtRegisteredClaimNames.UniqueName) ?? User.FindFirst(ClaimTypes.Name);
             var emailClaim = User.FindFirst(JwtRegisteredClaimNames.Email) ?? User.FindFirst(ClaimTypes.Email);
+            var roleClaim = User.FindFirst(ClaimTypes.Role) ?? User.FindFirst("role");
 
             if (userIdClaim == null)
             {
@@ -200,7 +217,8 @@ public class AuthApiController : ControllerBase
             {
                 Id = userId,
                 Name = userNameClaim?.Value ?? string.Empty,
-                Email = emailClaim?.Value ?? string.Empty
+                Email = emailClaim?.Value ?? string.Empty,
+                Role = roleClaim?.Value ?? "Customer" // Default to Customer if role not found
             };
 
             return Ok(ApiResponse<UserInfoResponse>.SuccessResult(
@@ -223,20 +241,95 @@ public class AuthApiController : ControllerBase
             );
         }
     }
+    /// <summary>
+    /// Seed default users and roles for development (Admin, Employee)
+    /// </summary>
+    [HttpPost("seed")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> SeedUsers()
+    {
+        try
+        {
+            var roles = new[] { "Admin", "Employee", "Customer" };
+
+            foreach (var role in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    await _roleManager.CreateAsync(new AppRole { Name = role, NormalizedName = role.ToUpper(), Description = $"{role} Role" });
+                }
+            }
+
+            // Seed Admin
+            var adminEmail = "admin@coffeehouse.com";
+            var adminUser = await _userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new AppUser
+                {
+                    UserName = "admin",
+                    Email = adminEmail,
+                    FullName = "System Administrator",
+                    EmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+                var result = await _userManager.CreateAsync(adminUser, "Admin123!");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+            else
+            {
+                if (!await _userManager.IsInRoleAsync(adminUser, "Admin"))
+                {
+                    await _userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+
+            // Seed Employee
+            var employeeEmail = "staff@coffeehouse.com";
+            var employeeUser = await _userManager.FindByEmailAsync(employeeEmail);
+            if (employeeUser == null)
+            {
+                employeeUser = new AppUser
+                {
+                    UserName = "staff",
+                    Email = employeeEmail,
+                    FullName = "Staff Member",
+                    EmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+                var result = await _userManager.CreateAsync(employeeUser, "Staff123!");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(employeeUser, "Employee");
+                }
+            }
+
+            return Ok(new { message = "Users seeded successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error seeding users");
+            return StatusCode(500, new { message = "Seeding failed", error = ex.Message });
+        }
+    }
 }
 
 // Response DTOs
 public class LoginResponse
 {
-    public int UserId { get; set; }
+    public int Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
     public string Token { get; set; } = string.Empty;
 }
 
 public class RegisterResponse
 {
-    public int UserId { get; set; }
+    public int Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string Message { get; set; } = "Registration successful";
@@ -247,4 +340,5 @@ public class UserInfoResponse
     public int Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
 }

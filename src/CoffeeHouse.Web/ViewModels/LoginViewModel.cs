@@ -4,8 +4,8 @@ namespace CoffeeHouse.ViewModels;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage = "Tên tài khoản là bắt buộc")]
-    public string Username { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Email là bắt buộc")]
+    public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
     [DataType(DataType.Password)]

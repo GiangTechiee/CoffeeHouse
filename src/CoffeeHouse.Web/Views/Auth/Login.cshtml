@@ -36,16 +36,16 @@
             </div>
 
             <div class="space-y-6">
-                <!-- Username -->
+                <!-- Email -->
                 <div class="space-y-3">
-                    <label asp-for="Username" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Mã nhân dạng / Tài khoản</label>
+                    <label asp-for="Email" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Email / Tài khoản</label>
                     <div class="relative group/input">
-                        <input asp-for="Username" class="input-modern bg-surface-soft !rounded-[32px] pl-16 h-20 text-lg font-bold border-transparent focus:bg-white transition-all shadow-inner" placeholder="C-HOUSE-USER" required />
+                        <input asp-for="Email" class="input-modern bg-surface-soft !rounded-[32px] pl-16 h-20 text-lg font-bold border-transparent focus:bg-white transition-all shadow-inner" placeholder="example@email.com" required />
                         <div class="absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl flex-center text-text-light group-focus-within/input:bg-primary group-focus-within/input:text-white transition-all">
-                            <i class="fas fa-user-astronaut text-sm"></i>
+                            <i class="fas fa-envelope text-sm"></i>
                         </div>
                     </div>
-                    <span asp-validation-for="Username" class="text-rose-500 text-[10px] mt-1 ml-6 block font-black uppercase tracking-widest"></span>
+                    <span asp-validation-for="Email" class="text-rose-500 text-[10px] mt-1 ml-6 block font-black uppercase tracking-widest"></span>
                 </div>
 
                 <!-- Password -->

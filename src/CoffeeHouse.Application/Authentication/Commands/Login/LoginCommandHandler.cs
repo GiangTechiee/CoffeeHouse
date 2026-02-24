@@ -29,36 +29,35 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthenticationR
 
     public async Task<AuthenticationResultDto> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Authenticating user: {Username}", request.Username);
+        _logger.LogInformation("Authenticating user: {Email}", request.Email);
 
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await _userManager.FindByNameAsync(request.Email);
 
         if (user == null)
         {
-            _logger.LogWarning("Authentication failed: User {Username} not found", request.Username);
-            return new AuthenticationResultDto { Success = false, Message = "Invalid username or password" };
+            _logger.LogWarning("Authentication failed: User {Email} not found", request.Email);
+            return new AuthenticationResultDto { Success = false, Message = "Email hoặc mật khẩu không chính xác" };
         }
 
         var isPasswordValid = await _userManager.CheckPasswordAsync(user, request.Password);
 
         if (!isPasswordValid)
         {
-            _logger.LogWarning("Authentication failed: Invalid password for user {Username}", request.Username);
-            return new AuthenticationResultDto { Success = false, Message = "Invalid username or password" };
+            _logger.LogWarning("Authentication failed: Invalid password for user {Email}", request.Email);
+            return new AuthenticationResultDto { Success = false, Message = "Email hoặc mật khẩu không chính xác" };
         }
 
         var roles = await _userManager.GetRolesAsync(user);
         var token = _jwtProvider.GenerateToken(user, roles);
 
-        _logger.LogInformation("User {Username} authenticated successfully", request.Username);
+        _logger.LogInformation("User {Email} authenticated successfully", request.Email);
 
         return new AuthenticationResultDto
         {
             Id = user.Id, // Assuming AppUser Id is int, otherwise AuthenticationResultDto needs update if Id type differs. AppUser inherits IdentityUser<int> so it should be fine.
-            Username = user.UserName ?? string.Empty,
+            Email = user.Email ?? user.UserName ?? string.Empty,
             Role = roles.FirstOrDefault() ?? "User",
             FullName = user.FullName,
-            Email = user.Email,
             Success = true,
             Message = "Login successful",
             Token = token

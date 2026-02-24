@@ -1,13 +1,11 @@
 ﻿@model int
 
-<a asp-controller="cart" asp-action="index" title="Giỏ hàng" class="relative group p-2 flex items-center justify-center">
-    <div class="relative">
-        <i class="fas fa-shopping-bag text-xl text-[#2B1E16] group-hover:text-[#A3483C] transition-colors"></i>
-        @if (Model > 0)
-        {
-            <div id="cartTip" class="absolute -top-3 -right-3 w-5 h-5 bg-[#A3483C] text-[#F7F2E8] text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm border border-[#F7F2E8]">
-                @Model
-            </div>
-        }
-    </div>
+<a asp-controller="cart" asp-action="index" title="Giỏ hàng" class="relative group">
+    <span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">shopping_cart</span>
+    @if (Model > 0)
+    {
+        <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+            @Model
+        </span>
+    }
 </a>

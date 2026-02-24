@@ -69,7 +69,7 @@ public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCo
         return new AuthResultDto
         {
             Success = true,
-            Username = user.UserName ?? string.Empty,
+            Email = user.UserName ?? string.Empty,
             Role = roles.FirstOrDefault() ?? "User",
             EmployeeId = user.EmployeeId,
             CustomerId = user.CustomerId,

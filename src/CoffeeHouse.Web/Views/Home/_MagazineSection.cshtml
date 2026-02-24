@@ -1,0 +1,41 @@
+@model IEnumerable<CoffeeHouse.Domain.Entities.NewsArticle>
+
+<section class="max-w-[1440px] mx-auto px-10 py-24 border-t border-[#f4f3f0] dark:border-gray-800">
+    <h2 class="serif-heading text-center text-4xl mb-16 italic">Chuyện Cà Phê</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        @{
+            var articles = Model.Take(3).ToList();
+            var designImages = new[] {
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuANdVkYW2uhlElWBJym8SjKDr4RE1yzQkli3Irv6YJDQQbVoxpdpDz_21vb-xnmGDDzAB935lJWJO744X8KaxYZCNZ4YNGbuStHeOOFdTsW5iWgiaoOHafuq0LFb9DWxI0SWTPUYeyU6-IfRCHtGIWLoNtgQzVty4jPzuSaWOzEt_mP4fmrW27d6iBayI8diP_XBDJrD32pTfANg9N9DCpITdQzKAq_KxYqK9hsLUc6u8lv4Uch56bd1wS54Em2eL5_pAPfutq2mjA",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuAs78tq0dn-1iUiFiwzkk6eCbS-beyQLbA54-CsOWz7_lgjhZOXacdtqakHSKFLHjjz7_CClIZq9FA-puHA7Ale-Axk9kEzC0rf0eHCvFvcdG_eR2tsNgga4tKBhl-xI8Rboi9bdRGOaDlJ8X1q-eaXb7jDHFVfgVnYTJ2iuMGnsFpKIsqIIH8XjCOUJ_k7u5RG2kQNlRHvMJ2nYnwvPRaKgLaEDSTovyUgp8GFgz857W1k2wG_-WBcBAn3woqg1kLY8R_PYVZjjdg",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuDwvB-Ouk9MiooZFfFwGlKR-0kxYgkXjac3WmwJWI1zhbitzklhSGUjqU4hqmaVWW3WSzYrpE4mkb5wL2LcQFODkt1ormU77RSHPhZxfp5oBVrRK5We8Rv5h-ezdfTBWS9v3IunzGS0n1KJp3_FKkgfh2SXpbK8363bCtKnn8Q_stdgLuxa8T1UxOyhYE5ePcuAheq0BjJ2pdadvq9Uc3_Ktuk6Z0wUVNGTRu8btqwwrE7mWaY-R-MbxSdStv6o6XFhyAVUJqKwAOA"
+            };
+        }
+        @for (int i = 0; i < articles.Count; i++)
+        {
+            var item = articles[i];
+            var displayImg = i < designImages.Length ? designImages[i] : (string.IsNullOrEmpty(item.ImageUrl) ? "" : Url.Content("~/img/news/" + item.ImageUrl));
+
+            <article class="flex flex-col gap-6 group">
+                <div class="aspect-[16/9] rounded-lg overflow-hidden">
+                    <img src="@displayImg" 
+                         alt="@item.Title" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
+                <div class="space-y-3">
+                    <span class="text-[10px] uppercase tracking-widest text-warm-gray font-bold">@item.PublishedAt.ToString("MMM dd, yyyy")</span>
+                    <h4 class="text-xl font-bold leading-snug group-hover:text-primary transition-colors">
+                        <a asp-controller="News" asp-action="Details" asp-route-maTinTuc="@item.ArticleId">@item.Title</a>
+                    </h4>
+                    <p class="text-sm text-warm-gray line-clamp-2">
+                        @(item.Content?.Length > 120 ? item.Content.Substring(0, 120) + "..." : item.Content)
+                    </p>
+                    <a asp-controller="News" asp-action="Details" asp-route-maTinTuc="@item.ArticleId" 
+                       class="inline-flex items-center gap-2 text-sm font-bold group-hover:translate-x-1 transition-transform">
+                        Đọc bài viết <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </article>
+        }
+    </div>
+</section>

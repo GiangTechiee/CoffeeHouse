@@ -71,7 +71,7 @@
                             <td class="px-10 py-8">
                                 <div class="flex items-center gap-6">
                                     <div class="relative w-20 h-20 rounded-2xl overflow-hidden bg-surface-soft border border-border/50 shadow-inner group-hover/row:scale-110 transition-transform duration-700">
-                                        <img src="@Url.Content("../img/products/" + item.ImageUrl)" class="w-full h-full object-cover grayscale group-hover/row:grayscale-0 transition-all duration-700">
+                                        <img src="@(item.ImageUrl?.StartsWith("http") == true ? item.ImageUrl : Url.Content("~/img/products/" + item.ImageUrl))" class="w-full h-full object-cover grayscale group-hover/row:grayscale-0 transition-all duration-700">
                                     </div>
                                     <div>
                                         <p class="text-base font-black text-secondary tracking-tight italic group-hover/row:text-primary transition-colors">@item.ProductName</p>

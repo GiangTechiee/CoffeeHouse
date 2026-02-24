@@ -1,0 +1,43 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  CoffeeHouse.Domain -> D:\CoffeeHouse\src\CoffeeHouse.Domain\bin\Debug\net8.0\CoffeeHouse.Domain.dll
+  CoffeeHouse.Application -> D:\CoffeeHouse\src\CoffeeHouse.Application\bin\Debug\net8.0\CoffeeHouse.Application.dll
+  CoffeeHouse.Infrastructure -> D:\CoffeeHouse\src\CoffeeHouse.Infrastructure\bin\Debug\net8.0\CoffeeHouse.Infrastructure.dll
+  CoffeeHouse.Web -> D:\CoffeeHouse\src\CoffeeHouse.Web\bin\Debug\net8.0\CoffeeHouse.Web.dll
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(43,27): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(44,30): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(45,30): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(46,32): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(47,29): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\AdminOperationSeedingTests.cs(48,30): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\EndUserFlowTests.cs(116,29): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\EndUserFlowTests.cs(116,29): warning CS8602: Dereference of a possibly null reference. [D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\CoffeeHouse.Integration.Tests.csproj]
+  CoffeeHouse.Integration.Tests -> D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\bin\Debug\net8.0\CoffeeHouse.Integration.Tests.dll
+Test run for D:\CoffeeHouse\tests\CoffeeHouse.Integration.Tests\bin\Debug\net8.0\CoffeeHouse.Integration.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.23)
+[xUnit.net 00:00:00.13]   Discovering: CoffeeHouse.Integration.Tests
+[xUnit.net 00:00:00.16]   Discovered:  CoffeeHouse.Integration.Tests
+[xUnit.net 00:00:00.16]   Starting:    CoffeeHouse.Integration.Tests
+[15:35:50 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLE0", "RequestPath": "/api/v1/products", "Application": "CoffeeHouse"}
+[15:35:50 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLDV", "RequestPath": "/api/v1/auth/register", "Application": "CoffeeHouse"}
+  Passed CoffeeHouse.Integration.Tests.UnitTest1.Test1 [2 ms]
+[15:35:52 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLE3", "RequestPath": "/api/v1/admin/bootstrap", "Application": "CoffeeHouse"}
+[15:35:52 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLE5", "RequestPath": "/api/v1/admin/bootstrap", "Application": "CoffeeHouse"}
+[15:35:52 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLE2", "RequestPath": "/api/v1/admin/bootstrap", "Application": "CoffeeHouse"}
+[15:35:52 WRN] Failed to determine the https port for redirect. {"EventId": {"Id": 3, "Name": "FailedToDeterminePort"}, "SourceContext": "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware", "RequestId": "0HNJ8FTIMVLE4", "RequestPath": "/api/v1/admin/bootstrap", "Application": "CoffeeHouse"}
+  Passed CoffeeHouse.Integration.Tests.PublicApiIntegrationTests.TestPublicEndpoints [4 s]
+  Passed CoffeeHouse.Integration.Tests.AdminNewsSeedingTests.SeedNewsArticles [4 s]
+  Passed CoffeeHouse.Integration.Tests.AdminSecuritySeedingTests.SeedRolesAndAccounts [5 s]
+  Passed CoffeeHouse.Integration.Tests.AdminCoreDataSeedingTests.SeedAllCoreData [6 s]
+  Passed CoffeeHouse.Integration.Tests.EndUserFlowTests.FullCustomerWorkflow_Succeeds [6 s]
+  Passed CoffeeHouse.Integration.Tests.AdminOperationSeedingTests.SeedTransactionalData [7 s]
+[xUnit.net 00:00:16.89]   Finished:    CoffeeHouse.Integration.Tests
+
+Test Run Successful.
+Total tests: 7
+     Passed: 7
+ Total time: 17.4563 Seconds

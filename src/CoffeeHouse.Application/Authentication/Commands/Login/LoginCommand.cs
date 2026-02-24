@@ -6,4 +6,4 @@ namespace CoffeeHouse.Application.Authentication.Commands.Login;
 /// <summary>
 /// Command for authenticating a user
 /// </summary>
-public record LoginCommand(string Username, string Password) : IRequest<AuthenticationResultDto>;
+public record LoginCommand(string Email, string Password) : IRequest<AuthenticationResultDto>;

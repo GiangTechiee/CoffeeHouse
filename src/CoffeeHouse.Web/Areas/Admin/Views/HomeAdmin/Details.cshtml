@@ -43,7 +43,7 @@
                 
                 <div class="relative bg-white p-6 rounded-[56px] border border-border/50 shadow-2xl relative overflow-hidden">
                     <div class="aspect-square rounded-[40px] overflow-hidden bg-surface-soft border border-border/30">
-                        <img src="@Url.Content("~/img/products/" + Model.ImageUrl)" alt="@Model.ProductName" 
+                        <img src="@(Model.ImageUrl?.StartsWith("http") == true ? Model.ImageUrl : Url.Content("~/img/products/" + Model.ImageUrl))" alt="@Model.ProductName" 
                              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
                     </div>
                 </div>

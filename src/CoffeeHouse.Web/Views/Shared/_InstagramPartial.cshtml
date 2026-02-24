@@ -1,19 +1,25 @@
-﻿<section class="mt-20 overflow-hidden border-t border-b" style="border-color: var(--border-color);">
-    <div class="container-vintage py-6 text-center">
-        <div class="flex items-center justify-center gap-4 mb-4">
-            <i class="fab fa-instagram" style="color: var(--brass-gold); font-size: 20px;"></i>
-            <span class="label-small" style="font-size: 14px;">@("@")thespacecoffee</span>
-        </div>
+﻿<section class="border-t border-[#f4f3f0] dark:border-gray-800">
+    <div class="max-w-[1440px] mx-auto px-10 py-12 flex items-center justify-between">
+        <h2 class="font-bold tracking-widest text-sm uppercase">@("@")thecoffeehouse</h2>
+        <a class="text-sm hover:text-primary transition-colors flex items-center gap-1" href="#">Follow Us <span class="material-symbols-outlined text-sm">open_in_new</span></a>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-        @for (int i = 1; i <= 6; i++)
+    <div class="grid grid-cols-3 md:grid-cols-6">
+        @{
+            var instaImages = new[] {
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuAgWFAmMUqHkJzbZZVm7fDbiFXHPRABSd5Y4Y0S20AnsQULGapBg-z0lKAR8jTuYwPfX0z0YDXNN5rQsZ5Qeetc7DIt5GfyiexdKXOh-GOiD3le6KkN6kQ8U68Lh5J-W-eri8-NcogJrw_-QiEIbIa6OQdpo-XYvBgMhU7oZa225ChVO5AqrZB3BEmtJjWfYRdxLaOM4q33XHYkwgMcdKX-twstiWlFEoOEP_a1W-A1LnGpjI3T1d7hgrLCohfrIjqMv6wQ0APWBdg",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuCWYsRwHqk4-liFJJ2LwnEP_a3rDDCx7eXtcT7HeWpaCW48tbPKgZkDQBAJrjjB6pcBm6UkWZtPN607A9umQ9G__M2XcjzenVkH9dvdrlv9cU8TJgP7r9gMcjltDN5Fv800XTT-W9AnPn4W374O5wEXU1sC-a9VdrnYkbQl_VS3lgTA6bAYSFINmSWHstas8KeKFjKUtB9HvNaK2RgDHkn09X55RdTY-qtaFIVvI-GcU4hEtgqAPBfeWAnC_NjeQL-hyhbYvGLXS3A",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuAzPoP77H6x0Z-5O5FqvSKM4vN4INQcYuf83LwIIczdbSUbKrRb7AYJdlJwGk5dj6wk-XjuYnUTy3bJy1QnsOgmaFJRBjwNgDeZjMsdbKn9KQP3ClJ-BxiC4ergzAYoA56jfibq8Cg8XILtZBohOFd0B46MbT1kChVzHRVndv5rXEiZrPMW5o2uRN5E8WmiqzXmu42Z2C1T1H8XGd8GM236pB8gmEmp3Qz4z6Heies8bLp6aELNVLCZz8hPP8Q-4zaKwKdo2X3N5f8",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuCaGdRmYiJVzK2Npp6ZN-KfnobjtA0256QxQbZcbbEUJM038Ug6q0ghxxR6yzz0QaG7Qf8khjJ84Taj6i8qqoYbXVXzdGptZsatTu7NpBUiMoT3CNdqt1eMbZYVNwGElfsHEShqB8QaBCRhvf_OL1ypwnx_D7LO8qbclUgnAHrpsXRsfBTt4OMLV6ZfhOOKNa4cD0lFiVR8OMwOOEf9RQj7dH8BR6-aFTFjReWe-Tc1wiFjZT6hlnHNqSsdRZ0cqLoYQtjRQ-Qo2sk",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuD3wfbUcFOB7VcylTx9A5Ig_kiQrJAhOtBJhnRl9tEFVqQdktlrbluIPWwwa_3cESHofBQRDkRwfpxtRXfJFtdPepVZJIstpZXtKqQlDcO5-FTkon8BJOOfVAcJnCfgYLNxRemjiaew2AybS6dNw934Aeq40cdQ2osNSbCHCjZFYF02SqeGvO4yYF0Nzan2kKW6ZFRXsKLZ4t_tv5IiGn0OFALtQkYIP5brSh_ynNVqnxvow52ZHeuTRZ4fMMaECty6tBheG0wl-j0",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuBqe9C-LGxT3DxKcFl1LscEH14F7ZnXLUw8U_KgjUcoZmxz4dQgAqQJSfzjq-PKW6M1TwQ_zeTj-_DJL05FJrvA82yOEd-vBUKeU5beysoM4c3sBkxAUEQRsQSSHeix_BS9mGcDGUwJ9yDrAWC0NFLE73bk8rKO9Bm2PV2P2CgOcDwU1XU4EBxxTn6ZSicFeS_Nak1n9VIq1H6JhlC5HGmOWBcuu6Upie6qwg3cJCpBC5kP5kbqt9MKgDa0M81Jop9Cx5d3kZgc8-g"
+            };
+        }
+        @for (int i = 0; i < instaImages.Length; i++)
         {
-            <div class="relative group aspect-square overflow-hidden border-r" style="border-right-color: var(--border-color);">
-                <div class="absolute inset-0 bg-cover bg-center sepia-img transition-transform duration-1000 group-hover:scale-110"
-                     style="background-image: url('../../img/instagram/insta-@(i).jpg')"></div>
-                
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-[#F7F2E8]">
-                    <i class="fab fa-instagram text-2xl"></i>
+            <div class="aspect-square overflow-hidden cursor-pointer relative group">
+                <img src="@instaImages[i]" alt="Instagram @(i+1)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined">favorite</span>
                 </div>
             </div>
         }

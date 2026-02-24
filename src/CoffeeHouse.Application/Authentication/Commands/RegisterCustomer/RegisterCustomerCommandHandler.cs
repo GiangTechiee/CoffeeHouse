@@ -29,17 +29,17 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
 
     public async Task<AuthResultDto> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Registering new customer: {Username}", request.Username);
+        _logger.LogInformation("Registering new customer: {Email}", request.Email);
 
         if (request.Password != request.ConfirmPassword)
         {
-            return new AuthResultDto { Success = false, Message = "Passwords do not match" };
+            return new AuthResultDto { Success = false, Message = "Mật khẩu xác nhận không khớp" };
         }
 
-        var existingUser = await _userManager.FindByNameAsync(request.Username);
+        var existingUser = await _userManager.FindByNameAsync(request.Email);
         if (existingUser != null)
         {
-            return new AuthResultDto { Success = false, Message = "Username already exists" };
+            return new AuthResultDto { Success = false, Message = "Email này đã được sử dụng" };
         }
 
         try 
@@ -60,8 +60,8 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
             // Create Identity User
             var user = new AppUser
             {
-                UserName = request.Username,
-                Email = request.Username, // Validated as email by RegisterCustomerCommandValidator
+                UserName = request.Email,
+                Email = request.Email, // Renamed from Username
                 FullName = request.FullName,
                 Address = request.Address,
                 CustomerId = customer.CustomerId,
@@ -74,7 +74,7 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
             {
                 await _unitOfWork.RollbackTransactionAsync(cancellationToken);
                 _logger.LogError("User creation failed: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-                return new AuthResultDto { Success = false, Message = result.Errors.First().Description };
+                return new AuthResultDto { Success = false, Message = "Đăng ký không thành công. Vui lòng kiểm tra lại thông tin." };
             }
 
             // Assign "User" role
@@ -88,17 +88,17 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
             {
                 await _unitOfWork.RollbackTransactionAsync(cancellationToken);
                 _logger.LogError("User role assignment failed: {Errors}", string.Join(", ", roleResult.Errors.Select(e => e.Description)));
-                return new AuthResultDto { Success = false, Message = "Role assignment failed" };
+                return new AuthResultDto { Success = false, Message = "Không thể gán quyền người dùng" };
             }
 
             await _unitOfWork.CommitTransactionAsync(cancellationToken);
 
-            _logger.LogInformation("Customer {Username} registered successfully", request.Username);
+            _logger.LogInformation("Customer {Email} registered successfully", request.Email);
 
             return new AuthResultDto
             {
                 Success = true,
-                Username = user.UserName,
+                Email = user.UserName ?? string.Empty,
                 Role = "User",
                 CustomerId = customer.CustomerId,
                 Message = "Registration successful"
@@ -107,7 +107,7 @@ public class RegisterCustomerCommandHandler : IRequestHandler<RegisterCustomerCo
         catch (Exception ex)
         {
             await _unitOfWork.RollbackTransactionAsync(cancellationToken);
-            _logger.LogError(ex, "Error occurred while registering customer {Username}", request.Username);
+            _logger.LogError(ex, "Error occurred while registering customer {Email}", request.Email);
             throw;
         }
     }

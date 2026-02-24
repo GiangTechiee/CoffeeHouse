@@ -25,6 +25,10 @@ public class UnitOfWork : IUnitOfWork
     private IAccountRepository? _accounts;
     private IRoleRepository? _roles;
     private IRepository<Domain.Entities.RefreshToken>? _refreshTokens;
+    private ISupplierRepository? _suppliers;
+    private IIngredientRepository? _ingredients;
+    private INewsRepository? _newsArticles;
+    private IPurchaseOrderRepository? _purchaseOrders;
 
     /// <summary>
     /// Initializes a new instance of the UnitOfWork class
@@ -155,6 +159,49 @@ public class UnitOfWork : IUnitOfWork
             return _refreshTokens;
         }
     }
+
+    /// <summary>
+    /// Gets the Supplier repository
+    /// </summary>
+    public ISupplierRepository Suppliers
+    {
+        get
+        {
+            _suppliers ??= new SupplierRepository(_context);
+            return _suppliers;
+        }
+    }
+
+    /// <summary>
+    /// Gets the Ingredient repository
+    /// </summary>
+    public IIngredientRepository Ingredients
+    {
+        get
+        {
+            _ingredients ??= new IngredientRepository(_context);
+            return _ingredients;
+        }
+    }
+
+    public INewsRepository NewsArticles
+    {
+        get
+        {
+            _newsArticles ??= new NewsRepository(_context);
+            return _newsArticles;
+        }
+    }
+
+    public IPurchaseOrderRepository PurchaseOrders
+    {
+        get
+        {
+            _purchaseOrders ??= new PurchaseOrderRepository(_context);
+            return _purchaseOrders;
+        }
+    }
+
 
     /// <summary>
     /// Saves all changes made in this unit of work to the database asynchronously

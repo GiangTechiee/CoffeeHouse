@@ -9,4 +9,32 @@ public class CafeStoreRepository : Repository<CafeStore>, ICafeStoreRepository
     public CafeStoreRepository(DbContext context) : base(context)
     {
     }
+
+    public async Task<(IReadOnlyList<CafeStore> Items, int TotalCount)> GetPagedAsync(
+        string? search,
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var term = search.Trim().ToLower();
+            query = query.Where(s =>
+                s.StoreName.ToLower().Contains(term) ||
+                s.Address.ToLower().Contains(term) ||
+                s.PhoneNumber.ToLower().Contains(term));
+        }
+
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        var items = await query
+            .OrderBy(s => s.StoreName)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (items, totalCount);
+    }
 }

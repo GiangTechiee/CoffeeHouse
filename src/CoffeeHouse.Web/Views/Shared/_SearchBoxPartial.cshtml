@@ -1,31 +1,45 @@
-﻿<div class="search-model fixed inset-0 z-[2000] bg-[#F7F2E8]/98 backdrop-blur-xl opacity-0 invisible transition-all duration-500 flex-center overflow-hidden">
-    <!-- Paper Texture -->
-    <div class="absolute inset-0 opacity-[0.05] pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/linen.png');"></div>
-
-    <div class="absolute top-12 right-12 z-10">
-        <button class="search-close-switch w-12 h-12 border border-[#E3D7C7] rounded-full flex-center text-[#2B1E16] hover:bg-[#A3483C] hover:text-white transition-all duration-300">
-            <i class="fas fa-times"></i>
+﻿<div class="search-model fixed inset-0 z-[2000] bg-background-light/98 dark:bg-background-dark/98 backdrop-blur-2xl opacity-0 invisible transition-all duration-500 flex items-center justify-center overflow-hidden">
+    <div class="absolute top-10 right-10 z-10">
+        <button class="search-close-switch w-14 h-14 border border-gray-200 dark:border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-primary transition-all duration-300">
+            <span class="material-symbols-outlined text-3xl">close</span>
         </button>
     </div>
     
-    <div class="w-full max-w-4xl px-10 relative z-10 text-center">
-        <div class="mb-10">
-            <span class="label-small">TÌM KIẾM</span>
-            <div class="ornament">❦</div>
+    <div class="w-full max-w-4xl px-10 text-center scale-90 opacity-0 transition-all duration-500 search-content">
+        <div class="mb-12">
+            <span class="text-primary font-bold text-xs uppercase tracking-[0.5em] mb-4 block">Search Area</span>
+            <h2 class="font-serif text-5xl italic">Bạn đang tìm kiếm điều gì?</h2>
         </div>
 
         @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "search-model-form" }))
         {
-            <div class="relative">
+            <div class="relative group">
                 <input type="text" id="search-input" name="search" 
-                       placeholder="Nhập từ khóa tìm kiếm..." 
+                       placeholder="Cà phê sữa đá, Trà đào..." 
                        autocomplete="off"
-                       class="w-full bg-transparent border-b border-[#E3D7C7] py-8 text-4xl lg:text-6xl text-center font-serif text-[#2B1E16] italic placeholder:opacity-20 focus:outline-none focus:border-[#C8A96A] transition-all">
+                       class="w-full bg-transparent border-b-2 border-gray-100 dark:border-gray-800 py-10 text-4xl lg:text-7xl text-center font-display font-medium text-background-dark dark:text-white placeholder:text-gray-200 dark:placeholder:text-gray-800 focus:outline-none focus:border-primary transition-all">
+                <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-700 group-focus-within:w-full"></div>
             </div>
             
-            <div class="mt-12">
-                <p class="label-small" style="font-size: 10px; opacity: 0.5;">Nhấn <span style="color: var(--faded-red);">Enter</span> để khám phá</p>
+            <div class="mt-12 flex flex-col items-center gap-4">
+                <p class="text-xs font-bold uppercase tracking-widest text-warm-gray">Nhấn <span class="text-primary">Enter</span> để bắt đầu</p>
+                <div class="flex flex-wrap justify-center gap-4 mt-4">
+                    <span class="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-beige-soft dark:bg-gray-800 rounded-full text-warm-gray cursor-pointer hover:bg-primary hover:text-white transition-all">Cà phê</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-beige-soft dark:bg-gray-800 rounded-full text-warm-gray cursor-pointer hover:bg-primary hover:text-white transition-all">Trà Đào</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-beige-soft dark:bg-gray-800 rounded-full text-warm-gray cursor-pointer hover:bg-primary hover:text-white transition-all">Bạc Sỉu</span>
+                </div>
             </div>
         }
     </div>
 </div>
+
+<style>
+    .search-model.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .search-model.active .search-content {
+        opacity: 1;
+        transform: scale(1);
+    }
+</style>

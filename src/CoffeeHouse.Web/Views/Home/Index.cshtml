@@ -1,210 +1,30 @@
-﻿@using CoffeeHouse.Domain.Entities
-@model CoffeeHouse.ViewModels.HomeViewModel
+﻿@model CoffeeHouse.ViewModels.HomeViewModel
 @{
-    ViewData["Title"] = "Trang chủ - Hanoi Space Edition";
+    ViewData["Title"] = "The Coffee House - Redesign";
     ViewData["Home"] = "active";
 }
 
-<!-- Section 1: Hero + Categories -->
-<section class="section-spacing relative overflow-hidden" style="padding-top: 140px;">
-    <!-- Watermark Background -->
-    <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none" style="z-index: 0;">
-        <h1 style="font-size: 35vw; white-space: nowrap; color: var(--espresso); font-family: var(--font-heading);">CÀ PHÊ</h1>
-    </div>
+<!-- Hero Section -->
+<partial name="_HeroSection" model="Model" />
 
-    <div class="container-vintage relative" style="z-index: 1;">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <!-- Hero Card -->
-            <div class="lg:col-span-12 xl:col-span-7">
-                <div class="vintage-card vignette relative h-[650px] group overflow-hidden">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[4000ms] group-hover:scale-105 sepia-img"
-                         style="background-image: url('@Url.Content("~/img/categories/anh-1.jpg")')"></div>
-                    <div class="absolute inset-0" style="background: var(--overlay-sepia);"></div>
-                    
-                    <div class="absolute top-12 right-12">
-                        <div class="stamp-badge">
-                            CHẤT LƯỢNG THƯỢNG HẠNG
-                        </div>
-                    </div>
+<!-- Category Strip -->
+<partial name="_CategoryStrip" />
 
-                    <div class="absolute bottom-16 left-16 right-16 text-[#F7F2E8]">
-                        <h1 class="mb-4">Thưởng thức <br/> <span class="text-ital">cà phê thật</span></h1>
-                        <p class="text-lg max-w-lg mb-10 opacity-90 font-medium">
-                            Khơi nguồn cảm hứng trong từng tách cà phê và khoảnh khắc bên nhau.
-                        </p>
-                        <a asp-controller="products" asp-action="index" class="btn-vintage">
-                            Khám phá thực đơn
-                        </a>
-                    </div>
-                </div>
-            </div>
+<!-- Product Suggestions (Now using AJAX) -->
+<partial name="_ProductSuggestions" />
 
-            <!-- Categories Grid -->
-            <div class="lg:col-span-12 xl:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                @{
-                    var categories = new[] {
-                        new { Title = "Trà", Desc = "Hương vị trà đặc sản truyền thống.", Image = "anh-2.jpg", Controller = "products", Action = "type", Route = new Dictionary<string, string> { { "target", "5" }, { "targetname", "Trà" } } },
-                        new { Title = "Tin tức", Desc = "Cập nhật những câu chuyện mới mỗi ngày.", Image = "anh-3.jpg", Controller = "news", Action = "index", Route = (Dictionary<string, string>)null },
-                        new { Title = "Câu chuyện", Desc = "Về kiến trúc và không gian Hanoi Space.", Image = "anh-4.jpg", Controller = "about", Action = "index", Route = (Dictionary<string, string>)null },
-                        new { Title = "Liên hệ", Desc = "Chúng tôi luôn ở đây để lắng nghe bạn.", Image = "anh-5.jpg", Controller = "contact", Action = "index", Route = (Dictionary<string, string>)null }
-                    };
-                }
-                @foreach (var cat in categories)
-                {
-                    <a asp-controller="@cat.Controller" asp-action="@cat.Action" asp-all-route-data="@cat.Route" class="vintage-card relative h-[300px] group block">
-                        <div class="absolute inset-0 bg-cover bg-center sepia-img transition-transform duration-1000 group-hover:scale-105"
-                             style="background-image: url('@Url.Content("~/img/categories/" + cat.Image)')"></div>
-                        <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 30%, rgba(43, 30, 22, 0.8));"></div>
-                        
-                        <div class="absolute inset-0 flex flex-col justify-end p-8 text-[#F7F2E8]">
-                            <h3 class="text-3xl mb-1">@cat.Title</h3>
-                            <p class="text-xs opacity-70 leading-relaxed line-clamp-2">@cat.Desc</p>
-                        </div>
-                    </a>
-                }
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Magazine Section -->
+<partial name="_MagazineSection" model="Model.NewsArticles" />
 
-<!-- Section 2: Gợi ý hôm nay -->
-<section class="section-spacing">
-    <div class="container-vintage">
-        <div class="flex items-end justify-between mb-16 border-b pb-8" style="border-color: var(--border-color);">
-            <div class="space-y-2">
-                <span class="label-small">NÊN THỬ</span>
-                <h2 class="text-ital">Gợi ý hôm nay</h2>
-            </div>
-            <a asp-controller="products" asp-action="index" class="label-small group flex items-center gap-2 hover:text-[#A3483C]">
-                Xem tất cả thực đơn
-                <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-            </a>
-        </div>
+<!-- Promo Strip -->
+<partial name="_PromoStrip" />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-            @foreach (var item in Model.Products.Take(4))
-            {
-                <div class="group">
-                    <div class="vintage-card vignette relative aspect-[4/5] mb-8 overflow-hidden">
-                        <img src="@Url.Content("~/img/products/" + item.ImageUrl)" alt="@item.ProductName"
-                             class="w-full h-full object-cover sepia-img transition-transform duration-700 group-hover:scale-110">
-                        
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: rgba(43, 30, 22, 0.4);">
-                            <div class="flex flex-col gap-4 px-8 w-full">
-                                <a asp-controller="cart" asp-action="add" asp-route-id="@item.ProductId" asp-route-quantity="1"
-                                   class="btn-vintage w-full text-center py-4">
-                                    Thêm nhanh
-                                </a>
-                                <a asp-controller="products" asp-action="details" asp-route-id="@item.ProductId"
-                                   class="btn-outline-vintage w-full text-center py-4 !bg-[#F7F2E8]">
-                                    Chi tiết
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-2xl mb-2 hover:text-[#A3483C] transition-colors">
-                            <a asp-controller="products" asp-action="details" asp-route-id="@item.ProductId">@item.ProductName</a>
-                        </h3>
-                        <p class="text-xl font-bold" style="color: var(--faded-red);">@item.Price.ToString("n0") <span class="text-xs uppercase ml-1">đ</span></p>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</section>
 
-<!-- Section 3: Tạp chí -->
-<section class="section-spacing bg-surface-soft">
-    <div class="container-vintage">
-        <div class="text-center mb-20">
-            <span class="label-small">ẤN BẢN PHONG CÁCH</span>
-            <h2 class="mt-4 text-ital">Tạp chí Coffee House</h2>
-            <div class="ornament">❦</div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            @foreach (var item in Model.NewsArticles.Take(3))
-            {
-                <article class="vintage-card flex flex-col h-full bg-transparent">
-                    <div class="relative h-64 overflow-hidden vignette">
-                        <img src="@Url.Content("~/img/news/" + item.ImageUrl)" alt="@item.Title"
-                             class="w-full h-full object-cover sepia-img transition-transform duration-1000 group-hover:scale-105">
-                        <div class="absolute top-6 left-6 px-4 py-1 bg-[#F7F2E8] border border-[#E3D7C7] text-xs font-bold label-small">
-                            CÂU CHUYỆN
-                        </div>
-                    </div>
-                    <div class="p-10 flex flex-col flex-1">
-                        <p class="label-small mb-4" style="font-size: 10px;">@item.PublishedAt.ToString("dd") THG @item.PublishedAt.ToString("MM"), @item.PublishedAt.ToString("yyyy")</p>
-                        <h3 class="text-2xl mb-8 leading-tight line-clamp-2 hover:text-[#A3483C]">
-                            <a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.ArticleId">@item.Title</a>
-                        </h3>
-                        <div class="mt-auto pt-6 border-t" style="border-color: var(--border-color);">
-                            <a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.ArticleId"
-                               class="label-small flex items-center gap-2 hover:text-[#A3483C]">
-                                Đọc bài viết
-                                <i class="fas fa-chevron-right text-[8px]"></i>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            }
-        </div>
-    </div>
-</section>
-
-<!-- Section 4: Banner Promo Slider -->
-<section class="section-spacing" style="background: var(--espresso);">
-    <div class="container-vintage">
-        <div class="banner__slider owl-carousel">
-            <!-- Slide 1 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center py-20">
-                <div class="space-y-8 text-[#F7F2E8]">
-                    <span class="label-small !color-[#C8A96A]">ƯU ĐÃI TRẢI NGHIỆM</span>
-                    <h2 class="text-6xl text-ital text-[#F7F2E8]">Khởi đầu <br/> đầy cảm hứng</h2>
-                    <p class="text-xl opacity-70 max-w-lg">
-                        Khám phá hương vị cà phê nguyên bản tại Hanoi Space với ưu đãi đặc biệt dành cho thực khách lần đầu ghé thăm.
-                    </p>
-                    <div class="pt-6">
-                        <a href="#" class="btn-vintage !px-12 !py-5">Nhận ngay ưu đãi</a>
-                    </div>
-                </div>
-                <div class="vintage-card h-[450px] overflow-hidden vignette">
-                    <img src="@Url.Content("~/img/banner/banner-1.jpg")" class="w-full h-full object-cover sepia-img" alt="Promo">
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center py-20">
-                <div class="space-y-8 text-[#F7F2E8]">
-                    <span class="label-small !color-[#C8A96A]">DỊCH VỤ GIAO HÀNG</span>
-                    <h2 class="text-6xl text-ital text-[#F7F2E8]">Giao nhanh <br/> 15 phút</h2>
-                    <p class="text-xl opacity-70 max-w-lg">
-                        Gói trọn hương vị nồng nàn của Coffee House đến tận cửa nhà bạn chỉ trong chớp mắt. Miễn phí vận chuyển.
-                    </p>
-                    <div class="pt-6">
-                        <a href="#" class="btn-vintage !px-12 !py-5">Đặt ngay bây giờ</a>
-                    </div>
-                </div>
-                <div class="vintage-card h-[450px] overflow-hidden vignette">
-                    <img src="@Url.Content("~/img/banner/banner-2.jpg")" class="w-full h-full object-cover sepia-img" alt="Promo">
-                </div>
-            </div>
-             <!-- Slide 3 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center py-20">
-                <div class="space-y-8 text-[#F7F2E8]">
-                    <span class="label-small !color-[#C8A96A]">BỘ SƯU TẬP MÙA HÈ</span>
-                    <h2 class="text-6xl text-ital text-[#F7F2E8]">Sảng khoái <br/> rực rỡ</h2>
-                    <p class="text-xl opacity-70 max-w-lg">
-                        Thổi bùng năng lượng với những món đồ uống đá xay và trà trái cây mới nhất từ thực đơn mùa hè này.
-                    </p>
-                    <div class="pt-6">
-                        <a href="#" class="btn-vintage !px-12 !py-5">Khám phá danh mục</a>
-                    </div>
-                </div>
-                <div class="vintage-card h-[450px] overflow-hidden vignette">
-                    <img src="@Url.Content("~/img/banner/banner-3.jpg")" class="w-full h-full object-cover sepia-img" alt="Promo">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@section Scripts {
+    <style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .serif-heading { font-family: 'Playfair Display', serif; }
+        .product-card:hover .quick-add { opacity: 1; transform: translateY(0); }
+        .quick-add { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+    </style>
+}

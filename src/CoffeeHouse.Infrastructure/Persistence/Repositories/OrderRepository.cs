@@ -107,7 +107,10 @@ public class OrderRepository : Repository<SalesOrder>, IOrderRepository
         var totalCount = await query.CountAsync(cancellationToken);
 
         var orders = await query
-            .Include(o => o.SalesOrderItems) // Fix for Issue 4
+            .Include(o => o.Store)
+            .Include(o => o.Customer)
+            .Include(o => o.Employee)
+            .Include(o => o.SalesOrderItems)
                 .ThenInclude(i => i.Product)
             .OrderByDescending(o => o.OrderDate)
             .Skip((pageNumber - 1) * pageSize)

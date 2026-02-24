@@ -38,12 +38,12 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-3 md:col-span-2">
-                        <label asp-for="Username" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Mã danh tính (Tài khoản)</label>
+                        <label asp-for="Email" class="text-[10px] font-black uppercase tracking-[0.2em] text-text-light ml-6">Email (Tài khoản)</label>
                         <div class="relative group/input">
-                            <input asp-for="Username" class="input-modern bg-surface-soft !rounded-[24px] pl-14 h-16 text-base font-bold transition-all shadow-inner" placeholder="Tên tài khoản của bạn" required />
-                            <i class="fas fa-id-badge absolute left-6 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
+                            <input asp-for="Email" class="input-modern bg-surface-soft !rounded-[24px] pl-14 h-16 text-base font-bold transition-all shadow-inner" placeholder="example@email.com" required />
+                            <i class="fas fa-envelope absolute left-6 top-1/2 -translate-y-1/2 text-text-light group-focus-within/input:text-primary transition-colors"></i>
                         </div>
-                        <span asp-validation-for="Username" class="text-rose-500 text-[10px] mt-1 ml-6 block font-black uppercase tracking-widest"></span>
+                        <span asp-validation-for="Email" class="text-rose-500 text-[10px] mt-1 ml-6 block font-black uppercase tracking-widest"></span>
                     </div>
 
                     <div class="space-y-3">

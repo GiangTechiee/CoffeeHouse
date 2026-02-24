@@ -1,4 +1,5 @@
-﻿using CoffeeHouse.Infrastructure.Persistence;
+﻿using CoffeeHouse.Application.Interfaces;
+using CoffeeHouse.Infrastructure.Persistence;
 using CoffeeHouse.Domain.Entities;
 
 using CoffeeHouse.ViewModels;
@@ -15,12 +16,14 @@ namespace CoffeeHouse.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         private readonly CoffeeHouseContext _context;
-        IWebHostEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IImageService _imageService;
 
-        public HomeAdminController(CoffeeHouseContext context, IWebHostEnvironment hc)
+        public HomeAdminController(CoffeeHouseContext context, IWebHostEnvironment hc, IImageService imageService)
         {
             _context = context;
             _hostEnvironment = hc;
+            _imageService = imageService;
         }
 
         [Route("")]
@@ -98,7 +101,7 @@ namespace CoffeeHouse.Areas.Admin.Controllers
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(SanPhamViewModel model)
+        public async Task<IActionResult> Create(SanPhamViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -134,21 +137,17 @@ namespace CoffeeHouse.Areas.Admin.Controllers
                     return View(model);
                 }
 
-                string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "img", "products");
-                if (!Directory.Exists(uploadFolder))
+                // Xử lý file upload qua ImageKit
+                try 
                 {
-                    Directory.CreateDirectory(uploadFolder);
+                    sanPham.ImageUrl = await _imageService.UploadImageAsync(model.ImageFile, "products");
                 }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.ImageFile.FileName);
-                string filePath = Path.Combine(uploadFolder, uniqueFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                catch (Exception ex)
                 {
-                    model.ImageFile.CopyTo(stream);
+                    ModelState.AddModelError("ImageFile", "Lỗi khi upload ảnh lên cloud: " + ex.Message);
+                    ViewBag.CategoryId = new SelectList(_context.ProductCategories.ToList(), "CategoryId", "CategoryName");
+                    return View(model);
                 }
-
-                sanPham.ImageUrl = uniqueFileName;
             }
 
             _context.Products.Add(sanPham);
@@ -214,7 +213,7 @@ namespace CoffeeHouse.Areas.Admin.Controllers
         [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(SanPhamViewModel model)
+        public async Task<IActionResult> Edit(SanPhamViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -245,24 +244,17 @@ namespace CoffeeHouse.Areas.Admin.Controllers
                     return View(model);
                 }
 
-                string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "img", "products");
-                if (!Directory.Exists(uploadFolder))
+                // Xử lý file upload qua ImageKit
+                try 
                 {
-                    Directory.CreateDirectory(uploadFolder);
+                    product.ImageUrl = await _imageService.UploadImageAsync(model.ImageFile, "products");
                 }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.ImageFile.FileName);
-                string filePath = Path.Combine(uploadFolder, uniqueFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                catch (Exception ex)
                 {
-                    model.ImageFile.CopyTo(stream);
+                    ModelState.AddModelError("ImageFile", "Lỗi khi cập nhật ảnh: " + ex.Message);
+                    ViewBag.CategoryId = new SelectList(_context.ProductCategories.ToList(), "CategoryId", "CategoryName");
+                    return View(model);
                 }
-
-                // Optional: Delete old image file if it exists
-                // if (!string.IsNullOrEmpty(product.ImageUrl)) { ... }
-
-                product.ImageUrl = uniqueFileName;
             }
 
             _context.Update(product);
@@ -286,10 +278,17 @@ namespace CoffeeHouse.Areas.Admin.Controllers
                 return RedirectToAction("Index", "HomeAdmin");
             }
 
-            _context.Remove(_context.Products.Find(id));
-            _context.SaveChanges();
-
-            TempData["Message"] = "S?n ph?m dã du?c xoá";
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                _context.Remove(product);
+                _context.SaveChanges();
+                TempData["Message"] = "Sản phẩm đã được xóa";
+            }
+            else
+            {
+               TempData["Message"] = "Không tìm thấy sản phẩm";
+            }
 
             return RedirectToAction("Index", "HomeAdmin");
         }

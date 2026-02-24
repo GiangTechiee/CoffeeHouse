@@ -9,10 +9,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#ca1515',
-          dark: '#a01010',
-          light: '#e63946',
+          DEFAULT: "#ec8e13",
+          dark: "#d47f11",
         },
+        "background-light": "#FCFAF8",
+        "background-dark": "#1a1612",
+        "beige-soft": "#F3EEEA",
+        "moss-green": "#4A5D4E",
+        "warm-gray": "#897861",
         secondary: '#111111',
         accent: '#36a300',
         surface: {
@@ -27,6 +31,8 @@ module.exports = {
         },
       },
       fontFamily: {
+        display: ["Work Sans", "sans-serif"],
+        serif: ["Playfair Display", "serif"],
         sans: ['Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
       },
       spacing: {
